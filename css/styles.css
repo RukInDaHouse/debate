@@ -332,3 +332,33 @@ body .card:hover .multi-button, body .card .multi-button:focus-within {
   font-weight: bolder;
   letter-spacing: 2;
 }
+
+#in-kod {
+  width: 0px;
+  height: 0px;
+}
+
+.add {
+  z-index: 99999999!important;
+}
+
+.btn {
+  z-index: 99999999!important;
+  position: absolute;
+  width: 25%;
+  bottom: 0;
+}
+.btn2 {
+  z-index: 99999999!important;
+  position: absolute;
+  width: 25%;
+  bottom: 0;
+  left: 50%;
+}
+.btn3 {
+  z-index: 99999999!important;
+  position: absolute;
+  width: 25%;
+  bottom: 0;
+  right: 0;
+}
