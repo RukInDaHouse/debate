@@ -378,32 +378,9 @@ body .card:hover .multi-button, body .card .multi-button:focus-within {
 .textcard {
   position: absolute;
   z-index: 1;
-  top: 100px;
+  top: 50%;
   width: 200px;
   height: 200px;
-}
-
-#text_area {
-  width: 170px;
-  height: 30px;
-  overflow: hidden;
-  padding: 5px;
-  border: 1px solid #000000;
-  font-family: Arial;
-  font-size: 12px;
-  color: #000000;
-  resize: none;
-}
-
-#text_area_div {
-  width: 170px;
-  font-family: Arial;
-  font-size: 12px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  visibility: hidden;
-  position: absolute;
-  left: -9999px;
 }
 
 button {
