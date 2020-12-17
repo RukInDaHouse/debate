@@ -13,10 +13,10 @@ var addBlueBlock = function() {
 };
 
 var addPurpleBlock = function() {
-	var col6 = document.querySelector('.col-8');
+	var col7 = document.querySelector('.col-7');
 	var elemKod4 = document.querySelector('.in-kod4').innerHTML;
 
-	col6.innerHTML += '<div>' + elemKod4 + '</div>';
+	col7.innerHTML += '<div>' + elemKod4 + '</div>';
 };
 
 
@@ -24,12 +24,17 @@ document.onclick = function() {
 	var elem = window.event.srcElement;
 	if (elem.className === "btn") {
 		addWhiteBlock();
+		Drag();
+
 	}
 	else if (elem.className === "btn2") {
 		addBlueBlock();
+		Drag();
 	}		
 	else if (elem.className === "btn3") {
 		addPurpleBlock();
+		Drag();
+
 	}		
 };
 
@@ -51,9 +56,40 @@ function removeElem(delElem, attribute, attributeName) {
   };
 }
 
-
+var Drag = function() {
 document.addEventListener("click", removeElem("card", "data-del", "delete"));
 
 function change_color(elem, color) {
 	elem.parentElement.style.background = color;
 }
+
+
+let elements = document.querySelectorAll('.textcard');
+
+elements.forEach(function(el) {
+  let mover = false,
+    x, y, posx, posy, first = true;
+  el.onmousedown = function() {
+    mover = true;
+  };
+  el.onmouseup = function() {
+    mover = false;
+    first = true;
+  };
+  el.parentNode.onmousemove = function(e) {
+    el.style.cursor = "move";
+    if (mover) {
+      if (first) {
+        x = e.offsetX;
+        y = e.offsetY;
+        first = false;
+      }
+
+      posx = e.pageX - x;
+      posy = e.pageY - y;
+      el.style.left = posx + 'px';
+      el.style.top = posy + 'px';
+    }
+  }
+});
+};
