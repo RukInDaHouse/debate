@@ -1,80 +1,53 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <title>Дебаты</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-    <link href="css/styles.css" rel="stylesheet" />
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'><link rel="stylesheet" href="./style.css">
-    <link rel='stylesheet' href='https://pro.fontawesome.com/releases/v5.12.0/css/all.css'>
-  </head>
-    
-<body>
-  <div class="schema2">
-    <div class="in-kod2">
-      <textarea class="textcard white"></textarea> 
-    </div>
-  </div>
-  <div class="schema2">
-    <div class="in-kod3">
-      <textarea class="textcard blue"></textarea> 
-    </div>
-  </div>
-  <div class="schema2">
-    <div class="in-kod4">
-      <textarea class="textcard purple"></textarea> 
-    </div>
-  </div>
+﻿<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<title></title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-  <div class='col-1'></div>
-  <div class='col-1-2'></div>
-  <div class='col-2'></div>
-  <div class='col-2-3'></div>
-  <div class='col-3'></div>
-  <div class='col-3-4'></div>
+   <link type="text/css" rel="stylesheet" href="./css/aristo/jquery-ui-1.8.16.custom.css" />
+   <link type="text/css" rel="stylesheet" href="./css/jquery.layout.css" />
+   <link type="text/css" rel="stylesheet" href="./css/application.css" />
 
-  <div class='col-4'>
-    <textarea class="textcard blue"></textarea>
-  </div>
-  <div class='col-5'></div>
-  <div class='col-6'>
-    <textarea class="textcard purple"></textarea>        
-  </div>
-  <div class='col-5'></div>
-  <div class='col-5-6'></div>
-  <div class='col-6-7'></div>
-  <div class='col-7'></div>
-  <div class='col-7-8'></div>
-  <div class='col-8'></div>
-  <div class='col-8-9'></div>
-  <div class='col-9'></div>
-  <div class='col-9-10'></div>
-  <div class='col-10'></div>
-  <div class='col-11'></div>
+    <script src="./lib/jquery.js"></script>
+    <script src="./lib/jquery-ui.js"></script>
+    <script src="./lib/jquery.browser.js"></script>
+    <script src="./lib/jquery.layout.js"></script>
 
-  <div class="btnpanel">
-    <div class="multi-button">
-      <span class="add">
-        <button class="btn">+</button>
-      </span>
-    </div>
-              
-    <div class="multi-button">
-      <span class="add">
-        <button class="btn2">+</button>
-      </span>
-    </div>
-    
-    <div class="multi-button">
-      <span class="add">
-        <button class="btn3">+</button>
-      </span>
-    </div>
-  </div>
+    <script src="./draw2d.js"></script>
 
-    <script src="js/script.js"></script>
-    <script src="js/drag.js"></script>
-  </body>
+    <script src="./gui/Application.js"></script>
+	  <script src="./gui/View.js"></script>
+    <script src="./gui/Toolbar.js"></script>
+    <script src="./gui/HoverConnection.js"></script>
+
+ <script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded",function () {
+
+     var app  = new example.Application();
+     app.view.installEditPolicy(  new draw2d.policy.connection.DragConnectionCreatePolicy({
+        createConnection: function(){
+            return new HoverConnection();
+        }
+      }));
+});
+
+</script>
+
+</head>
+
+<body id="container">
+
+   <div id="content">
+   		<div id="toolbar"></div>
+   		<div id="canvas" class="" style="width:3000px; height:3000px;"></div>
+   </div>
+
+   <div id="navigation" class="">
+    	<div data-shape="draw2d.shape.node.End"     class="palette_node_element draw2d_droppable">+</div>
+    	<div data-shape="draw2d.shape.node.Between" class="palette_node_element draw2d_droppable">+</div>
+   </div>
+
+</body>
 </html>
