@@ -18,6 +18,9 @@ body {
 	-webkit-text-size-adjust: 100%;
 	text-rendering: optimizeLegibility;
 }
+.blue {
+	background: blue;
+}
 
 #canvas {
 	padding: 0px;
@@ -58,14 +61,26 @@ body {
 
 .palette_node_element {
 	border: 1px solid gray;
-	background-color: #f3f3f3;
 	padding: 10px;
 	cursor: move;
-	width: 80px;
+	width: 60px;
+	height: 60px;
 	margin: 30px auto 30px auto;
 	text-align: center;
 	align: center;
-	border-radius: 5px;
+	border-radius: 100%;
+	color: #dadada;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.blue {
+	background: #3f72c3;
+}
+
+.purple {
+	background: #743da0;
 }
 
 #side-nav {
