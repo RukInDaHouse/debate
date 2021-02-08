@@ -37,18 +37,7 @@ document.addEventListener("DOMContentLoaded",function () {
 
     var routerToUse =new draw2d.layout.connection.InteractiveManhattanConnectionRouter();
     var app  = new example.Application();
-    app.view.installEditPolicy(  new draw2d.policy.connection.DragConnectionCreatePolicy({
-        createConnection: function(){
-            var connection = new draw2d.Connection({
-                stroke:3,
-                outlineStroke:1,
-                outlineColor:"#000000",
-                color:"000000",
-                router:routerToUse
-            });
-            return connection;
-        }
-    }));
+
 
     var reader = new draw2d.io.json.Reader();
     reader.unmarshal(app.view, jsonDocument);
@@ -66,10 +55,11 @@ document.addEventListener("DOMContentLoaded",function () {
    </div>
 
    <div id="side-nav" >
-     <span id="logo">Draw2D</span>
+     <span id="logo">Logo</span>
      <div id="layer_elements"></div>
      <div id="layer_header" class="highlight panetitle blackgradient">
-            <div data-shape="TableShape"   class="palette_node_element draw2d_droppable" title="drag&amp;drop the table into the canvas..">Table</div>
+            <div data-shape="TableShape"   class="palette_node_element draw2d_droppable" title="drag&amp;drop the table into the canvas..">+</div>
+            <div data-shape="TableShapePurple"   class="palette_node_element draw2d_droppable" title="drag&amp;drop the table into the canvas..">+</div>
      </div>
    </div>
 
