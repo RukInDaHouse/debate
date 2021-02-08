@@ -60560,7 +60560,7 @@ _packages2.default.shape.node.Between = _packages2.default.shape.basic.Rectangle
 
   NAME: "draw2d.shape.node.Between",
 
-  DEFAULT_COLOR: new _packages2.default.util.Color("#743da0"),
+  DEFAULT_COLOR: new _packages2.default.util.Color("#4D90FE"),
 
   /**
    *
@@ -60616,7 +60616,7 @@ _packages2.default.shape.node.End = _packages2.default.shape.basic.Rectangle.ext
 
   NAME: "draw2d.shape.node.End",
 
-  DEFAULT_COLOR: new _packages2.default.util.Color("#3f72c3"),
+  DEFAULT_COLOR: new _packages2.default.util.Color("#4D90FE"),
 
   /**
    *
@@ -60630,7 +60630,6 @@ _packages2.default.shape.node.End = _packages2.default.shape.basic.Rectangle.ext
       height: 50
     }, attr), setter, getter);
 
-	this.createPort("output");
     this.createPort("input");
   }
 

@@ -5,33 +5,56 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-   <link type="text/css" rel="stylesheet" href="./css/aristo/jquery-ui-1.8.16.custom.css" />
-   <link type="text/css" rel="stylesheet" href="./css/jquery.layout.css" />
-   <link type="text/css" rel="stylesheet" href="./css/application.css" />
+  <link type="text/css" rel="stylesheet" href="./css/application.css" />
 
-    <script src="./lib/jquery.js"></script>
-    <script src="./lib/jquery-ui.js"></script>
-    <script src="./lib/jquery.browser.js"></script>
-    <script src="./lib/jquery.layout.js"></script>
+  <script src="./lib/jquery.js"></script>
+  <script src="./lib/jquery-ui.js"></script>
+  <script src="./lib/jquery.browser.js"></script>
 
-    <script src="./draw2d.js"></script>
+  <script src="./draw2d.js"></script>
 
-    <script src="./gui/Application.js"></script>
-	  <script src="./gui/View.js"></script>
-    <script src="./gui/Toolbar.js"></script>
-    <script src="./gui/HoverConnection.js"></script>
+    <script src="./app/Application.js"></script>
+    <script src="./app/View.js"></script>
+    <script src="./app/Toolbar.js"></script>
+    <script src="./app/TableShape.js"></script>
 
- <script type="text/javascript">
+    <script src="document.js"></script>
+
+	<style>
+	.draw2d_InputPort{
+	   fill:#F7F7F7;
+	   stroke:#d7d7d7;
+	}
+    .draw2d_OutputPort{
+       fill:#000;
+       stroke:#d7d7d7;
+    }
+	</style>
+<script type="text/javascript">
+
 
 document.addEventListener("DOMContentLoaded",function () {
 
-     var app  = new example.Application();
-     app.view.installEditPolicy(  new draw2d.policy.connection.DragConnectionCreatePolicy({
+    var routerToUse =new draw2d.layout.connection.InteractiveManhattanConnectionRouter();
+    var app  = new example.Application();
+    app.view.installEditPolicy(  new draw2d.policy.connection.DragConnectionCreatePolicy({
         createConnection: function(){
-            return new HoverConnection();
+            var connection = new draw2d.Connection({
+                stroke:3,
+                outlineStroke:1,
+                outlineColor:"#000000",
+                color:"000000",
+                router:routerToUse
+            });
+            return connection;
         }
-      }));
+    }));
+
+    var reader = new draw2d.io.json.Reader();
+    reader.unmarshal(app.view, jsonDocument);
+
 });
+
 
 </script>
 
@@ -39,15 +62,18 @@ document.addEventListener("DOMContentLoaded",function () {
 
 <body id="container">
 
-   <div id="content">
-   		<div id="toolbar"></div>
-   		<div id="canvas" class="" style="width:3000px; height:3000px;"></div>
+   <div id="toolbar" class="navbar-default">
    </div>
 
-   <div id="navigation" class="">
-    	<div data-shape="draw2d.shape.node.End"     class="palette_node_element draw2d_droppable">+</div>
-    	<div data-shape="draw2d.shape.node.Between" class="palette_node_element draw2d_droppable">+</div>
+   <div id="side-nav" >
+     <span id="logo">Draw2D</span>
+     <div id="layer_elements"></div>
+     <div id="layer_header" class="highlight panetitle blackgradient">
+            <div data-shape="TableShape"   class="palette_node_element draw2d_droppable" title="drag&amp;drop the table into the canvas..">Table</div>
+     </div>
    </div>
 
+   <div id="canvas" >
+   </div>
 </body>
 </html>
