@@ -8602,7 +8602,7 @@ _packages2.default.Connection = _packages2.default.shape.basic.PolyLine.extend(
     };
 
     this._super((0, _extend2.default)({
-      color: "#129CE4",
+      color: "#000",
       stroke: 2,
       //    outlineStroke:1,
       //    outlineColor:"#ffffff",
@@ -18434,7 +18434,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @example
  *
- *    // create and add two nodes which contains Ports (In and OUT)
+ *   create and add two nodes which contains Ports (In and OUT)
  *    //
  *    var start = new draw2d.shape.node.Start();
  *    var end   = new draw2d.shape.node.End();

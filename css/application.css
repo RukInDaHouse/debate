@@ -36,19 +36,21 @@ body {
 }
 
 #toolbar {
-	position: absolute;
-	margin: 0px;
-	padding-top: 10px;
-	padding-left: 20px;
-	top: 0px;
-	left: 160px;
-	height: 64px;
-	right: 0px;
-	overflow: hidden !important;
+	border-right: 1px solid #e0e0e0;
+	bottom: 0;
+	background: #fff;
+	color: #333;
+	display: block;
+	font-family: 'RobotoDraft', sans-serif;
+	left: 0;
+	position: fixed;
+	width: 120px;
 	z-index: 1000 !important;
 	border: 0 none;
 	border-bottom: 1px solid #d6d6d6;
-	background-color: #c2185b !important;
+	background-color: transparent !important;
+	display: block;
+	height: 50%;
 }
 
 #toolbar_hint {
@@ -63,8 +65,8 @@ body {
 	border: 1px solid gray;
 	padding: 10px;
 	cursor: move;
-	width: 60px;
-	height: 60px;
+	width: 50px;
+	height: 50px;
 	margin: 30px auto 30px auto;
 	text-align: center;
 	align: center;
@@ -74,6 +76,7 @@ body {
 	align-items: center;
 	justify-content: center;
 }
+
 
 .blue {
 	background: #3f72c3;
@@ -93,7 +96,7 @@ body {
 	left: 0;
 	position: fixed;
 	top: 0;
-	width: 160px;
+	width: 120px;
 	z-index: 4;
 }
 
@@ -107,6 +110,11 @@ body {
 	font-size: 30px;
 	font-weight: 100;
 }
+
+.gray {
+	margin: 30px auto 0px 30px;
+}
+
 
 button.gray,a.gray,input[type=submit].gray {
 	padding: 10px 10px;
@@ -126,17 +134,17 @@ button.gray,a.gray,input[type=submit].gray {
 	background: linear-gradient(top, #f4f4f4 0%, #f1f1f1 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#f4f4f4',
 		endColorstr='#f1f1f1', GradientType=0); /* IE6-9 */
-	color: #555;
 	text-decoration: none;
 	cursor: pointer;
 	display: inline-block;
 	text-align: center;
 	font-weight: bold;
 	font-family: Arial, Helvetica, sans-serif;
-	text-shadow: 0px 1px 1px rgba(255, 255, 255, 1);
 	line-height: 1;
-	font-size: 11px;
-	min-width: 80px;
+	font-size: 20px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
 }
 
 .gray:hover {
@@ -170,7 +178,15 @@ button.gray,a.gray,input[type=submit].gray {
 }
 
 .disabled {
-	cursor: default !important;
-	color: #888 !important;
+	cursor: pointer !important;
 	opacity: 0.8;
+}
+
+.disabled:nth-child(4) {
+	color: #f4f4f4 !important;
+}
+
+.gray:nth-child(4) {
+	background: red;
+	font-size: 20px;
 }
