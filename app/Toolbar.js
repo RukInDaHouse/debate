@@ -19,7 +19,7 @@ example.Toolbar = Class.extend({
 		
 		// Inject the UNDO Button and the callbacks
 		//
-		this.undoButton  = $("<button class='gray'>Undo</button>");
+		this.undoButton  = $("<button class='gray'>&#11178;</button>");
 		this.html.append(this.undoButton);
 		this.undoButton.click($.proxy(function(){
 		       this.view.getCommandStack().undo();
@@ -27,7 +27,7 @@ example.Toolbar = Class.extend({
 
 		// Inject the REDO Button and the callback
 		//
-		this.redoButton  = $("<button class='gray'>Redo</button>");
+		this.redoButton  = $("<button class='gray'>&#11179;</button>");
 		this.html.append(this.redoButton);
 		this.redoButton.click($.proxy(function(){
 		    this.view.getCommandStack().redo();
@@ -38,7 +38,7 @@ example.Toolbar = Class.extend({
 
 		// Inject the DELETE Button
 		//
-		this.deleteButton  = $("<button class='gray'>Delete</button>");
+		this.deleteButton  = $("<button class='gray'>&#215;</button>");
 		this.html.append(this.deleteButton);
 		this.deleteButton.click($.proxy(function(){
 			var node = this.view.getPrimarySelection();
@@ -50,7 +50,31 @@ example.Toolbar = Class.extend({
         this.disableButton(this.redoButton, true);
         this.disableButton(this.deleteButton, true);
 
-        this.html.append($("<div id='toolbar_hint'>Use the contextmenu on table entities for extended features..</div>"));
+				this.zoomInButton  = $("<button class='gray'>+</button>");
+		this.html.append(this.zoomInButton);
+		this.zoomInButton.button().click($.proxy(function(){
+		      this.view.setZoom(this.view.getZoom()*0.7,true);
+		      this.app.layout();
+		},this));
+
+		// Inject the DELETE Button
+		//
+		this.resetButton  = $("<button class='gray'>=</button>");
+		this.html.append(this.resetButton);
+		this.resetButton.button().click($.proxy(function(){
+		    this.view.setZoom(1.0, true);
+            this.app.layout();
+		},this));
+		
+		// Inject the REDO Button and the callback
+		//
+		this.zoomOutButton  = $("<button class='gray'>-</button>");
+		this.html.append(this.zoomOutButton);
+		this.zoomOutButton.button().click($.proxy(function(){
+            this.view.setZoom(this.view.getZoom()*1.3, true);
+            this.app.layout();
+		},this));
+
     },
 
 	/**
