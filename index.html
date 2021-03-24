@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <title>Аргументация</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="vendors/jquery.js" charset="utf-8"></script>
+  <script type="text/javascript" src="vendors/tinybox.js" charset="utf-8"></script>
+</head>
+<body onload="init()">
+
+  <div class="slide" id="diagram">
+    <div id="infoControls" oncontextmenu="return false"></div>  
+    <div onmousedown="return false" id="blockControls" oncontextmenu="return false" ></div>
+    <div onmousedown="return false" id="constraintControls" oncontextmenu="return false" ></div>
+    <div onmousedown="return false" id="operationControls" oncontextmenu="return false" ></div>
+    <div onmousedown="return false" id="partControls" oncontextmenu="return false" ></div>
+    <div onmousedown="return false" id="referenceControls" oncontextmenu="return false" ></div>
+    <div onmousedown="return false" id="valueControls" oncontextmenu="return false" ></div>
+    <div onmousedown="return false" id="propertyControls" oncontextmenu="return false" ></div>
+    <div id="connectionControls" oncontextmenu="return false"></div>
+
+    <h2>Схема аргуметации</h2>
+
+    <p class="upper__panel" id="control">
+      <button onclick="clickAddNewBlock()" class="aui-button panel__button blue">+</button>
+      <button onclick="clickAddNewPurpleBlock()" class="aui-button panel__button purple">+</button>
+      <button onclick="clickAddNewWhiteBlock()" class="aui-button panel__button white">+</button>
+      <button onclick="loadModelRepoWithTestData()" class="aui-button panel__button white">E</button>
+      <button class="aui-button panel__button white" id="zoomInButton">+</button>
+      <button class="aui-button panel__button white" id="zoomOut">-</button>
+    </p>
+    <div id="container" class="container">
+      <canvas id="glass" height="1300" width="2500" ></canvas>
+      <canvas id="top" height="1300" width="2500"></canvas>
+      <canvas id="middle" height="1300" width="2500"></canvas>
+      <canvas id="bottom" height="1300" width="2500"></canvas>
+    </div>
+  </div>
+    <script type="text/javascript" src="js/config.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/listener.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/ui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/ui_indp.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/model.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/view_conn.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/view_func.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/view_paintcycle.js" charset="utf-8"></script>
+  </body>
+</html>
