@@ -22,10 +22,31 @@ function build_model_tree(blockName) {
 
 var zoom = 1;
 var zoomStep = 0.2;
-document.getElementById("zoomInButton").addEventListener("click", function() {
-	document.getElementsByClassName("container")[0].style.transform = "scale(" + zoom + ")";
+
+document.getElementById("red__background").addEventListener("click", function() {
+	document.getElementsByTagName("body")[0].style.background = "#B22222";
 });
 
+document.getElementById("blue__background").addEventListener("click", function() {
+	document.getElementsByTagName("body")[0].style.background = "#1e5799";
+	CONFIG_grid_color = '#000';
+});
+
+document.getElementById("green__background").addEventListener("click", function() {
+	document.getElementsByTagName("body")[0].style.background = "#2ea125";
+});
+
+document.getElementById("black__background").addEventListener("click", function() {
+	document.getElementsByTagName("body")[0].style.background = "#010101";
+});
+
+document.getElementById("white__background").addEventListener("click", function() {
+	document.getElementsByTagName("body")[0].style.background = "#ECEFF1";
+});
+
+document.getElementById("purple__background").addEventListener("click", function() {
+	document.getElementsByTagName("body")[0].style.background = "purple";
+});
 
 document.getElementById("zoomIn").addEventListener("click", function() {
     zoom += zoomStep;
@@ -40,8 +61,8 @@ document.getElementById("zoomOut").addEventListener("click", function() {
 });
 
 function clickAddNewBlock() {
-	newModel_startX = 0;
-	CONFIG_block_color = '#3f72c3'; 
+	newModel_startX = 1100;
+	CONFIG_block_color = '#743da0'; 
 	CONFIG_block_font_color = '#FFF';
 	CONFIG_block_stroke_color = '#FFF';
 	CONFIG_focus_stroke_color = '#FFF'; 
@@ -52,14 +73,71 @@ function clickAddNewBlock() {
 	var width = 0; 
 	var height = 0;
 	newModel_startX = newModel_startX;
-	newModel_startY = newModel_startY + 200;
-	var theBlock = addSimpleBox( newModel_startX, newModel_startY , width, height);
+	newModel_startBlueY = newModel_startBlueY + 200;
+	var theBlock = addSimpleBox( newModel_startX, newModel_startBlueY , width, height);
+	invalidate();
+  clearContextSensitiveIcons(); 
+}
+
+function clickAddNewBlueBlockSecond() {
+	newModel_startX = 700;
+	CONFIG_block_color = '#3f72c3';
+	CONFIG_block_font_color = '#FFF';
+	CONFIG_block_stroke_color = '#FFF';
+	CONFIG_focus_stroke_color = '#FFF'; 
+	CONFIG_block_part_header_font_color = '#FFF';
+	CONFIG_block_name_font_color = '#FFF';
+	CONFIG_stereotype_font_color = '#FFF';  
+	mySel = null;
+	var width = 0; 
+	var height = 0;
+	newModel_startX = newModel_startX;
+	newModel_startBlueSecondY = newModel_startBlueSecondY + 200;
+	var theBlock = addSimpleBox( newModel_startX, newModel_startBlueSecondY , width, height);
+	invalidate();
+  clearContextSensitiveIcons(); 
+}
+
+function clickAddNewPurpleBlockSecond() {
+	newModel_startX = 400;
+	CONFIG_block_color = '#3f72c3';
+	CONFIG_block_font_color = '#FFF';
+	CONFIG_block_stroke_color = '#FFF';
+	CONFIG_focus_stroke_color = '#FFF'; 
+	CONFIG_block_part_header_font_color = '#FFF';
+	CONFIG_block_name_font_color = '#FFF';
+	CONFIG_stereotype_font_color = '#FFF';  
+	mySel = null;
+	var width = 0; 
+	var height = 0;
+	newModel_startX = newModel_startX;
+	newModel_startPurpleSecondY = newModel_startPurpleSecondY + 200;
+	var theBlock = addSimpleBox( newModel_startX, newModel_startPurpleSecondY , width, height);
+	invalidate();
+  clearContextSensitiveIcons(); 
+}
+
+function clickAddNewPurpleBlockThird() {
+	newModel_startX = 100;
+	CONFIG_block_color = '#3f72c3';
+	CONFIG_block_font_color = '#FFF';
+	CONFIG_block_stroke_color = '#FFF';
+	CONFIG_focus_stroke_color = '#FFF'; 
+	CONFIG_block_part_header_font_color = '#FFF';
+	CONFIG_block_name_font_color = '#FFF';
+	CONFIG_stereotype_font_color = '#FFF';  
+	mySel = null;
+	var width = 0; 
+	var height = 0;
+	newModel_startX = newModel_startX;
+	newModel_startPurpleThirdY = newModel_startPurpleThirdY + 200;
+	var theBlock = addSimpleBox( newModel_startX, newModel_startPurpleThirdY , width, height);
 	invalidate();
   clearContextSensitiveIcons(); 
 }
 
 function clickAddNewPurpleBlock() {
-	newModel_startX = 0;
+	newModel_startX = 1400;
 	CONFIG_block_color = '#743da0';
 	CONFIG_block_font_color = '#FFF';
 	CONFIG_block_stroke_color = '#FFF';
@@ -71,8 +149,27 @@ function clickAddNewPurpleBlock() {
 	var width = 0; 
 	var height = 0;
 	newModel_startX = newModel_startX;
-	newModel_startY = newModel_startY + 200;
-	var theBlock = addSimpleBox( newModel_startX, newModel_startY , width, height);
+	newModel_startPurpleY=newModel_startPurpleY + 200;
+	var theBlock = addSimpleBox( newModel_startX, newModel_startPurpleY , width, height);
+	invalidate();
+  clearContextSensitiveIcons(); 
+}
+
+function clickAddNewBlueBlockThird() {
+	newModel_startX = 1700;
+	CONFIG_block_color = '#743da0';
+	CONFIG_block_font_color = '#FFF';
+	CONFIG_block_stroke_color = '#FFF';
+	CONFIG_focus_stroke_color = '#FFF'; 
+	CONFIG_block_part_header_font_color = '#FFF';
+	CONFIG_block_name_font_color = '#FFF';
+	CONFIG_stereotype_font_color = '#FFF';  
+	mySel = null;
+	var width = 0; 
+	var height = 0;
+	newModel_startX = newModel_startX;
+	newModel_startBlueThirdY = newModel_startBlueThirdY + 200;
+	var theBlock = addSimpleBox( newModel_startX, newModel_startBlueThirdY , width, height);
 	invalidate();
   clearContextSensitiveIcons(); 
 }

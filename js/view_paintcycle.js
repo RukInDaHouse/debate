@@ -23,6 +23,13 @@ window.requestAnimFrame = (function(){  // <----- New code
 
 var newModel_startX  = 300;
 var newModel_startY = 50;
+var newModel_startPurpleY = 50;
+var newModel_startBlueY = 50;
+var newModel_startBlueSecondY = 50;
+var newModel_startPurpleSecondY = 50;
+var newModel_startPurpleThirdY = 50;
+var newModel_startBlueThirdY = 50;
+
 
 var animate_start = false;
 var global_connection_guide_canvas;
@@ -813,7 +820,7 @@ function drawBlock(theCtx, theBox) {
 				theCtx.font = CONFIG_block_part_header_font;
 				theCtx.textAlign = 'center';
 				var ctext = '';
-				if( theBox.constraints_visible == true ) ctext = 'constraints';
+				if( theBox.constraints_visible == true ) ctext = 'Текст';
 				else ctext = 'constraints ... (' + theBox.constraints.length + ')';
 				high_space = high_space + 15; 
 				theCtx.fillStyle = CONFIG_block_part_header_font_color;
@@ -873,7 +880,7 @@ function drawBlock(theCtx, theBox) {
 				theCtx.font = CONFIG_block_part_header_font;
 				theCtx.textAlign = 'center';
 				var optext = '';
-				if( theBox.operations_visible == true ) optext = 'operations';
+				if( theBox.operations_visible == true ) optext = 'Текст';
 				else optext = 'operations ... (' + _numberOfOperations + ')';
 
 				high_space = high_space + 15;
@@ -931,7 +938,7 @@ function drawBlock(theCtx, theBox) {
 				theCtx.font = CONFIG_block_part_header_font;
 				theCtx.textAlign = 'center';
 				var optext = '';
-				if( theBox.parts_visible == true ) optext = 'parts';
+				if( theBox.parts_visible == true ) optext = 'Текст';
 				else optext = 'parts ... (' + _numberOfParts + ')';
 				high_space = high_space + 15;
 				theCtx.fillStyle = CONFIG_block_part_header_font_color;
@@ -989,7 +996,7 @@ function drawBlock(theCtx, theBox) {
 				theCtx.font = CONFIG_block_part_header_font;
 				theCtx.textAlign = 'center';
 				var optext = '';
-				if( theBox.references_visible == true ) optext = 'references';
+				if( theBox.references_visible == true ) optext = 'Ссылка на источник';
 				else optext = 'references ... (' + _numberOfReferences + ')';
 				high_space = high_space + 15;
 				theCtx.fillStyle = CONFIG_block_part_header_font_color;
@@ -1047,7 +1054,7 @@ function drawBlock(theCtx, theBox) {
 				theCtx.font = CONFIG_block_part_header_font;
 				theCtx.textAlign = 'center';
 				var optext = '';
-				if( theBox.values_visible == true ) optext = 'values';
+				if( theBox.values_visible == true ) optext = 'Текст';
 				else optext = 'values ... (' + _numberOfValues + ')';
 
 				high_space = high_space + 15;
@@ -1108,7 +1115,7 @@ function drawBlock(theCtx, theBox) {
 				theCtx.font = CONFIG_block_part_header_font;
 				theCtx.textAlign = 'center';
 				var optext = '';
-				if( theBox.properties_visible == true ) optext = 'properties';
+				if( theBox.properties_visible == true ) optext = 'Текст';
 				else optext = 'properties ... (' + _numberOfProperties + ')';
 
 				high_space = high_space + 15;
