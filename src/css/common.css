@@ -164,3 +164,14 @@ td.mxPopupMenuIcon {
 	opacity: 0.2 !important;
 	cursor:default !important;
 }
+
+footer {
+	position: fixed;
+	background:#000066;
+	width: 100%;
+	height: 100px;
+	bottom: 0;
+	left: 0;
+	padding: 0;
+	margin: 0;
+}
