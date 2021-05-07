@@ -37,7 +37,7 @@
 				};
 				
 				var graph = new mxGraph(container);
-				var deleteImage = new mxImage('editors/images/overlays/forbidden.png', 16, 16);
+				var deleteImage = new mxImage('editors/images/overlays/forbidden.png', 24, 24);
 
 				mxCellRendererCreateControl = mxCellRenderer.prototype.createControl;
 				mxCellRenderer.prototype.createControl = function(state)
@@ -181,7 +181,30 @@
 					graph.addCellOverlay(cell, overlay);
 				}
 
-				
+							// Undo/redo
+			var undoManager = new mxUndoManager();
+			var listener = function(sender, evt)
+			{
+				undoManager.undoableEditHappened(evt.getProperty('edit'));
+			};
+			graph.getModel().addListener(mxEvent.UNDO, listener);
+			graph.getView().addListener(mxEvent.UNDO, listener);
+			
+			document.body.appendChild(mxUtils.button('Undo', function()
+			{
+				undoManager.undo();
+			}));
+			
+			document.body.appendChild(mxUtils.button('Redo', function()
+			{
+				undoManager.redo();
+			}));
+
+			// Shows XML for debugging the actual model
+			document.body.appendChild(mxUtils.button('Delete', function()
+			{
+				graph.removeCells();
+			}));
 								
 				// Adds cells to the model in a single step
 				graph.getModel().beginUpdate();
