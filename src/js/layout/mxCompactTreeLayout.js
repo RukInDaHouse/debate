@@ -1,26 +1,3 @@
-/**
- * Copyright (c) 2006-2018, JGraph Ltd
- * Copyright (c) 2006-2018, Gaudenz Alder
- */
-/**
- * Class: mxCompactTreeLayout
- * 
- * Extends <mxGraphLayout> to implement a compact tree (Moen) algorithm. This
- * layout is suitable for graphs that have no cycles (trees). Vertices that are
- * not connected to the tree will be ignored by this layout.
- * 
- * Example:
- * 
- * (code)
- * var layout = new mxCompactTreeLayout(graph);
- * layout.execute(graph.getDefaultParent());
- * (end)
- * 
- * Constructor: mxCompactTreeLayout
- * 
- * Constructs a new compact tree layout for the specified graph
- * and orientation.
- */
 function mxCompactTreeLayout(graph, horizontal, invert)
 {
 	mxGraphLayout.call(this, graph);
