@@ -597,7 +597,28 @@ mxCompactTreeLayout.prototype.layout = function(node)
 		}
 	}
 };
-
+mxCompactTreeLayout.prototype.layoutRight = function(node)
+{
+	if (node != null)
+	{
+		var child = node.child;
+		
+		while (child != null)
+		{
+			this.layout(child);
+			child = child.next;
+		}
+		
+		if (node.child != null)
+		{
+			this.attachParentRight(node, this.join(node));
+		}
+		else
+		{
+			this.layoutLeaf(node);
+		}
+	}
+};
 /**
  * Function: horizontalLayout
  */
@@ -655,6 +676,21 @@ mxCompactTreeLayout.prototype.verticalLayout = function(node, parent, x0, y0, bo
 /**
  * Function: attachParent
  */
+mxCompactTreeLayout.prototype.attachParentRight = function(node, height)
+{
+	var x = this.nodeDistance + this.levelDistance;
+	var y2 = (height - node.width) / 2 - this.nodeDistance;
+	var y1 = y2 + node.width + 2 * this.nodeDistance - height;
+	
+	node.child.offsetX = -(x + node.height);
+	node.child.offsetY = y1;
+	
+	node.contour.upperHead = this.createLine(node.height, 0,
+		this.createLine(x, y1, node.contour.upperHead));
+	node.contour.lowerHead = this.createLine(node.height, 0,
+		this.createLine(x, y2, node.contour.lowerHead));
+};
+
 mxCompactTreeLayout.prototype.attachParent = function(node, height)
 {
 	var x = this.nodeDistance + this.levelDistance;

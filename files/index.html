@@ -1,13 +1,9 @@
 <html>
 <head>
-	<title>Orgchart example for mxGraph</title>
-
-	<!-- Sets the basepath for the library if not in same directory -->
+	<title>Дебаты</title>
 	<script type="text/javascript">
 		mxBasePath = '../src';
 	</script>
-
-	<!-- Loads and initializes the library -->
 	<script type="text/javascript" src="../src/js/mxClient.js"></script>
 
 	<!-- Example code -->
@@ -335,9 +331,9 @@ function createPopupMenu(graph, menu, cell, evt)
 function addOverlays(graph, cell, addDeleteIcon)
 {
 	var overlay = new mxCellOverlay(new mxImage('images/add.png', 24, 24), 'Add child');
-	overlay.cursor = 'hand';
-	overlay.align = mxConstants.ALIGN_RIGHT;
-	overlay.addListener(mxEvent.CLICK, mxUtils.bind(this, function(sender, evt)
+		overlay.cursor = 'hand';
+		overlay.align = mxConstants.ALIGN_RIGHT;
+		overlay.addListener(mxEvent.CLICK, mxUtils.bind(this, function(sender, evt)
 	{
 		addChild(graph, cell);
 	}));
@@ -357,6 +353,18 @@ function addOverlays(graph, cell, addDeleteIcon)
 		}));
 	
 		graph.addCellOverlay(cell, overlay);
+	}
+
+	else{
+		var overlay = new mxCellOverlay(new mxImage('images/add.png', 24, 24), 'Add child');
+		overlay.cursor = 'hand';
+		overlay.align = mxConstants.ALIGN_LEFT;
+		overlay.addListener(mxEvent.CLICK, mxUtils.bind(this, function(sender, evt)
+	{
+		addChild(graph, cell);
+	}));
+	
+	graph.addCellOverlay(cell, overlay);
 	}
 };
 
@@ -419,7 +427,6 @@ function deleteSubtree(graph, cell)
 <!-- Calls the main function after the page has loaded. Container is dynamically created. -->
 <body onload="main();">
 
-	<!-- Creates a container for the outline -->
 	<div id="outlineContainer"
 		style="z-index:1;position:absolute;overflow:hidden;top:0px;right:0px;width:160px;height:120px;background:transparent;border-style:solid;border-color:lightgray;">
 	</div>
