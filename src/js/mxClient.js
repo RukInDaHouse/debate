@@ -772,26 +772,5 @@ if (mxForceIncludes || !(typeof module === 'object' && module.exports != null))
 	mxClient.include('../src/js/handler/mxTooltipHandler.js');
 	mxClient.include('../src/js/handler/mxCellTracker.js');
 	mxClient.include('../src/js/handler/mxCellHighlight.js');
-	mxClient.include('../src/js/editor/mxDefaultKeyHandler.js');
-	mxClient.include('../src/js/editor/mxDefaultPopupMenu.js');
-	mxClient.include('../src/js/editor/mxDefaultToolbar.js');
-	mxClient.include('../src/js/editor/mxEditor.js');
-	mxClient.include('../src/js/io/mxCodecRegistry.js');
-	mxClient.include('../src/js/io/mxCodec.js');
-	mxClient.include('../src/js/io/mxObjectCodec.js');
-	mxClient.include('../src/js/io/mxCellCodec.js');
-	mxClient.include('../src/js/io/mxModelCodec.js');
-	mxClient.include('../src/js/io/mxRootChangeCodec.js');
-	mxClient.include('../src/js/io/mxChildChangeCodec.js');
-	mxClient.include('../src/js/io/mxTerminalChangeCodec.js');
-	mxClient.include('../src/js/io/mxGenericChangeCodec.js');
-	mxClient.include('../src/js/io/mxGraphCodec.js');
-	mxClient.include('../src/js/io/mxGraphViewCodec.js');
-	mxClient.include('../src/js/io/mxStylesheetCodec.js');
-	mxClient.include('../src/js/io/mxDefaultKeyHandlerCodec.js');
-	mxClient.include('../src/js/io/mxDefaultToolbarCodec.js');
-	mxClient.include('../src/js/io/mxDefaultPopupMenuCodec.js');
-	mxClient.include('../src/js/io/mxEditorCodec.js');
-// PREPROCESSOR-REMOVE-START
 }
 // PREPROCESSOR-REMOVE-END

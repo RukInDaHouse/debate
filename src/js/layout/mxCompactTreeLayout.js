@@ -597,7 +597,7 @@ mxCompactTreeLayout.prototype.layout = function(node)
 		}
 	}
 };
-mxCompactTreeLayout.prototype.layoutRight = function(node)
+mxCompactTreeLayout.prototype.layout = function(node)
 {
 	if (node != null)
 	{
