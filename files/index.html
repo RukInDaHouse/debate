@@ -211,7 +211,9 @@
 					var v1 = graph.insertVertex(parent, 'treeRoot',
 						'Утверждение', w/2 - 30, 20, 140, 60);
 					graph.updateCellSize(v1);
+					addOverlaysToLeftSide(graph, v1, false);
 					addOverlays(graph, v1, false);
+
 				}
 				finally
 				{
@@ -332,6 +334,34 @@ function addOverlays(graph, cell, addDeleteIcon)
 	}
 };
 
+function addOverlaysToLeftSide(graph, cell, addDeleteIcon)
+{
+	var overlay = new mxCellOverlay(new mxImage('images/add.png', 24, 24), 'Добавить блок');
+		overlay.cursor = 'hand';
+		overlay.align = mxConstants.ALIGN_LEFT;
+		overlay.addListener(mxEvent.CLICK, mxUtils.bind(this, function(sender, evt)
+	{
+		addChildToLeftSide(graph, cell);
+	}));
+	
+	graph.addCellOverlay(cell, overlay);
+
+	if (addDeleteIcon)
+	{
+		overlay = new mxCellOverlay(new mxImage('images/close.png', 30, 30), 'Удалить');
+		overlay.cursor = 'hand';
+		overlay.offset = new mxPoint(-4, 8);
+		overlay.align = mxConstants.ALIGN_RIGHT;
+		overlay.verticalAlign = mxConstants.ALIGN_TOP;
+		overlay.addListener(mxEvent.CLICK, mxUtils.bind(this, function(sender, evt)
+		{
+			deleteSubtree(graph, cell);
+		}));
+	
+		graph.addCellOverlay(cell, overlay);
+	}
+};
+
 function addChild(graph, cell)
 {
 	var model = graph.getModel();
@@ -363,6 +393,48 @@ function addChild(graph, cell)
 		edge.geometry.offset = new mxPoint(0, -20);
 
 		addOverlays(graph, vertex, true);
+
+	}
+	finally
+	{
+		model.endUpdate();
+	}
+	
+	return vertex;
+};
+
+function addChildToLeftSide(graph, cell)
+{
+	var model = graph.getModel();
+	var parent = graph.getDefaultParent();
+	var vertex;
+
+	model.beginUpdate();
+	try
+	{
+		vertex = graph.insertVertex(parent, null, 'Доказательство');
+		var geometry = model.getGeometry(vertex);
+
+		// Updates the geometry of the vertex with the
+		// preferred size computed in the graph
+		var size = graph.getPreferredSizeForCell(vertex);
+		geometry.width = size.width;
+		geometry.height = size.height;
+
+		// Adds the edge between the existing cell
+		// and the new vertex and executes the
+		// automatic layout on the parent
+		var edge = graph.insertEdge(parent, null, '', cell, vertex);
+
+		// Configures the edge label "in-place" to reside
+		// at the end of the edge (x = 1) and with an offset
+		// of 20 pixels in negative, vertical direction.
+		edge.geometry.x = 1;
+		edge.geometry.y = 0;
+		edge.geometry.offset = new mxPoint(0, -20);
+
+		addOverlaysToLeftSide(graph, vertex, true);
+
 	}
 	finally
 	{

@@ -461,21 +461,7 @@ mxCompactTreeLayout.prototype.sortOutgoingEdges = function(source, edges)
  * Stores the maximum height (relative to the layout
  * direction) of cells in each rank
  */
-mxCompactTreeLayout.prototype.findRankHeights = function(node, rank)
-{
-	if (this.maxRankHeight[rank] == null || this.maxRankHeight[rank] < node.height)
-	{
-		this.maxRankHeight[rank] = node.height;
-	}
 
-	var child = node.child;
-	
-	while (child != null)
-	{
-		this.findRankHeights(child, rank + 1);
-		child = child.next;
-	}
-};
 
 /**
  * Function: setCellHeights
@@ -597,7 +583,7 @@ mxCompactTreeLayout.prototype.layout = function(node)
 		}
 	}
 };
-mxCompactTreeLayout.prototype.layout = function(node)
+mxCompactTreeLayout.prototype.layoutRight = function(node)
 {
 	if (node != null)
 	{
