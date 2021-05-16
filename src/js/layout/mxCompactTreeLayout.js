@@ -321,7 +321,7 @@ mxCompactTreeLayout.prototype.execute = function(parent, root)
 			
 			if (this.node != null)
 			{
-				this.layout(this.node);
+				this.layoutRight(this.node);
 				var x0 = this.graph.gridSize;
 				var y0 = x0;
 				
@@ -591,7 +591,7 @@ mxCompactTreeLayout.prototype.layoutRight = function(node)
 		
 		while (child != null)
 		{
-			this.layout(child);
+			this.layoutRight(child);
 			child = child.next;
 		}
 		
@@ -667,8 +667,9 @@ mxCompactTreeLayout.prototype.attachParentRight = function(node, height)
 	var x = this.nodeDistance + this.levelDistance;
 	var y2 = (height - node.width) / 2 - this.nodeDistance;
 	var y1 = y2 + node.width + 2 * this.nodeDistance - height;
+	var direction = -1;
 	
-	node.child.offsetX = -(x + node.height);
+	node.child.offsetX = (direction) * (x + node.height);
 	node.child.offsetY = y1;
 	
 	node.contour.upperHead = this.createLine(node.height, 0,
