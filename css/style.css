@@ -183,6 +183,14 @@ a {
 	text-decoration: inherit;
 }
 
+.text__panel {
+	height: 300px;
+}
+
+.rotate {
+	transform: rotate(180deg);
+}
+
 button,input,optgroup,select,textarea {
 	padding: 0;
 	line-height: inherit;
@@ -1314,10 +1322,13 @@ canvas:focus {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	width: 100%;
+	width: 100vw;
 	z-index: 9999999;
 	background: #000;
 	transition: 3s;
+}
+.active__panel {
+	transform: translateY(300px);
 }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
@@ -1338,7 +1349,7 @@ h1 {
 
 .main-wrapper {
 		border-radius: 4px;
-		background-color: white;
+		background-color: #1a1a1a;
 		padding: 20px;
 		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 		position: relative;
@@ -1353,10 +1364,13 @@ i.material-icons {
 		margin: 3px;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 		transition: color 0.2s ease, background-color 0.2s ease, transform 0.3s ease;
+		border: 3px solid#738595;
 }
 
 i.material-icons svg {
 	width: 30px;
+	padding: auto;
+	
 }
 
 i.material-icons:after {
@@ -1378,20 +1392,21 @@ i.material-icons:hover:after {
 }
 
 i.material-icons {
-		background-color: #cd8484;
+	background: rgb(2,0,36);
+	background: linear-gradient(159deg, rgba(2,0,36,1) 0%, rgba(0,5,103,1) 41%, rgba(0,212,255,1) 100%);
 }
 
 i.material-icons:hover {
 		color: #cd8484;
+		transform: scale(1.2);
 }
 
 i.material-icons:after {
-		border-color: #cd8484;
+		border-color: transparent;
 }
 
 i.material-icons:hover {
 		background-color: transparent;
-		transform: rotate(360deg);
 		cursor: pointer;
 		box-shadow: none;
 }
