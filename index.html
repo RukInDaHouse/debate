@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
@@ -20,7 +19,7 @@
         <script src="./js/DoubleTreeLayout.js"></script>
           <script id="code">
           function init() {
-            var $ = go.GraphObject.make;  // for conciseness in defining templates in this function
+            var $ = go.GraphObject.make;
       
             myDiagram =
               $(go.Diagram, "myDiagramDiv",
@@ -43,26 +42,28 @@
                           layerSpacing: 50 
                         },
                     })
-                });
+                }
+              );
 
-                myDiagram.addDiagramListener("Modified", function(e) {
-                  var button = document.getElementById("SaveButton");
-                  if (button) button.disabled = !myDiagram.isModified;
-                  var idx = document.title.indexOf("*");
-                  if (myDiagram.isModified) 
+            myDiagram.addDiagramListener("Modified", function(e) {
+              var button = document.getElementById("SaveButton");
+              if (button) button.disabled = !myDiagram.isModified;
+                var idx = document.title.indexOf("*");
+                if (myDiagram.isModified) 
                   {
                     if (idx < 0) document.title += "*";
                   } 
-                  else 
+                else 
                   {
                     if (idx >= 0) document.title = document.title.substr(0, idx);
                   }
-                });
+              }
+            );
       
-                var graygrad = $(go.Brush, "Linear", { 0: "#F5F5F5", 1: "#F1F1F1" });
-                var bluegrad = $(go.Brush, "Linear", { 0: "#CDDAF0", 1: "#91ADDD" });
-                var yellowgrad = $(go.Brush, "Linear", { 0: "#FEC901", 1: "#FEA200" });
-                var lavgrad = $(go.Brush, "Linear", { 0: "#EF9EFA", 1: "#A570AD" });
+            var graygrad = $(go.Brush, "Linear", { 0: "#F5F5F5", 1: "#F1F1F1" });
+            var bluegrad = $(go.Brush, "Linear", { 0: "#CDDAF0", 1: "#91ADDD" });
+            var yellowgrad = $(go.Brush, "Linear", { 0: "#FEC901", 1: "#FEA200" });
+            var lavgrad = $(go.Brush, "Linear", { 0: "#EF9EFA", 1: "#A570AD" });
       
             myDiagram.nodeTemplate =
               $(go.Node, "Auto",
@@ -72,19 +73,22 @@
                   locationObjectName: "BODY" 
                 },
               new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-                // define the node's outer shape
+              
               $(go.Shape, "RoundedRectangle",
                 { 
                   fill: graygrad, 
                   stroke: "gray", 
                   minSize: new go.Size(120, 21) 
                 },
-              new go.Binding("fill", "isSelected", function(s) { return s ? "dodgerblue" : graygrad; }).ofObject()),
-                // define the node's text
+              new go.Binding("fill", "isSelected", function(s) 
+                { 
+                  return s ? "dodgerblue" : graygrad; 
+                }).ofObject()),
+
               $(go.TextBlock,
                 {
-                  stroke: "red", 
-                  font: "12px sans-serif", 
+                  stroke: "black", 
+                  font: "15px sans-serif", 
                   editable: true,
                   margin: new go.Margin(30, 30, 30, 30), 
                   alignment: go.Spot.Left
@@ -117,28 +121,14 @@
                 })
               ),
 
-          // input port
               $(go.Panel, "Auto",
                 { 
                   alignment: go.Spot.Left, 
                   portId: "to", 
                   toLinkable: true 
                 },
-              $(go.Shape, "Circle",
-                { 
-                  width: 8, 
-                  height: 8, 
-                  fill: "white", 
-                  stroke: "gray" 
-                }),
-              $(go.Shape, "Circle",
-                { 
-                  width: 4, 
-                  height: 4, 
-                  fill: "dodgerblue", 
-                  stroke: null })
               )
-          );
+            );
 
 
               myDiagram.nodeTemplate.contextMenu =
@@ -180,22 +170,27 @@
                     locationObjectName: "BODY" 
                   },
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-          // the main body consists of a Rectangle surrounding the text
                 $(go.Panel, "Auto",
                   { 
                     name: "BODY" 
                   },
-                $(go.Shape, "Rectangle",
+                $(go.Shape, "RoundedRectangle",
                   { 
                     fill: graygrad, 
                     stroke: "gray", 
                     minSize: new go.Size(20, 21) 
                   },
-                new go.Binding("fill", "isSelected", function(s) { return s ? "dodgerblue" : graygrad; }).ofObject()),
+                new go.Binding("fill", "isSelected", function(s) 
+                  { 
+                    return s ? "dodgerblue" : graygrad; 
+                  }).ofObject()),
                 $(go.TextBlock,
                   {
-                    stroke: "black", font: "12px sans-serif", editable: true,
-                    margin: new go.Margin(30, 30, 30, 30), alignment: go.Spot.Left
+                    stroke: "black", 
+                    font: "12px sans-serif", 
+                    editable: true,
+                    margin: new go.Margin(30, 30, 30, 30), 
+                    alignment: go.Spot.Left
                   },
                   new go.Binding("text", "text"))
               ),
@@ -210,10 +205,10 @@
                 },
                 $(go.Shape, "Circle",
                   { 
-                    width: 22,
-                    height: 22, 
-                    fill: "red", 
-                    stroke: "dodgerblue", 
+                    width: 25,
+                    height: 25, 
+                    fill: "purple", 
+                    stroke: "purple", 
                     strokeWidth: 3 
                   }),
                 $(go.Shape, "PlusLine",
@@ -221,8 +216,8 @@
                     width: 11, 
                     height: 11, 
                     fill: null, 
-                    stroke: "dodgerblue", 
-                    strokeWidth: 3 
+                    stroke: "white", 
+                    strokeWidth: 2 
                   })
               ),
 
@@ -235,9 +230,9 @@
                 },
                 $(go.Shape, "Circle",
                   { 
-                    width: 22, 
-                    height: 22, 
-                    fill: "white", 
+                    width: 25, 
+                    height: 25, 
+                    fill: "dodgerblue", 
                     stroke: "dodgerblue", 
                     strokeWidth: 3 
                   }),
@@ -246,8 +241,8 @@
                     width: 11, 
                     height: 11, 
                     fill: null, 
-                    stroke: "dodgerblue", 
-                    strokeWidth: 3 
+                    stroke: "white", 
+                    strokeWidth: 2 
                   })
               )
             ));
@@ -263,73 +258,59 @@
             myDiagram.model = new go.TreeModel([
               { 
                 key: "Root", 
-                color: lavgrad 
+                color: lavgrad,
+                text: "Аргумент"
               }
             ]);
 
         function addNodeAndLink(e, obj) {
           var fromNode = obj.part;
           var diagram = fromNode.diagram;
-          diagram.startTransaction("Add State");
-          // get the node data for which the user clicked the button
+              diagram.startTransaction("Добавить");
           var fromData = fromNode.data;
-          // create a new "State" data object, positioned off to the right of the fromNode
-          var p = fromNode.location.copy();
           var toData = {
-            dir: "left", 
+            dir: "right",
+            text: "Аргумент",
             color: bluegrad 
           };
-          // add the new node data to the model
           var model = diagram.model;
           model.addNodeData(toData);
-          // create a link data from the old node data to the new node data
+
           var linkdata = {
             from: model.getKeyForNodeData(fromData),
             to: model.getKeyForNodeData(toData)
           };
-          // and add the link data to the model
           model.addLinkData(linkdata);
-          // select the new Node
           var newnode = diagram.findNodeForData(toData);
           diagram.select(newnode);
-          // snap the new node to a valid location
-          newnode.location = diagram.toolManager.draggingTool.computeMove(newnode, p);
-          // then account for any overlap
           shiftNodesToEmptySpaces();
-          diagram.commitTransaction("Add State");
+          diagram.commitTransaction("Добавить");
       }
 
       function addNodeAndLinkLeft(e, obj) {
-        var fromNode = obj.part;
-        var diagram = fromNode.diagram;
-        diagram.startTransaction("Add State");
-        // get the node data for which the user clicked the button
-        var fromData = fromNode.data;
-        // create a new "State" data object, positioned off to the right of the fromNode
-        var p = fromNode.location.copy();
-                var toData = {
-          text: "Block",
-          loc: go.Point.stringify(p)
-        };
-        // add the new node data to the model
-        var model = diagram.model;
-        model.addNodeData(toData);
-        // create a link data from the old node data to the new node data
-        var linkdata = {
-          from: model.getKeyForNodeData(fromData),
-          to: model.getKeyForNodeData(toData)
-        };
-        // and add the link data to the model
-        model.addLinkData(linkdata);
-        // select the new Node
-        var newnode = diagram.findNodeForData(toData);
-        diagram.select(newnode);
-        // snap the new node to a valid location
-        newnode.location = diagram.toolManager.draggingTool.computeMove(newnode, p);
-        // then account for any overlap
-        shiftNodesToEmptySpaces();
-        diagram.commitTransaction("Add State");
+          var fromNode = obj.part;
+          var diagram = fromNode.diagram;
+              diagram.startTransaction("Добавить");
+          var fromData = fromNode.data;
+          var toData = {
+            dir: "left",
+            text: "Аргумент",
+            color: bluegrad 
+          };
+          var model = diagram.model;
+          model.addNodeData(toData);
+
+          var linkdata = {
+            from: model.getKeyForNodeData(fromData),
+            to: model.getKeyForNodeData(toData)
+          };
+          model.addLinkData(linkdata);
+          var newnode = diagram.findNodeForData(toData);
+          diagram.select(newnode);
+          shiftNodesToEmptySpaces();
+          diagram.commitTransaction("Добавить");
       }
+      
 
       var OldTarget = null;  // remember the last highlit port
       function highlight(port) {
@@ -360,15 +341,9 @@
 
       
       myDiagram.linkTemplate =
-        $(go.Link,
-          { selectionAdorned: false, fromPortId: "from", toPortId: "to", relinkableTo: true },
-          $(go.Shape,
-            { stroke: "gray", strokeWidth: 2 },
-            {
-              mouseEnter: function(e, obj) { obj.strokeWidth = 5; obj.stroke = "dodgerblue"; },
-              mouseLeave: function(e, obj) { obj.strokeWidth = 2; obj.stroke = "gray"; }
-            })
-        );
+        $(go.Link,  // the whole link panel
+          { selectable: false },
+          $(go.Shape)); 
 
       function commonLinkingToolInit(tool) {
         // the temporary link drawn during a link drawing operation (LinkingTool) is thick and blue
@@ -581,14 +556,11 @@
           <textarea id="mySavedModel" style="width:100%;height:300px">
         { "class": "go.GraphLinksModel",
           "nodeDataArray": [
-            { "key":1, "text":"Block", "category":"Loading" }
-          ],
-          "linkDataArray": [
-            { "from":1, "to":2 },
-            { "from":2, "to":3 },
-            { "from":2, "to":5 },
-            { "from":3, "to":4 },
-            { "from":4, "to":6 }
+            { 
+              "key":1, 
+              "text":"Утверждение", 
+              "category":"Loading" 
+            }
           ]
         }
           </textarea>
