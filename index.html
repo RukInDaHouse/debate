@@ -477,6 +477,10 @@
             myDiagram.commandHandler.deleteSelection();
           }
 
+          function undo() {
+            myDiagram.commandHandler.undo();
+          }
+
           function redo() {
             myDiagram.commandHandler.redo();
           }
@@ -497,7 +501,7 @@
         <div id="sample">
           <div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 570px;"></div>
             <div class="main-wrapper">
-              <button id="zoomToFit">
+              <button title="Полная схема" id="zoomToFit">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
                   <defs/>
                   <g>
@@ -505,39 +509,39 @@
                   </g>
                 </svg>
               </button> 
-              <button id="centerRoot">
+              <button title="Центрирование" id="centerRoot">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="#fff">
                   <defs/>
                   <path d="M11 11l-7-1s-1 0 0 0l1-2-5-5 3-3 5 5 2-1c0-1 0 0 0 0l1 7zM15 15l7 1s1-1 0 0l-1 2a161 161 0 005 5l-3 3-5-5-2 1c0 1 0 0 0 0l-1-7zM11 15l-1 7s0 1 0 0l-2-1-5 5H2l-2-3 5-5-1-2c-1 0 0 0 0 0l7-1zM15 11V4h1l2 1 5-5 3 3-5 5 1 2c1 0 0 0 0 0l-7 1z"/>
                 </svg>
               </button>
-              <button id="SaveButton" onclick="save()">
+              <button title="Сохранить схему" id="SaveButton" onclick="save()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.3 469.3" fill="#fff">
                   <defs/>
                   <path d="M466.2 88.5L381 3c-2-2-4.7-3.1-7.6-3.1H42.7A42.7 42.7 0 000 42.7v384a42.7 42.7 0 0042.7 42.6h384a42.7 42.7 0 0042.6-42.6V96c0-2.8-1-5.5-3-7.5zM106.7 21.3h234.6v128c0 11.8-9.5 21.4-21.3 21.4H128a21.4 21.4 0 01-21.3-21.4v-128zM384 448H85.3V256H384v192zm64-21.3c0 11.7-9.6 21.3-21.3 21.3h-21.4V245.3c0-5.9-4.7-10.6-10.6-10.6h-320c-6 0-10.7 4.7-10.7 10.6V448H42.7a21.4 21.4 0 01-21.4-21.3v-384c0-11.8 9.6-21.4 21.4-21.4h42.6v128A42.7 42.7 0 00128 192h192a42.7 42.7 0 0042.7-42.7v-128h6.2l79.1 79.1v326.3z"/>
                   <path d="M266.7 149.3h42.6c6 0 10.7-4.7 10.7-10.6V53.3c0-5.9-4.8-10.6-10.7-10.6h-42.6c-6 0-10.7 4.7-10.7 10.6v85.4c0 5.9 4.8 10.6 10.7 10.6zM277.3 64h21.4v64h-21.4V64z"/>
                 </svg>
               </button>
-              <button onclick="load()">
+              <button title="Загрузить схему" onclick="load()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.9 477.9" fill="#fff">
                   <defs/>
                   <path d="M443.7 307.2a17 17 0 00-17 17v102.5a17 17 0 01-17.1 17H68.3a17 17 0 01-17.1-17V324.3a17 17 0 10-34.1 0v102.4c0 28.2 22.9 51.2 51.2 51.2h341.3c28.3 0 51.2-23 51.2-51.2V324.3a17 17 0 00-17-17.1z"/>
                   <path d="M336 295.1a17 17 0 00-23.8 0L256 351.3V17.1a17 17 0 10-34.1 0v334.2l-56.2-56.2a17 17 0 00-24.2 24.2l85.4 85.3a17 17 0 0024.1 0l85.4-85.3a17 17 0 00-.5-24.2z"/>
                 </svg>
               </button>
-              <button onclick="zoomIn()">
+              <button title="Увеличить масштаб" onclick="zoomIn()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.3 459.3" fill="#fff">
                   <defs/>
                   <path d="M459.3 229.7c0 22.2-18 40.2-40.2 40.2H269.8V419a40.2 40.2 0 11-80.3 0V270H40.2A40 40 0 010 229.7c0-22.2 18-40.2 40.2-40.2h149.3V40.2a40.2 40.2 0 0180.4 0v149.3H419c22.2 0 40.2 18 40.2 40.2z"/>
                 </svg> 
               </button>
-              <button onclick="zoomOut()">
+              <button title="Уменьшить масштаб" onclick="zoomOut()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 124" fill="#fff">
                   <defs/>
                   <path d="M112 50H12A12 12 0 000 62a12 12 0 0012 12h100a12 12 0 0012-12 12 12 0 00-12-12z"/>
                 </svg>
               </button>
-              <button onclick="deleteNode()">
+              <button title="Удалить" onclick="deleteNode()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 0 427 427" fill="#fff">
                   <defs/>
                   <path d="M232 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0M114 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0"/>
@@ -545,7 +549,13 @@
                   <path d="M173 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0"/>
                 </svg>
               </button>
-              <button onclick="redo()">
+              <button title="Отменить" onclick="undo()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
+                  <defs/>
+                  <path d="M0 128c0 4.6 2 9 5.5 12l128 112a16 16 0 0026.6-12.1v-48h128c79.4 0 144 64.6 144 144s-64.6 144-144 144c-8.8 0-16 7.2-16 16s7.2 16 16 16c123.5 0 224-100.5 224-224s-100.5-224-224-224H160V16c0-6.3-3.6-12-9.4-14.6a16.1 16.1 0 00-17.2 2.5L5.5 116C2 119 0 123.4 0 128z"/>
+                </svg>
+              </button>
+              <button title="Повторить" onclick="redo()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
                   <defs/>
                   <path d="M506.5 116L378.5 4A16 16 0 00352 16v48H224A224.2 224.2 0 000 288c0 123.5 100.5 224 224 224a16 16 0 000-32c-79.4 0-144-64.6-144-144s64.6-144 144-144h128v48a16 16 0 0026.5 12l128-112a16 16 0 000-24z"/>
