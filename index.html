@@ -1,522 +1,574 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
-<meta name="description" content="An organization chart editor -- edit details and change relationships."/> 
-<link rel="stylesheet" href="./css/style.css"/> 
-<!-- Copyright 1998-2021 by Northwoods Software Corporation. -->
-<title>Org Chart Editor</title>
-</head>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
+    <meta name="description" content="An organization chart editor -- edit details and change relationships."/> 
+    <link rel="stylesheet" href="./css/style.css"/> 
+    <title>Дебаты</title>
+  </head>
 
-<body>
-  <div class="md:flex flex-col md:flex-row md:min-h-screen w-full max-w-screen-xl mx-auto">
-    <div id="navSide" class="flex flex-col w-full md:w-48 text-gray-700 bg-white flex-shrink-0"></div>
+  <body>
+    <div class="md:flex flex-col md:flex-row md:min-h-screen w-full max-w-screen-xl mx-auto">
+      <div div id="navSide" class="flex flex-col w-full md:w-48 text-gray-700 bg-white flex-shrink-0"></div>
     
-    <script src="./js/go.js"></script>
-    <div class="p-4 w-full">
-      <script src="./js/DoubleTreeLayout.js"></script>
+      <script src="./js/go.js"></script>
+      <div class="p-4 w-full">
+        <script src="./js/DoubleTreeLayout.js"></script>
 
-  <script id="code">
-    function init() {
-      var $ = go.GraphObject.make;  // for conciseness in defining templates
+        <script id="code">
+          function init() {
+            var $ = go.GraphObject.make;
 
-      myDiagram =
-      $(go.Diagram, "myDiagramDiv",
-                {
-                  layout: $(DoubleTreeLayout,
-                    {
-                      vertical: false,
-                      directionFunction: function(n) 
-                        { 
-                          return n.data && n.data.dir !== "left"; 
-                        },
-                      bottomRightOptions: 
-                        { 
-                          nodeSpacing: 50, 
-                          layerSpacing: 50 
-                        },
-                      topLeftOptions:
-                        { 
-                          nodeSpacing: 50, 
-                          layerSpacing: 50 
-                        },
-                    })
-                }
-              );
+            myDiagram =
+            $(go.Diagram, "myDiagramDiv",
+                      {
+                        "undoManager.isEnabled": true,
+                        layout: $(DoubleTreeLayout,
+                          {
+                            vertical: false,
+                            directionFunction: function(n) 
+                              { 
+                                return n.data && n.data.dir !== "left"; 
+                              },
+                            bottomRightOptions: 
+                              { 
+                                nodeSpacing: 50, 
+                                layerSpacing: 50 
+                              },
+                            topLeftOptions:
+                              { 
+                                nodeSpacing: 50, 
+                                layerSpacing: 50 
+                              },
+                          })
+                      }
+                    );
 
-      // when the document is modified, add a "*" to the title and enable the "Save" button
-      myDiagram.addDiagramListener("Modified", function(e) {
-        var button = document.getElementById("SaveButton");
-        if (button) button.disabled = !myDiagram.isModified;
-        var idx = document.title.indexOf("*");
-        if (myDiagram.isModified) {
-          if (idx < 0) document.title += "*";
-        } else {
-          if (idx >= 0) document.title = document.title.substr(0, idx);
-        }
-      });
-
-      var graygrad = $(go.Brush, "Linear", { 0: "#F5F5F5", 1: "#F1F1F1" });
-            var bluegrad = $(go.Brush, "Linear", { 0: "#CDDAF0", 1: "#91ADDD" });
-            var yellowgrad = $(go.Brush, "Linear", { 0: "#FEC901", 1: "#FEA200" });
-            var lavgrad = $(go.Brush, "Linear", { 0: "#EF9EFA", 1: "#A570AD" });
-
-
-
-      // when a node is double-clicked, add a child to it
-      function nodeDoubleClick(e, obj) {
-        var clicked = obj.part;
-        if (clicked !== null) {
-          var thisemp = clicked.data;
-          myDiagram.startTransaction("add employee");
-          var newemp = {
-            name: "(new person)",
-            title: "",
-            comments: "",
-            parent: thisemp.key
-          };
-          myDiagram.model.addNodeData(newemp);
-          myDiagram.commitTransaction("add employee");
-        }
-      }
-
-      // this is used to determine feedback during drags
-      function mayWorkFor(node1, node2) {
-        if (!(node1 instanceof go.Node)) return false;  // must be a Node
-        if (node1 === node2) return false;  // cannot work for yourself
-        if (node2.isInTreeOf(node1)) return false;  // cannot work for someone who works for you
-        return true;
-      }
-
-      // This function provides a common style for most of the TextBlocks.
-      // Some of these values may be overridden in a particular TextBlock.
-      function textStyle() {
-        return { font: "9pt  Segoe UI,sans-serif", stroke: "white" };
-      }
-
-      // This converter is used by the Picture.
-      function findHeadShot(key) {
-        if (key < 0 || key > 16) return "images/HSnopic.jpg"; // There are only 16 images on the server
-        return "images/HS" + key + ".jpg"
-      }
-
-      // define the Node template
-      myDiagram.nodeTemplate =
-              $(go.Node, "Auto",
-                { 
-                  selectionAdorned: false, 
-                  textEditable: true, 
-                  locationObjectName: "BODY" 
-                },
-              new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-              
-              $(go.Shape, "RoundedRectangle",
-                { 
-                  fill: graygrad, 
-                  stroke: "gray", 
-                  minSize: new go.Size(120, 21) 
-                },
-              new go.Binding("fill", "isSelected", function(s) 
-                { 
-                  return s ? "dodgerblue" : graygrad; 
-                }).ofObject()),
-
-              $(go.TextBlock,
-                {
-                  stroke: "black", 
-                  font: "15px sans-serif", 
-                  editable: true,
-                  margin: new go.Margin(30, 30, 30, 30), 
-                  alignment: go.Spot.Left
-                },
-              new go.Binding("text").makeTwoWay()),
-
-              $(go.Panel, "Auto",
-                { 
-                  alignment: go.Spot.Right, 
-                  portId: "from", 
-                  fromLinkable: true, 
-                  cursor: "pointer", 
-                  click: addNodeAndLink 
-                },
-              $(go.Shape, "Circle",
-                { 
-                  width: 22, 
-                  height: 22, 
-                  fill: "white", 
-                  stroke: "dodgerblue", 
-                  strokeWidth: 3 
-                }),
-              $(go.Shape, "PlusLine",
-                { 
-                  width: 11, 
-                  height: 11, 
-                  fill: null, 
-                  stroke: "dodgerblue", 
-                  strokeWidth: 3 
-                })
-              ),
-
-              $(go.Panel, "Auto",
-                { 
-                  alignment: go.Spot.Left, 
-                  portId: "to", 
-                  toLinkable: true 
-                },
-              )
-            );
-
-            myDiagram.nodeTemplate.contextMenu =
-                $("ContextMenu",
-                  $("ContextMenuButton",
-                    $(go.TextBlock, "Rename"),
-                      { 
-                        click: function(e, obj) 
-                          { 
-                            e.diagram.commandHandler.editTextBlock(); 
-                          } 
-                      },
-                    new go.Binding("visible", "", function(o) 
-                      { 
-                        return o.diagram && o.diagram.commandHandler.canEditTextBlock(); 
-                      }).ofObject()
-                  ),
-                      
-                  $("ContextMenuButton",
-                    $(go.TextBlock, "Delete"),
-                      { 
-                        click: function(e, obj) 
-                          { 
-                            e.diagram.commandHandler.deleteSelection(); 
-                          } 
-                      },
-                    new go.Binding("visible", "", function(o) 
-                    { 
-                      return o.diagram && o.diagram.commandHandler.canDeleteSelection(); 
-                    }).ofObject()
-                  )
-                );
-
-              myDiagram.nodeTemplateMap.add("Loading",
-                $(go.Node, "Spot",
-                  { 
-                    selectionAdorned: false, 
-                    textEditable: true, 
-                    locationObjectName: "BODY" 
-                  },
-                new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-                $(go.Panel, "Auto",
-                  { 
-                    name: "BODY" 
-                  },
-                $(go.Shape, "RoundedRectangle",
-                  { 
-                    fill: graygrad, 
-                    stroke: "gray", 
-                    minSize: new go.Size(20, 21) 
-                  },
-                new go.Binding("fill", "isSelected", function(s) 
-                  { 
-                    return s ? "dodgerblue" : graygrad; 
-                  }).ofObject()),
-                $(go.TextBlock,
-                  {
-                    stroke: "black", 
-                    font: "12px sans-serif", 
-                    editable: true,
-                    margin: new go.Margin(30, 30, 30, 30), 
-                    alignment: go.Spot.Left
-                  },
-                  new go.Binding("text", "text"))
-              ),
-
-              // output port
-              $(go.Panel, "Auto",
-                { 
-                  alignment: go.Spot.Left, 
-                  portId: "fromLeft", 
-                  fromLinkable: true, 
-                  click: addNodeAndLinkLeft 
-                },
-                $(go.Shape, "Circle",
-                  { 
-                    width: 25,
-                    height: 25, 
-                    fill: "purple", 
-                    stroke: "purple", 
-                    strokeWidth: 3 
-                  }),
-                $(go.Shape, "PlusLine",
-                  { 
-                    width: 11, 
-                    height: 11, 
-                    fill: null, 
-                    stroke: "white", 
-                    strokeWidth: 2 
-                  })
-              ),
-
-              $(go.Panel, "Auto",
-                { 
-                  alignment: go.Spot.Right, 
-                  portId: "from", 
-                  fromLinkable: true, 
-                  click: addNodeAndLink 
-                },
-                $(go.Shape, "Circle",
-                  { 
-                    width: 25, 
-                    height: 25, 
-                    fill: "dodgerblue", 
-                    stroke: "dodgerblue", 
-                    strokeWidth: 3 
-                  }),
-                $(go.Shape, "PlusLine",
-                  { 
-                    width: 11, 
-                    height: 11, 
-                    fill: null, 
-                    stroke: "white", 
-                    strokeWidth: 2 
-                  })
-              )
-            ));
-
-            myDiagram.linkTemplate =
-              $(go.Link,
-                { 
-                  selectable: false 
-                },
-                $(go.Shape));
-      
-            myDiagram.model = new go.TreeModel([
-              { 
-                key: "Root", 
-                color: lavgrad,
-                text: "Аргумент"
+            // when the document is modified, add a "*" to the title and enable the "Save" button
+            myDiagram.addDiagramListener("Modified", function(e) {
+              var button = document.getElementById("SaveButton");
+              if (button) button.disabled = !myDiagram.isModified;
+              var idx = document.title.indexOf("*");
+              if (myDiagram.isModified) {
+                if (idx < 0) document.title += "*";
+              } else {
+                if (idx >= 0) document.title = document.title.substr(0, idx);
               }
-            ]);
+            });
 
+            var graygrad = $(go.Brush, "Linear", { 0: "#F5F5F5", 1: "#F1F1F1" });
+                  var bluegrad = $(go.Brush, "Linear", { 0: "#CDDAF0", 1: "#91ADDD" });
+                  var yellowgrad = $(go.Brush, "Linear", { 0: "#FEC901", 1: "#FEA200" });
+                  var lavgrad = $(go.Brush, "Linear", { 0: "#EF9EFA", 1: "#A570AD" });
+
+
+
+            // when a node is double-clicked, add a child to it
+            function nodeDoubleClick(e, obj) {
+              var clicked = obj.part;
+              if (clicked !== null) {
+                var thisemp = clicked.data;
+                myDiagram.startTransaction("add employee");
+                var newemp = {
+                  name: "(new person)",
+                  title: "",
+                  comments: "",
+                  parent: thisemp.key
+                };
+                myDiagram.model.addNodeData(newemp);
+                myDiagram.commitTransaction("add employee");
+              }
+            }
+
+            // this is used to determine feedback during drags
+            function mayWorkFor(node1, node2) {
+              if (!(node1 instanceof go.Node)) return false;  // must be a Node
+              if (node1 === node2) return false;  // cannot work for yourself
+              if (node2.isInTreeOf(node1)) return false;  // cannot work for someone who works for you
+              return true;
+            }
+
+            // This function provides a common style for most of the TextBlocks.
+            // Some of these values may be overridden in a particular TextBlock.
+            function textStyle() {
+              return { font: "9pt  Segoe UI,sans-serif", stroke: "white" };
+            }
+
+            // This converter is used by the Picture.
+            function findHeadShot(key) {
+              if (key < 0 || key > 16) return "images/HSnopic.jpg"; // There are only 16 images on the server
+              return "images/HS" + key + ".jpg"
+            }
+
+            // define the Node template
+            myDiagram.nodeTemplate =
+                    $(go.Node, "Auto",
+                      { 
+                        selectionAdorned: false, 
+                        textEditable: true, 
+                        locationObjectName: "BODY" 
+                      },
+                    new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+                    
+                    $(go.Shape, "RoundedRectangle",
+                      { 
+                        fill: graygrad, 
+                        stroke: "gray", 
+                        minSize: new go.Size(120, 21) 
+                      },
+                    new go.Binding("fill", "isSelected", function(s) 
+                      { 
+                        return s ? "dodgerblue" : graygrad; 
+                      }).ofObject()),
+
+                    $(go.TextBlock,
+                      {
+                        stroke: "black", 
+                        font: "15px sans-serif", 
+                        editable: true,
+                        margin: new go.Margin(30, 30, 30, 30), 
+                        alignment: go.Spot.Left
+                      },
+                    new go.Binding("text").makeTwoWay()),
+
+                    $(go.Panel, "Auto",
+                      { 
+                        alignment: go.Spot.Right, 
+                        portId: "from", 
+                        fromLinkable: true, 
+                        cursor: "pointer", 
+                        click: addNodeAndLink 
+                      },
+                    $(go.Shape, "Circle",
+                      { 
+                        width: 22, 
+                        height: 22, 
+                        fill: "white", 
+                        stroke: "dodgerblue", 
+                        strokeWidth: 3 
+                      }),
+                    $(go.Shape, "PlusLine",
+                      { 
+                        width: 11, 
+                        height: 11, 
+                        fill: null, 
+                        stroke: "dodgerblue", 
+                        strokeWidth: 3 
+                      })
+                    ),
+
+                    $(go.Panel, "Auto",
+                      { 
+                        alignment: go.Spot.Left, 
+                        portId: "to", 
+                        toLinkable: true 
+                      },
+                    )
+                  );
+
+                  myDiagram.nodeTemplate.contextMenu =
+                      $("ContextMenu",
+                        $("ContextMenuButton",
+                          $(go.TextBlock, "Rename"),
+                            { 
+                              click: function(e, obj) 
+                                { 
+                                  e.diagram.commandHandler.editTextBlock(); 
+                                } 
+                            },
+                          new go.Binding("visible", "", function(o) 
+                            { 
+                              return o.diagram && o.diagram.commandHandler.canEditTextBlock(); 
+                            }).ofObject()
+                        ),
+                            
+                        $("ContextMenuButton",
+                          $(go.TextBlock, "Delete"),
+                            { 
+                              click: function(e, obj) 
+                                { 
+                                  e.diagram.commandHandler.deleteSelection(); 
+                                } 
+                            },
+                          new go.Binding("visible", "", function(o) 
+                          { 
+                            return o.diagram && o.diagram.commandHandler.canDeleteSelection(); 
+                          }).ofObject()
+                        )
+                      );
+
+                    myDiagram.nodeTemplateMap.add("Loading",
+                      $(go.Node, "Spot",
+                        { 
+                          selectionAdorned: false, 
+                          textEditable: true, 
+                          locationObjectName: "BODY" 
+                        },
+                      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+                      $(go.Panel, "Auto",
+                        { 
+                          name: "BODY" 
+                        },
+                      $(go.Shape, "RoundedRectangle",
+                        { 
+                          fill: graygrad, 
+                          stroke: "gray", 
+                          minSize: new go.Size(20, 21) 
+                        },
+                      new go.Binding("fill", "isSelected", function(s) 
+                        { 
+                          return s ? "dodgerblue" : graygrad; 
+                        }).ofObject()),
+                      $(go.TextBlock,
+                        {
+                          stroke: "black", 
+                          font: "12px sans-serif", 
+                          editable: true,
+                          margin: new go.Margin(30, 30, 30, 30), 
+                          alignment: go.Spot.Left
+                        },
+                        new go.Binding("text", "text"))
+                    ),
+
+                    // output port
+                    $(go.Panel, "Auto",
+                      { 
+                        alignment: go.Spot.Left, 
+                        portId: "fromLeft", 
+                        fromLinkable: true, 
+                        click: addNodeAndLinkLeft 
+                      },
+                      $(go.Shape, "Circle",
+                        { 
+                          width: 25,
+                          height: 25, 
+                          fill: "purple", 
+                          stroke: "purple", 
+                          strokeWidth: 3 
+                        }),
+                      $(go.Shape, "PlusLine",
+                        { 
+                          width: 11, 
+                          height: 11, 
+                          fill: null, 
+                          stroke: "white", 
+                          strokeWidth: 2 
+                        })
+                    ),
+
+                    $(go.Panel, "Auto",
+                      { 
+                        alignment: go.Spot.Right, 
+                        portId: "from", 
+                        fromLinkable: true, 
+                        click: addNodeAndLink 
+                      },
+                      $(go.Shape, "Circle",
+                        { 
+                          width: 25, 
+                          height: 25, 
+                          fill: "dodgerblue", 
+                          stroke: "dodgerblue", 
+                          strokeWidth: 3 
+                        }),
+                      $(go.Shape, "PlusLine",
+                        { 
+                          width: 11, 
+                          height: 11, 
+                          fill: null, 
+                          stroke: "white", 
+                          strokeWidth: 2 
+                        })
+                    )
+                  ));
+
+                  myDiagram.linkTemplate =
+                    $(go.Link,
+                      { 
+                        selectable: false 
+                      },
+                      $(go.Shape));
             
+                  myDiagram.model = new go.TreeModel([
+                    { 
+                      key: "Root", 
+                      color: lavgrad,
+                      text: "Аргумент"
+                    }
+                  ]);
 
-            function addNodeAndLink(e, obj) {
-          var fromNode = obj.part;
-          var diagram = fromNode.diagram;
-              diagram.startTransaction("Добавить");
-          var fromData = fromNode.data;
-          var toData = {
-            dir: "right",
-            text: "Аргумент",
-            color: bluegrad 
-          };
-          var model = diagram.model;
-          model.addNodeData(toData);
+                  
 
-          var linkdata = {
-            from: model.getKeyForNodeData(fromData),
-            to: model.getKeyForNodeData(toData)
-          };
-          model.addLinkData(linkdata);
-          var newnode = diagram.findNodeForData(toData);
-          diagram.select(newnode);
-          shiftNodesToEmptySpaces();
-          diagram.commitTransaction("Добавить");
-      }
+                  function addNodeAndLink(e, obj) {
+                var fromNode = obj.part;
+                var diagram = fromNode.diagram;
+                    diagram.startTransaction("Добавить");
+                var fromData = fromNode.data;
+                var toData = {
+                  dir: "right",
+                  text: "Аргумент",
+                  color: bluegrad 
+                };
+                var model = diagram.model;
+                model.addNodeData(toData);
 
-      function addNodeAndLinkLeft(e, obj) {
-          var fromNode = obj.part;
-          var diagram = fromNode.diagram;
-              diagram.startTransaction("Добавить");
-          var fromData = fromNode.data;
-          var toData = {
-            dir: "left",
-            text: "Аргумент",
-            color: bluegrad 
-          };
-          var model = diagram.model;
-          model.addNodeData(toData);
+                var linkdata = {
+                  from: model.getKeyForNodeData(fromData),
+                  to: model.getKeyForNodeData(toData)
+                };
+                model.addLinkData(linkdata);
+                var newnode = diagram.findNodeForData(toData);
+                diagram.select(newnode);
+                shiftNodesToEmptySpaces();
+                diagram.commitTransaction("Добавить");
+            }
 
-          var linkdata = {
-            from: model.getKeyForNodeData(fromData),
-            to: model.getKeyForNodeData(toData)
-          };
-          model.addLinkData(linkdata);
-          var newnode = diagram.findNodeForData(toData);
-          diagram.select(newnode);
-          shiftNodesToEmptySpaces();
-          diagram.commitTransaction("Добавить");
-      }
+            function addNodeAndLinkLeft(e, obj) {
+                var fromNode = obj.part;
+                var diagram = fromNode.diagram;
+                    diagram.startTransaction("Добавить");
+                var fromData = fromNode.data;
+                var toData = {
+                  dir: "left",
+                  text: "Аргумент",
+                  color: bluegrad 
+                };
+                var model = diagram.model;
+                model.addNodeData(toData);
 
-      // the context menu allows users to make a position vacant,
-      // remove a role and reassign the subtree, or remove a department
-      myDiagram.nodeTemplate.contextMenu =
-        $("ContextMenu",
-          $("ContextMenuButton",
-            $(go.TextBlock, "Vacate Position"),
-            {
-              click: function(e, obj) {
-                var node = obj.part.adornedPart;
-                if (node !== null) {
-                  var thisemp = node.data;
-                  myDiagram.startTransaction("vacate");
-                  // update the key, name, and comments
-                  myDiagram.model.setDataProperty(thisemp, "name", "(Vacant)");
-                  myDiagram.model.setDataProperty(thisemp, "comments", "");
-                  myDiagram.commitTransaction("vacate");
-                }
+                var linkdata = {
+                  from: model.getKeyForNodeData(fromData),
+                  to: model.getKeyForNodeData(toData)
+                };
+                model.addLinkData(linkdata);
+                var newnode = diagram.findNodeForData(toData);
+                diagram.select(newnode);
+                shiftNodesToEmptySpaces();
+                diagram.commitTransaction("Добавить");
+            }
+
+            var OldTarget = null;  // remember the last highlit port
+            function highlight(port) {
+              if (OldTarget !== port) {
+                lowlight();  // remove highlight from any old port
+                OldTarget = port;
+                port.scale = 1.3;  // highlight by enlarging
               }
             }
-          ),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Remove Role"),
-            {
-              click: function(e, obj) {
-                // reparent the subtree to this node's boss, then remove the node
-                var node = obj.part.adornedPart;
-                if (node !== null) {
-                  myDiagram.startTransaction("reparent remove");
-                  var chl = node.findTreeChildrenNodes();
-                  // iterate through the children and set their parent key to our selected node's parent key
-                  while (chl.next()) {
-                    var emp = chl.value;
-                    myDiagram.model.setParentKeyForNodeData(emp.data, node.findTreeParentNode().data.key);
-                  }
-                  // and now remove the selected node itself
-                  myDiagram.model.removeNodeData(node.data);
-                  myDiagram.commitTransaction("reparent remove");
-                }
+            function lowlight() {  // remove any highlight
+              if (OldTarget) {
+                OldTarget.scale = 1.0;
+                OldTarget = null;
               }
             }
-          ),
-          $("ContextMenuButton",
-            $(go.TextBlock, "Remove Department"),
-            {
-              click: function(e, obj) {
-                // remove the whole subtree, including the node itself
-                var node = obj.part.adornedPart;
-                if (node !== null) {
-                  myDiagram.startTransaction("remove dept");
-                  myDiagram.removeParts(node.findTreeParts());
-                  myDiagram.commitTransaction("remove dept");
+
+            function commonLinkingToolInit(tool) {
+              // the temporary link drawn during a link drawing operation (LinkingTool) is thick and blue
+              tool.temporaryLink =
+                $(go.Link, { layerName: "Tool" },
+                  $(go.Shape, { stroke: "dodgerblue", strokeWidth: 5 }));
+
+              // change the standard proposed ports feedback from blue rectangles to transparent circles
+              tool.temporaryFromPort.figure = "Circle";
+              tool.temporaryFromPort.stroke = null;
+              tool.temporaryFromPort.strokeWidth = 0;
+              tool.temporaryToPort.figure = "Circle";
+              tool.temporaryToPort.stroke = null;
+              tool.temporaryToPort.strokeWidth = 0;
+
+              // provide customized visual feedback as ports are targeted or not
+              tool.portTargeted = function(realnode, realport, tempnode, tempport, toend) {
+                if (realport === null) {  // no valid port nearby
+                  lowlight();
+                } else if (toend) {
+                  highlight(realport);
                 }
-              }
+              };
             }
-          )
-        );
 
-      // define the Link template
-      myDiagram.linkTemplate =
-        $(go.Link, go.Link.Orthogonal,
-          { corner: 5, relinkableFrom: true, relinkableTo: true },
-          $(go.Shape, { strokeWidth: 1.5, stroke: "#F5F5F5" }));  // the link shape
+            var ltool = myDiagram.toolManager.linkingTool;
+            commonLinkingToolInit(ltool);
+            // do not allow links to be drawn starting at the "to" port
+            ltool.direction = go.LinkingTool.ForwardsOnly;
 
-      // read in the JSON-format data from the "mySavedModel" element
-      load();
+            var rtool = myDiagram.toolManager.relinkingTool;
+            commonLinkingToolInit(rtool);
+            // change the standard relink handle to be a shape that takes the shape of the link
 
 
-      // support editing the properties of the selected person in HTML
-      if (window.Inspector) myInspector = new Inspector("myInspector", myDiagram,
-        {
-          properties: {
-            "key": { readOnly: true },
-            "comments": {}
+            // use a special DraggingTool to cause the dragging of a Link to start relinking it
+
+            // detect when dropped onto an occupied cell
+            myDiagram.addDiagramListener("SelectionMoved", shiftNodesToEmptySpaces);
+
+            function shiftNodesToEmptySpaces() {
+              myDiagram.selection.each(function(node) {
+                if (!(node instanceof go.Node)) return;
+                // look for Parts overlapping the node
+                while (true) {
+                  var exist = myDiagram.findObjectsIn(node.actualBounds,
+                    // only consider Parts
+                    function(obj) { return obj.part; },
+                    // ignore Links and the dropped node itself
+                    function(part) { return part instanceof go.Node && part !== node; },
+                    // check for any overlap, not complete containment
+                    true).first();
+                  if (exist === null) break;
+                  // try shifting down beyond the existing node to see if there's empty space
+                  node.position = new go.Point(node.actualBounds.x, exist.actualBounds.bottom + 10);
+                }
+              });
+            }
+            myDiagram.addDiagramListener("LayoutCompleted", function(e) {
+              myDiagram.nodes.each(function(node) {
+                if (node.category === "Recycle") return;
+                node.minLocation = new go.Point(node.location.x, -Infinity);
+              });
+            });
+
+
+
+            // define the Link template
+            myDiagram.linkTemplate =
+              $(go.Link, go.Link.Orthogonal,
+                { corner: 5, relinkableFrom: true, relinkableTo: true },
+                $(go.Shape, { strokeWidth: 1.5, stroke: "#F5F5F5" }));  // the link shape
+
+            load();
+
+
+            // support editing the properties of the selected person in HTML
+            if (window.Inspector) myInspector = new Inspector("myInspector", myDiagram,
+              {
+                properties: {
+                  "key": { readOnly: true },
+                  "comments": {}
+                }
+              });
+
+            // Setup zoom to fit button
+            document.getElementById('zoomToFit').addEventListener('click', function() {
+              myDiagram.commandHandler.zoomToFit();
+            });
+
+            document.getElementById('centerRoot').addEventListener('click', function() {
+              myDiagram.scale = 1;
+              myDiagram.commandHandler.scrollToPart(myDiagram.findNodeForKey(1));
+            });
+
           }
-        });
+           // end init
 
-      // Setup zoom to fit button
-      document.getElementById('zoomToFit').addEventListener('click', function() {
-        myDiagram.commandHandler.zoomToFit();
-      });
+          function save() {
+            document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+            myDiagram.isModified = false;
+          }
 
-      document.getElementById('centerRoot').addEventListener('click', function() {
-        myDiagram.scale = 1;
-        myDiagram.commandHandler.scrollToPart(myDiagram.findNodeForKey(1));
-      });
+          function zoomIn() {
+            myDiagram.commandHandler.increaseZoom();
+          }
 
-    } // end init
+          function zoomOut() {
+            myDiagram.commandHandler.decreaseZoom();
+          }
 
-    // Show the diagram's model in JSON format
-    function save() {
-      document.getElementById("mySavedModel").value = myDiagram.model.toJson();
-      myDiagram.isModified = false;
-    }
-    function load() {
-      myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
-      // make sure new data keys are unique positive integers
-      var lastkey = 1;
-      myDiagram.model.makeUniqueKeyFunction = function(model, data) {
-        var k = data.key || lastkey;
-        while (model.findNodeDataForKey(k)) k++;
-        data.key = lastkey = k;
-        return k;
-      };
-    }
-    window.addEventListener('DOMContentLoaded', init);
-  </script>
+          function deleteNode() {
+            myDiagram.commandHandler.deleteSelection();
+          }
 
-<div id="sample">
-  <div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 570px;"></div>
-  <div class="main-wrapper">
-    <button id="zoomToFit">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
-        <defs/>
-        <g>
-          <path d="M1 0l6 1s1 0 0 0L6 3a100 100 0 005 5v1l-2 2H8L4 6H3L1 7c0 1 0 0 0 0L0 1l1-1zM23 24l-6-1h-1l2-2-1-1-4-4v-1l2-2h1l4 4 1 1 1-2 1 1 1 6-1 1zM0 23l1-6v-1l2 2v-1l5-4h1l2 2v1l-5 4v1l1 1v1l-7 1v-1zM24 1l-1 6h-1l-1-1-1 1-4 4h-1l-2-2V8l4-4 1-1-2-2h1l6-1 1 1z"/>
-        </g>
-      </svg>
-    </button> 
-    <button id="centerRoot">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="#fff">
-        <defs/>
-        <path d="M11 11l-7-1s-1 0 0 0l1-2-5-5 3-3 5 5 2-1c0-1 0 0 0 0l1 7zM15 15l7 1s1-1 0 0l-1 2a161 161 0 005 5l-3 3-5-5-2 1c0 1 0 0 0 0l-1-7zM11 15l-1 7s0 1 0 0l-2-1-5 5H2l-2-3 5-5-1-2c-1 0 0 0 0 0l7-1zM15 11V4h1l2 1 5-5 3 3-5 5 1 2c1 0 0 0 0 0l-7 1z"/>
-      </svg>
-    </button>
-    <button id="SaveButton" onclick="save()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.3 469.3" fill="#fff">
-        <defs/>
-        <path d="M466.2 88.5L381 3c-2-2-4.7-3.1-7.6-3.1H42.7A42.7 42.7 0 000 42.7v384a42.7 42.7 0 0042.7 42.6h384a42.7 42.7 0 0042.6-42.6V96c0-2.8-1-5.5-3-7.5zM106.7 21.3h234.6v128c0 11.8-9.5 21.4-21.3 21.4H128a21.4 21.4 0 01-21.3-21.4v-128zM384 448H85.3V256H384v192zm64-21.3c0 11.7-9.6 21.3-21.3 21.3h-21.4V245.3c0-5.9-4.7-10.6-10.6-10.6h-320c-6 0-10.7 4.7-10.7 10.6V448H42.7a21.4 21.4 0 01-21.4-21.3v-384c0-11.8 9.6-21.4 21.4-21.4h42.6v128A42.7 42.7 0 00128 192h192a42.7 42.7 0 0042.7-42.7v-128h6.2l79.1 79.1v326.3z"/>
-        <path d="M266.7 149.3h42.6c6 0 10.7-4.7 10.7-10.6V53.3c0-5.9-4.8-10.6-10.7-10.6h-42.6c-6 0-10.7 4.7-10.7 10.6v85.4c0 5.9 4.8 10.6 10.7 10.6zM277.3 64h21.4v64h-21.4V64z"/>
-      </svg>
-    </button>
-    <button onclick="load()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.9 477.9" fill="#fff">
-        <defs/>
-        <path d="M443.7 307.2a17 17 0 00-17 17v102.5a17 17 0 01-17.1 17H68.3a17 17 0 01-17.1-17V324.3a17 17 0 10-34.1 0v102.4c0 28.2 22.9 51.2 51.2 51.2h341.3c28.3 0 51.2-23 51.2-51.2V324.3a17 17 0 00-17-17.1z"/>
-        <path d="M336 295.1a17 17 0 00-23.8 0L256 351.3V17.1a17 17 0 10-34.1 0v334.2l-56.2-56.2a17 17 0 00-24.2 24.2l85.4 85.3a17 17 0 0024.1 0l85.4-85.3a17 17 0 00-.5-24.2z"/>
-      </svg>
-    </button>
-  </div>
-  
-  <div>
+          function redo() {
+            myDiagram.commandHandler.redo();
+          }
 
-    <textarea id="mySavedModel" style="width:100%; height:270px;">
-{ "class": "go.TreeModel",
-  "nodeDataArray": [
-{"key":1, "name":"Stella Payne Diaz", "title":"CEO"},
-{"key":2, "name":"Luke Warm", "title":"VP Marketing/Sales", "parent":1},
-{"key":3, "name":"Meg Meehan Hoffa", "title":"Sales", "parent":2},
-{"key":4, "name":"Peggy Flaming", "title":"VP Engineering", "parent":1},
-{"key":5, "name":"Saul Wellingood", "title":"Manufacturing", "parent":4},
-{"key":6, "name":"Al Ligori", "title":"Marketing", "parent":2},
-{"key":7, "name":"Dot Stubadd", "title":"Sales Rep", "parent":3},
-{"key":8, "name":"Les Ismore", "title":"Project Mgr", "parent":5},
-{"key":9, "name":"April Lynn Parris", "title":"Events Mgr", "parent":6},
-{"key":10, "name":"Xavier Breath", "title":"Engineering", "parent":4},
-{"key":11, "name":"Anita Hammer", "title":"Process", "parent":5},
-{"key":12, "name":"Billy Aiken", "title":"Software", "parent":10},
-{"key":13, "name":"Stan Wellback", "title":"Testing", "parent":10},
-{"key":14, "name":"Marge Innovera", "title":"Hardware", "parent":10},
-{"key":15, "name":"Evan Elpus", "title":"Quality", "parent":5},
-{"key":16, "name":"Lotta B. Essen", "title":"Sales Rep", "parent":3}
- ]
-}
-    </textarea>
-  </div>
-</div>
-    </div>
-    <!-- * * * * * * * * * * * * * -->
-    <!--  End of GoJS sample code  -->
-  </div>
-</body>
+          function load() {
+            myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+            var lastkey = 1;
+            myDiagram.model.makeUniqueKeyFunction = function(model, data) {
+              var k = data.key || lastkey;
+              while (model.findNodeDataForKey(k)) k++;
+              data.key = lastkey = k;
+              return k;
+            };
+          }
+          window.addEventListener('DOMContentLoaded', init);
+        </script>
+
+        <div id="sample">
+          <div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 570px;"></div>
+            <div class="main-wrapper">
+              <button id="zoomToFit">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
+                  <defs/>
+                  <g>
+                    <path d="M1 0l6 1s1 0 0 0L6 3a100 100 0 005 5v1l-2 2H8L4 6H3L1 7c0 1 0 0 0 0L0 1l1-1zM23 24l-6-1h-1l2-2-1-1-4-4v-1l2-2h1l4 4 1 1 1-2 1 1 1 6-1 1zM0 23l1-6v-1l2 2v-1l5-4h1l2 2v1l-5 4v1l1 1v1l-7 1v-1zM24 1l-1 6h-1l-1-1-1 1-4 4h-1l-2-2V8l4-4 1-1-2-2h1l6-1 1 1z"/>
+                  </g>
+                </svg>
+              </button> 
+              <button id="centerRoot">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="#fff">
+                  <defs/>
+                  <path d="M11 11l-7-1s-1 0 0 0l1-2-5-5 3-3 5 5 2-1c0-1 0 0 0 0l1 7zM15 15l7 1s1-1 0 0l-1 2a161 161 0 005 5l-3 3-5-5-2 1c0 1 0 0 0 0l-1-7zM11 15l-1 7s0 1 0 0l-2-1-5 5H2l-2-3 5-5-1-2c-1 0 0 0 0 0l7-1zM15 11V4h1l2 1 5-5 3 3-5 5 1 2c1 0 0 0 0 0l-7 1z"/>
+                </svg>
+              </button>
+              <button id="SaveButton" onclick="save()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.3 469.3" fill="#fff">
+                  <defs/>
+                  <path d="M466.2 88.5L381 3c-2-2-4.7-3.1-7.6-3.1H42.7A42.7 42.7 0 000 42.7v384a42.7 42.7 0 0042.7 42.6h384a42.7 42.7 0 0042.6-42.6V96c0-2.8-1-5.5-3-7.5zM106.7 21.3h234.6v128c0 11.8-9.5 21.4-21.3 21.4H128a21.4 21.4 0 01-21.3-21.4v-128zM384 448H85.3V256H384v192zm64-21.3c0 11.7-9.6 21.3-21.3 21.3h-21.4V245.3c0-5.9-4.7-10.6-10.6-10.6h-320c-6 0-10.7 4.7-10.7 10.6V448H42.7a21.4 21.4 0 01-21.4-21.3v-384c0-11.8 9.6-21.4 21.4-21.4h42.6v128A42.7 42.7 0 00128 192h192a42.7 42.7 0 0042.7-42.7v-128h6.2l79.1 79.1v326.3z"/>
+                  <path d="M266.7 149.3h42.6c6 0 10.7-4.7 10.7-10.6V53.3c0-5.9-4.8-10.6-10.7-10.6h-42.6c-6 0-10.7 4.7-10.7 10.6v85.4c0 5.9 4.8 10.6 10.7 10.6zM277.3 64h21.4v64h-21.4V64z"/>
+                </svg>
+              </button>
+              <button onclick="load()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.9 477.9" fill="#fff">
+                  <defs/>
+                  <path d="M443.7 307.2a17 17 0 00-17 17v102.5a17 17 0 01-17.1 17H68.3a17 17 0 01-17.1-17V324.3a17 17 0 10-34.1 0v102.4c0 28.2 22.9 51.2 51.2 51.2h341.3c28.3 0 51.2-23 51.2-51.2V324.3a17 17 0 00-17-17.1z"/>
+                  <path d="M336 295.1a17 17 0 00-23.8 0L256 351.3V17.1a17 17 0 10-34.1 0v334.2l-56.2-56.2a17 17 0 00-24.2 24.2l85.4 85.3a17 17 0 0024.1 0l85.4-85.3a17 17 0 00-.5-24.2z"/>
+                </svg>
+              </button>
+              <button onclick="zoomIn()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.3 459.3" fill="#fff">
+                  <defs/>
+                  <path d="M459.3 229.7c0 22.2-18 40.2-40.2 40.2H269.8V419a40.2 40.2 0 11-80.3 0V270H40.2A40 40 0 010 229.7c0-22.2 18-40.2 40.2-40.2h149.3V40.2a40.2 40.2 0 0180.4 0v149.3H419c22.2 0 40.2 18 40.2 40.2z"/>
+                </svg> 
+              </button>
+              <button onclick="zoomOut()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 124" fill="#fff">
+                  <defs/>
+                  <path d="M112 50H12A12 12 0 000 62a12 12 0 0012 12h100a12 12 0 0012-12 12 12 0 00-12-12z"/>
+                </svg>
+              </button>
+              <button onclick="deleteNode()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 0 427 427" fill="#fff">
+                  <defs/>
+                  <path d="M232 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0M114 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0"/>
+                  <path d="M28 127v247c0 14 6 28 15 38 9 9 22 15 36 15h189c14 0 26-6 36-15 9-10 14-24 14-38V127a38 38 0 00-9-75h-52V40a39 39 0 00-39-40h-89a39 39 0 00-40 40v12H38a38 38 0 00-10 75zm240 280H79c-17 0-31-15-31-33V128h250v246c0 18-13 33-30 33zM109 40a19 19 0 0120-20h89a19 19 0 0119 20v12H109zM38 72h271a18 18 0 110 36H38a18 18 0 110-36zm0 0"/>
+                  <path d="M173 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0"/>
+                </svg>
+              </button>
+              <button onclick="redo()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
+                  <defs/>
+                  <path d="M506.5 116L378.5 4A16 16 0 00352 16v48H224A224.2 224.2 0 000 288c0 123.5 100.5 224 224 224a16 16 0 000-32c-79.4 0-144-64.6-144-144s64.6-144 144-144h128v48a16 16 0 0026.5 12l128-112a16 16 0 000-24z"/>
+                </svg>
+              </button>
+            </div>
+
+            <div>
+              <textarea id="mySavedModel" style="width:100%;height:300px">
+                { "class": "go.GraphLinksModel",
+                  "nodeDataArray": 
+                  [
+                    { 
+                      "key":1, 
+                      "text":"Утверждение", 
+                      "category":"Loading" 
+                    }
+                  ]
+                }
+              </textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
 </html>
