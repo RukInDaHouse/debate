@@ -203,7 +203,6 @@ code,kbd,pre,samp {
 
 audio,canvas,embed,iframe,img,object,svg,video {
 	display: block;
-	vertical-align: middle;
 }
 
 img,video {
@@ -217,8 +216,6 @@ html {
 
 body {
 	font-size: .875rem;
-	line-height: 1.25rem;
-	line-height: 1.5;
 	letter-spacing: 0;
 }
 
@@ -1317,20 +1314,6 @@ canvas:focus {
 	}
 }
 
-.panel {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	width: 100vw;
-	z-index: 9999999;
-	background: #000;
-	transition: 3s;
-}
-.active__panel {
-	transform: translateY(300px);
-}
-
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
 * {
 		font-family: "Roboto", Arial, sans-serif;
@@ -1338,7 +1321,6 @@ canvas:focus {
 
 body {
 		font-size: 1rem;
-		padding: 20px;
 		text-align: center;
 }
 
