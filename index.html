@@ -48,7 +48,7 @@
 					1: "#9400d3"
 				});
 				var bluegrad = $(go.Brush, "Linear", {
-					0: "#CDDAF0",
+					0: "#91ADDD",
 					1: "#91ADDD"
 				});
 				var yellowgrad = $(go.Brush, "Linear", {
@@ -86,25 +86,64 @@
 					editable: true,
 					margin: new go.Margin(30, 30, 30, 30),
 					alignment: go.Spot.Left
-				}, new go.Binding("text").makeTwoWay()), $(go.Panel, "Auto", {
-					alignment: go.Spot.Right,
+				}, new go.Binding("text").makeTwoWay()),
+				$(go.Panel, "Auto", {
+					alignment: go.Spot.TopRight,
 					portId: "from",
 					fromLinkable: true,
 					cursor: "pointer",
-					click: addNodeAndLink
+					click: addNodeAndLinkPurple
 				}, $(go.Shape, "Circle", {
 					width: 22,
 					height: 22,
-					fill: "white",
-					stroke: "dodgerblue",
-					strokeWidth: 3
+					fill: "purple",
+					stroke: "purple",
+					strokeWidth: 1
 				}), $(go.Shape, "PlusLine", {
 					width: 11,
 					height: 11,
 					fill: null,
+					stroke: "white",
+					strokeWidth: 2
+				})), 
+				$(go.Panel, "Auto", {
+					alignment: go.Spot.TopLeft,
+					portId: "from",
+					fromLinkable: true,
+					cursor: "pointer",
+					click: addNodeAndLinkBlue
+				}, $(go.Shape, "Circle", {
+					width: 22,
+					height: 22,
+					fill: "dodgerblue",
 					stroke: "dodgerblue",
-					strokeWidth: 3
-				})), $(go.Panel, "Auto", {
+					strokeWidth: 1
+				}), $(go.Shape, "PlusLine", {
+					width: 11,
+					height: 11,
+					fill: null,
+					stroke: "white",
+					strokeWidth: 2
+				})), 
+				$(go.Panel, "Auto", {
+					alignment: go.Spot.TopCenter,
+					portId: "from",
+					fromLinkable: true,
+					cursor: "pointer",
+					click: addNodeAndLinkWhite
+				}, $(go.Shape, "Circle", {
+					width: 22,
+					height: 22,
+					fill: "white",
+					stroke: "black",
+					strokeWidth: 1
+				}), $(go.Shape, "PlusLine", {
+					width: 11,
+					height: 11,
+					fill: null,
+					stroke: "black",
+					strokeWidth: 2
+				})),$(go.Panel, "Auto", {
 					alignment: go.Spot.Left,
 					portId: "to",
 					toLinkable: true
@@ -519,9 +558,6 @@
 							elt.style.display = "none";
 						}
 					}
-					maybeShowItem(document.getElementById("cut"), cmd.canCutSelection());
-					maybeShowItem(document.getElementById("copy"), cmd.canCopySelection());
-					maybeShowItem(document.getElementById("paste"), cmd.canPasteSelection(diagram.toolManager.contextMenuTool.mouseDownPoint));
 					maybeShowItem(document.getElementById("delete"), cmd.canDeleteSelection());
 					maybeShowItem(document.getElementById("color"), obj !== null);
 					if(hasMenuItem) {
@@ -543,15 +579,6 @@
 				if(val === undefined) val = event.currentTarget.id;
 				var diagram = myDiagram;
 				switch(val) {
-					case "cut":
-						diagram.commandHandler.cutSelection();
-						break;
-					case "copy":
-						diagram.commandHandler.copySelection();
-						break;
-					case "paste":
-						diagram.commandHandler.pasteSelection(diagram.toolManager.contextMenuTool.mouseDownPoint);
-						break;
 					case "delete":
 						diagram.commandHandler.deleteSelection();
 						break;
@@ -618,9 +645,6 @@
 					<div style="position: relative;">
 						<div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 700px; width: 100vw; left: 0; padding: 0; margin: 0;"></div>
 						<ul id="contextMenu" class="menu">
-							<li id="cut" class="menu-item" onclick="cxcommand(event)">Вырезать</li>
-							<li id="copy" class="menu-item" onclick="cxcommand(event)">Копировать</li>
-							<li id="paste" class="menu-item" onclick="cxcommand(event)">Вставить</li>
 							<li id="delete" class="menu-item" onclick="cxcommand(event)">Удалить</li>
 							<li id="color" class="menu-item">Цвет
 								<ul class="menu">
