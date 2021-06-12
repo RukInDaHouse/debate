@@ -130,10 +130,10 @@
 					}, new go.Binding("text", "text"))),
 					// output port
 					$(go.Panel, "Auto", {
-						alignment: go.Spot.Left,
+						alignment: go.Spot.BottomLeft,
 						portId: "fromLeft",
 						fromLinkable: true,
-						click: addNodeAndLinkLeft
+						click: addNodeAndLinkLeftPurple
 					}, $(go.Shape, "Circle", {
 						width: 25,
 						height: 25,
@@ -147,6 +147,40 @@
 						stroke: "white",
 						strokeWidth: 2
 					})), $(go.Panel, "Auto", {
+						alignment: go.Spot.Left,
+						portId: "fromLeft",
+						fromLinkable: true,
+						click: addNodeAndLinkLeftWhite
+					}, $(go.Shape, "Circle", {
+						width: 25,
+						height: 25,
+						fill: "white",
+						stroke: "white",
+						strokeWidth: 3
+					}), $(go.Shape, "PlusLine", {
+						width: 11,
+						height: 11,
+						fill: null,
+						stroke: "black",
+						strokeWidth: 2
+					})), $(go.Panel, "Auto", {
+						alignment: go.Spot.TopLeft,
+						portId: "fromLeft",
+						fromLinkable: true,
+						click: addNodeAndLinkLeftBlue
+					}, $(go.Shape, "Circle", {
+						width: 25,
+						height: 25,
+						fill: "dodgerblue",
+						stroke: "dodgerblue",
+						strokeWidth: 3
+					}), $(go.Shape, "PlusLine", {
+						width: 11,
+						height: 11,
+						fill: null,
+						stroke: "white",
+						strokeWidth: 2
+					})),$(go.Panel, "Auto", {
 						alignment: go.Spot.TopRight,
 						portId: "from",
 						fromLinkable: true,
@@ -163,8 +197,7 @@
 						fill: null,
 						stroke: "white",
 						strokeWidth: 2
-					})),
-					$(go.Panel, "Auto", {
+					})),$(go.Panel, "Auto", {
 						alignment: go.Spot.Right,
 						portId: "from",
 						fromLinkable: true,
@@ -322,6 +355,72 @@
 						dir: "left",
 						text: "Аргумент",
 						color: bluegrad
+					};
+					var model = diagram.model;
+					model.addNodeData(toData);
+					var linkdata = {
+						from: model.getKeyForNodeData(fromData),
+						to: model.getKeyForNodeData(toData)
+					};
+					model.addLinkData(linkdata);
+					var newnode = diagram.findNodeForData(toData);
+					diagram.select(newnode);
+					shiftNodesToEmptySpaces();
+					diagram.commitTransaction("Добавить");
+				}
+				function addNodeAndLinkLeftWhite(e, obj) {
+					var fromNode = obj.part;
+					var diagram = fromNode.diagram;
+					diagram.startTransaction("Добавить");
+					var fromData = fromNode.data;
+					var toData = {
+						dir: "left",
+						text: "Аргумент",
+						color: white
+					};
+					var model = diagram.model;
+					model.addNodeData(toData);
+					var linkdata = {
+						from: model.getKeyForNodeData(fromData),
+						to: model.getKeyForNodeData(toData)
+					};
+					model.addLinkData(linkdata);
+					var newnode = diagram.findNodeForData(toData);
+					diagram.select(newnode);
+					shiftNodesToEmptySpaces();
+					diagram.commitTransaction("Добавить");
+				}
+				function addNodeAndLinkLeftBlue(e, obj) {
+					var fromNode = obj.part;
+					var diagram = fromNode.diagram;
+					diagram.startTransaction("Добавить");
+					var fromData = fromNode.data;
+					var toData = {
+						dir: "left",
+						text: "Аргумент",
+						color: bluegrad
+					};
+					var model = diagram.model;
+					model.addNodeData(toData);
+					var linkdata = {
+						from: model.getKeyForNodeData(fromData),
+						to: model.getKeyForNodeData(toData)
+					};
+					model.addLinkData(linkdata);
+					var newnode = diagram.findNodeForData(toData);
+					diagram.select(newnode);
+					shiftNodesToEmptySpaces();
+					diagram.commitTransaction("Добавить");
+				}
+				function addNodeAndLinkLeftPurple(e, obj) {
+					var fromNode = obj.part;
+					var diagram = fromNode.diagram;
+					diagram.startTransaction("Добавить");
+					var fromData = fromNode.data;
+					var toData = {
+						dir: "left",
+						text: "Аргумент",
+						color: graygrad
 					};
 					var model = diagram.model;
 					model.addNodeData(toData);
