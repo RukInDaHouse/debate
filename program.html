@@ -155,6 +155,67 @@
 					portId: "to",
 					toLinkable: true
 				}, ));
+				myDiagram.nodeTemplate.contextMenu =
+				$("ContextMenu",
+				$("ContextMenuButton",
+					$(go.TextBlock, "Удалить ветвь"),
+					{
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if (node !== null) {
+						myDiagram.startTransaction("remove dept");
+						myDiagram.removeParts(node.findTreeParts());
+						myDiagram.commitTransaction("remove dept");
+						}
+					}
+					}
+				),
+				$("ContextMenuButton",
+					$(go.TextBlock, "Сменить цвет (Фиолетовый)"),
+					{
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if (node !== null) {
+						myDiagram.startTransaction("remove dept");
+						var color = graygrad;
+						var diagram = myDiagram;
+						changeColor(diagram, color);
+						myDiagram.commitTransaction("remove dept");
+						}
+					}
+					}
+				),
+				$("ContextMenuButton",
+					$(go.TextBlock, "Сменить цвет (Синий)"),
+					{
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if (node !== null) {
+						myDiagram.startTransaction("remove dept");
+						var color = bluegrad;
+						var diagram = myDiagram;
+						changeColor(diagram, color);
+						myDiagram.commitTransaction("remove dept");
+						}
+					}
+					}
+				),
+				$("ContextMenuButton",
+					$(go.TextBlock, "Сменить цвет (Белый)"),
+					{
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if (node !== null) {
+						myDiagram.startTransaction("remove dept");
+						var color = "white";
+						var diagram = myDiagram;
+						changeColor(diagram, color);
+						myDiagram.commitTransaction("remove dept");
+						}
+					}
+					}
+				),
+				);
 				myDiagram.nodeTemplateMap.add("Loading", $(go.Node, "Spot", {
 						selectionAdorned: false,
 						textEditable: true,
