@@ -171,6 +171,42 @@
 					}
 				),
 				$("ContextMenuButton",
+					$(go.TextBlock, "Перекрасить ветвь (Фиолетовый)"),
+					{
+					click: (e, button) => {
+					    const node = button.part.adornedPart;
+						if (!node) return;
+						e.diagram.model.commit(m => {
+        				node.findTreeParts().each(n => m.set(n.data, "color", graygrad));
+    				});	
+					}
+					}
+				),
+				$("ContextMenuButton",
+					$(go.TextBlock, "Перекрасить ветвь (Синий)"),
+					{
+					click: (e, button) => {
+					    const node = button.part.adornedPart;
+						if (!node) return;
+						e.diagram.model.commit(m => {
+        				node.findTreeParts().each(n => m.set(n.data, "color", bluegrad));
+    				});	
+					}
+					}
+				),
+				$("ContextMenuButton",
+					$(go.TextBlock, "Перекрасить ветвь (Белый)"),
+					{
+					click: (e, button) => {
+					    const node = button.part.adornedPart;
+						if (!node) return;
+						e.diagram.model.commit(m => {
+        				node.findTreeParts().each(n => m.set(n.data, "color", "white"));
+    				});	
+					}
+					}
+				),
+				$("ContextMenuButton",
 					$(go.TextBlock, "Сменить цвет (Фиолетовый)"),
 					{
 					click: function(e, obj) {
@@ -644,20 +680,7 @@
 			}
 
 			function cxcommand(event, val) {
-				if(val === undefined) val = event.currentTarget.id;
-				var diagram = myDiagram;
-				switch(val) {
-					case "delete":
-						diagram.commandHandler.deleteSelection();
-						break;
-					case "color":
-						{
-							var color = window.getComputedStyle(event.target)['background-color'];
-							changeColor(diagram, color);
-							break;
-						}
-				}
-				diagram.currentTool.stopTool();
+
 			}
 
 			function deleteNode() {
