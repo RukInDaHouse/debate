@@ -81,7 +81,6 @@
 					hide: hideContextMenu
 				});
 				myDiagram.nodeTemplate = $(go.Node, "Auto", {
-					selectionAdorned: false,
 					textEditable: true,
 					contextMenu: myContextMenu,
 					locationObjectName: "BODY"
@@ -387,6 +386,13 @@
 						myDiagram.currentTool.doCancel();
 					}
 				}
+
+				myDiagram.groupTemplate =
+				$(go.Group, "Auto",
+					// the group does not lay out any of its member nodes
+					{ layout: null },
+					$(go.Shape, { visible: false, fill: "transparent" }),
+					$(go.Placeholder));
 				myDiagram.linkTemplate = $(go.Link, go.Link.Orthogonal, {
 					corner: 5,
 					relinkableFrom: true,
@@ -730,6 +736,7 @@
 				diagram.commitTransaction("change color");
 			}
 			window.addEventListener('DOMContentLoaded', init);
+			
 			</script>
 		
 		</div>
