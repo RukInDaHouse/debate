@@ -25,6 +25,11 @@
 				var $ = go.GraphObject.make;
 				myDiagram = $(go.Diagram, "myDiagramDiv", {
 					"undoManager.isEnabled": true,
+					padding: 20,  // extra space when scrolled all the way
+            		grid: $(go.Panel, "Grid",  // a simple 10x10 grid
+              		$(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.2 }),
+              		$(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.2 })
+            		),
 					layout: $(DoubleTreeLayout, {
 						vertical: false,
 						directionFunction: function(n) {
@@ -200,7 +205,7 @@
 					    const node = button.part.adornedPart;
 						if (!node) return;
 						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", "white"));
+        				node.findTreeParts().each(n => m.set(n.data, "font", "150px Helvetica"));
     				});	
 					}
 					}
