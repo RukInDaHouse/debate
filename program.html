@@ -99,8 +99,7 @@
 				myDiagram.nodeTemplate = $(go.Node, "Auto", {
 					selectionAdorned: true,
 					textEditable: true,
-					contextMenu: myContextMenu,
-					name: "SHAPE"				}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
+					contextMenu: myContextMenu}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
 					minSize: new go.Size(120, 21),
 				}, new go.Binding("fill", "color")), $(go.TextBlock, {
 					stroke: "black",
@@ -110,25 +109,24 @@
 					alignment: go.Spot.Left
 				}, new go.Binding("text").makeTwoWay()),
 
-				$(go.Panel, "Auto", {
-					alignment: go.Spot.TopLeft,
-					portId: "from",
-					fromLinkable: true,
-					cursor: "pointer",
-					click: addNodeAndLinkBlue
-				}, $(go.Shape, "Circle", {
-					width: 22,
-					height: 22,
-					fill: "dodgerblue",
-					stroke: "dodgerblue",
-					strokeWidth: 1
-				}), $(go.Shape, "PlusLine", {
-					width: 11,
-					height: 11,
-					fill: null,
-					stroke: "white",
-					strokeWidth: 2
-				})), );
+				$(go.Panel, "Auto", {alignment: go.Spot.TopRight},
+            	$("Button",
+              	{   
+					"ButtonBorder.figure": "Circle",
+					"ButtonBorder.strokeWidth": 3,
+					"_buttonFillOver": "white",
+					"_buttonStrokeOver": "grey",
+					click: changeLikeColor,
+				},
+              
+              	$(go.Shape,
+                { 
+					geometryString: "M406 90h-30a15 15 0 100 30h30a15 15 0 100-30zM254 38L239 8a15 15 0 00-27 14l16 30a15 15 0 0026-14zM353 2c-7-4-17-1-20 6l-15 30a15 15 0 1027 14l15-30c3-8 0-17-7-20zM196 90h-30a15 15 0 100 30h30a15 15 0 100-30zM106 241H46c-9 0-15 7-15 15v241c0 8 6 15 15 15h60c8 0 15-7 15-15V256c0-8-7-15-15-15zM481 281c-3-23-24-40-48-40H316c10-17 15-68 15-88 0-35-28-62-63-62h-12c-8 0-15 7-15 15 0 35-14 98-39 123-17 17-32 24-51 33v226c29 10 67 24 124 24h98c32 0 58-30 45-62a45 45 0 0030-60c32-9 44-48 22-73 8-10 13-22 11-36z",
+					desiredSize: new go.Size(15, 15),
+					margin: 5
+					 
+				})
+            	),) );
 				myDiagram.nodeTemplate.selectionAdornmentTemplate =
 				$(go.Adornment, "Spot",
 				$(go.Panel, "Auto",
@@ -139,12 +137,26 @@
 					{ alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom },
 
 					$("Button",
-					{ click: addNodeAndLinkPurple, desiredSize: new go.Size(30, 30), margin: 20},
+					{ 	click: addNodeAndLinkPurple, 
+						desiredSize: new go.Size(30, 30), 
+						margin: new go.Margin(0, 20, 0, 0),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					},
 					$(go.Shape,
 					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
 					),
 					$("Button",
-					{ click: addNodeAndLinkBlue, desiredSize: new go.Size(30, 30), margin: 20},
+					{ 	click: addNodeAndLinkBlue, 
+						desiredSize: new go.Size(30, 30), 
+						margin: new go.Margin(0, 0, 0, 20),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					},
 					$(go.Shape,
 					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
 					),
@@ -493,23 +505,13 @@
 					diagram.commitTransaction("Добавить");
 				}
 
-				var myColors = ["lightgray", "lightblue", "lightgreen", "yellow", "orange", "pink"];
-
-				function nextColor(c) {
-					var idx = myColors.indexOf(c);
-					if (idx < 0) return "lightgray";
-					if (idx >= myColors.length - 1) idx = 0;
-					return myColors[idx + 1];
-				}
-
 				function changeLikeColor(e, button) {
-					var node = button.part.adornedPart;
-					var shape = node.findObject("SHAPE");
-					if (shape === null) return;
-					node.diagram.startTransaction("Change color");
-					shape.fill = nextColor(shape.fill);
-					button["_buttonFillNormal"] = nextColor(shape.fill);  // update the button too
-					node.diagram.commitTransaction("Change color");
+					colorButton = button["_buttonFillNormal"];
+					if (colorButton == "gold") {
+						button["_buttonFillNormal"] =  "white";
+					} else {
+						button["_buttonFillNormal"] =  "gold";
+        			}    
 				}
 
 				function addNodeAndLinkLeftWhite(e, obj) {
