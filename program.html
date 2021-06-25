@@ -111,25 +111,7 @@
 					margin: new go.Margin(30, 30, 30, 30),
 					alignment: go.Spot.Left
 				}, new go.Binding("text").makeTwoWay()),
-				$(go.Panel, "Auto", {
-					alignment: go.Spot.TopRight,
-					portId: "from",
-					fromLinkable: true,
-					cursor: "pointer",
-					click: addNodeAndLinkPurple
-				}, $(go.Shape, "Circle", {
-					width: 22,
-					height: 22,
-					fill: "purple",
-					stroke: "purple",
-					strokeWidth: 1
-				}), $(go.Shape, "PlusLine", {
-					width: 11,
-					height: 11,
-					fill: null,
-					stroke: "white",
-					strokeWidth: 2
-				})), 
+
 				$(go.Panel, "Auto", {
 					alignment: go.Spot.TopLeft,
 					portId: "from",
@@ -149,25 +131,12 @@
 					stroke: "white",
 					strokeWidth: 2
 				})), 
-				$(go.Panel, "Auto", {
-					alignment: go.Spot.TopCenter,
-					portId: "from",
-					fromLinkable: true,
-					cursor: "pointer",
-					click: addNodeAndLinkWhite
-				}, $(go.Shape, "Circle", {
-					width: 22,
-					height: 22,
-					fill: "white",
-					stroke: "black",
-					strokeWidth: 1
-				}), $(go.Shape, "PlusLine", {
-					width: 11,
-					height: 11,
-					fill: null,
-					stroke: "black",
-					strokeWidth: 2
-				})),$(go.Panel, "Auto", {
+				$("Button",
+              { click: changeLikeColor, "_buttonFillOver": "transparent" },  // defined below, to support changing the color of the node
+              new go.Binding("ButtonBorder.fill", "color", nextColor),
+              $(go.Shape,
+                { fill: null, stroke: null, name: "SHAPE",desiredSize: new go.Size(14, 14) })
+            ),$(go.Panel, "Auto", {
 					alignment: go.Spot.Left,
 					portId: "to",
 					toLinkable: true
@@ -175,28 +144,21 @@
 				myDiagram.nodeTemplate.selectionAdornmentTemplate =
 				$(go.Adornment, "Spot",
 				$(go.Panel, "Auto",
-					$(go.Shape, { stroke: "dodgerblue", strokeWidth: 2, fill: null }),
+					$(go.Shape, "Circle", { stroke: "dodgerblue", strokeWidth: 2, fill: null }),
 					$(go.Placeholder)
 				),
 				$(go.Panel, "Horizontal",
 					{ alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom },
+
 					$("Button",
-					{ click: addNodeAndLinkWhite},
-					new go.Binding("ButtonBorder.fill", "color", nextColor),
+					{ click: addNodeAndLinkPurple, desiredSize: new go.Size(30, 30), margin: 20},
 					$(go.Shape,
-						{ fill: null, stroke: null, desiredSize: new go.Size(14, 14) })
+					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
 					),
 					$("Button",
-					{ click: addNodeAndLinkBlue},
-					new go.Binding("ButtonBorder.fill", "color", nextColor),
+					{ click: addNodeAndLinkBlue, desiredSize: new go.Size(30, 30), margin: 20},
 					$(go.Shape,
-						{ fill: null, stroke: null, desiredSize: new go.Size(14, 14) })
-					),
-					$("Button",
-					{ click: addNodeAndLinkPurple},
-					new go.Binding("ButtonBorder.fill", "color", nextColor),
-					$(go.Shape,
-						{ fill: null, stroke: null, desiredSize: new go.Size(14, 14) })
+					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
 					),
 				)
 				);
@@ -351,19 +313,7 @@
 						portId: "fromLeft",
 						fromLinkable: true,
 						click: addNodeAndLinkLeftWhite
-					}, $(go.Shape, "Circle", {
-						width: 25,
-						height: 25,
-						fill: "white",
-						stroke: "white",
-						strokeWidth: 3
-					}), $(go.Shape, "PlusLine", {
-						width: 11,
-						height: 11,
-						fill: null,
-						stroke: "black",
-						strokeWidth: 2
-					})), $(go.Panel, "Auto", {
+					}), $(go.Panel, "Auto", {
 						alignment: go.Spot.TopLeft,
 						portId: "fromLeft",
 						fromLinkable: true,
@@ -396,23 +346,6 @@
 						height: 11,
 						fill: null,
 						stroke: "white",
-						strokeWidth: 2
-					})),$(go.Panel, "Auto", {
-						alignment: go.Spot.Right,
-						portId: "from",
-						fromLinkable: true,
-						click: addNodeAndLinkWhite
-					}, $(go.Shape, "Circle", {
-						width: 25,
-						height: 25,
-						fill: "white",
-						stroke: "white",
-						strokeWidth: 3
-					}), $(go.Shape, "PlusLine", {
-						width: 11,
-						height: 11,
-						fill: null,
-						stroke: "black",
 						strokeWidth: 2
 					})),
 					$(go.Panel, "Auto", {
