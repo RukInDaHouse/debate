@@ -109,7 +109,7 @@
 					alignment: go.Spot.Left
 				}, new go.Binding("text").makeTwoWay()),
 
-				$(go.Panel, "Auto", {alignment: go.Spot.TopRight},
+				$(go.Panel, "Auto", {alignment: go.Spot.BottomRight},
             	$("Button",
               	{   
 					"ButtonBorder.figure": "Circle",
@@ -121,7 +121,7 @@
               
               	$(go.Shape,
                 { 
-					geometryString: "M406 90h-30a15 15 0 100 30h30a15 15 0 100-30zM254 38L239 8a15 15 0 00-27 14l16 30a15 15 0 0026-14zM353 2c-7-4-17-1-20 6l-15 30a15 15 0 1027 14l15-30c3-8 0-17-7-20zM196 90h-30a15 15 0 100 30h30a15 15 0 100-30zM106 241H46c-9 0-15 7-15 15v241c0 8 6 15 15 15h60c8 0 15-7 15-15V256c0-8-7-15-15-15zM481 281c-3-23-24-40-48-40H316c10-17 15-68 15-88 0-35-28-62-63-62h-12c-8 0-15 7-15 15 0 35-14 98-39 123-17 17-32 24-51 33v226c29 10 67 24 124 24h98c32 0 58-30 45-62a45 45 0 0030-60c32-9 44-48 22-73 8-10 13-22 11-36z",
+					geometryString: "M106 242H46c-9 0-15 6-15 15v240c0 8 6 15 15 15h60c8 0 15-7 15-15V257c0-9-7-15-15-15zM481 281c-3-23-24-39-48-39H316c10-18 15-69 15-89 0-35-28-62-62-62h-13c-8 0-15 7-15 15 0 35-13 98-39 123-17 17-32 24-51 33v226c29 9 67 24 124 24h98c33 0 58-30 45-62a45 45 0 0030-60c32-9 44-49 22-74 8-9 13-21 11-35z",
 					desiredSize: new go.Size(15, 15),
 					margin: 5
 					 
@@ -130,7 +130,7 @@
 				myDiagram.nodeTemplate.selectionAdornmentTemplate =
 				$(go.Adornment, "Spot",
 				$(go.Panel, "Auto",
-					$(go.Shape, "Circle", { stroke: "dodgerblue", strokeWidth: 2, fill: null }),
+					$(go.Shape, "Rectangle", { stroke: "dodgerblue", strokeWidth: 2, fill: null }),
 					$(go.Placeholder)
 				),
 				$(go.Panel, "Horizontal",
@@ -139,7 +139,7 @@
 					$("Button",
 					{ 	click: addNodeAndLinkPurple, 
 						desiredSize: new go.Size(30, 30), 
-						margin: new go.Margin(0, 20, 0, 0),
+						margin: new go.Margin(0, 20, 5, 0),
 						"ButtonBorder.figure": "Circle",
 						"ButtonBorder.strokeWidth": 3,
 						"_buttonFillOver": "white",
@@ -151,7 +151,7 @@
 					$("Button",
 					{ 	click: addNodeAndLinkBlue, 
 						desiredSize: new go.Size(30, 30), 
-						margin: new go.Margin(0, 0, 0, 20),
+						margin: new go.Margin(0, 0, 5, 20),
 						"ButtonBorder.figure": "Circle",
 						"ButtonBorder.strokeWidth": 3,
 						"_buttonFillOver": "white",
