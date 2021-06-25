@@ -62,9 +62,17 @@
 					0: "#9400d3",
 					1: "#9400d3"
 				});
+				var purplewhite = $(go.Brush, "Linear", {
+					0: "#9400d3",
+					1: "#FFFFFF"
+				});
 				var bluegrad = $(go.Brush, "Linear", {
 					0: "#91ADDD",
 					1: "#91ADDD"
+				});
+				var bluewhite = $(go.Brush, "Linear", {
+					0: "#91ADDD",
+					1: "#FFFFFF"
 				});
 				var yellowgrad = $(go.Brush, "Linear", {
 					0: "#FEC901",
@@ -94,7 +102,8 @@
 					contextMenu: myContextMenu,
 					locationObjectName: "BODY"
 				}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
-					minSize: new go.Size(120, 21)
+					minSize: new go.Size(120, 21),
+					name: "SHAPE"
 				}, new go.Binding("fill", "color")), $(go.TextBlock, {
 					stroke: "black",
 					font: "15px Helvetica",
@@ -163,6 +172,34 @@
 					portId: "to",
 					toLinkable: true
 				}, ));
+				myDiagram.nodeTemplate.selectionAdornmentTemplate =
+				$(go.Adornment, "Spot",
+				$(go.Panel, "Auto",
+					$(go.Shape, { stroke: "dodgerblue", strokeWidth: 2, fill: null }),
+					$(go.Placeholder)
+				),
+				$(go.Panel, "Horizontal",
+					{ alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom },
+					$("Button",
+					{ click: addNodeAndLinkWhite},
+					new go.Binding("ButtonBorder.fill", "color", nextColor),
+					$(go.Shape,
+						{ fill: null, stroke: null, desiredSize: new go.Size(14, 14) })
+					),
+					$("Button",
+					{ click: addNodeAndLinkBlue},
+					new go.Binding("ButtonBorder.fill", "color", nextColor),
+					$(go.Shape,
+						{ fill: null, stroke: null, desiredSize: new go.Size(14, 14) })
+					),
+					$("Button",
+					{ click: addNodeAndLinkPurple},
+					new go.Binding("ButtonBorder.fill", "color", nextColor),
+					$(go.Shape,
+						{ fill: null, stroke: null, desiredSize: new go.Size(14, 14) })
+					),
+				)
+				);
 				myDiagram.nodeTemplate.contextMenu =
 				$("ContextMenu",
 				$("ContextMenuButton",
@@ -203,13 +240,25 @@
 					}
 				),
 				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Белый)"),
+					$(go.TextBlock, "Перекрасить ветвь (Полуфиолетовый)"),
 					{
 					click: (e, button) => {
 					    const node = button.part.adornedPart;
 						if (!node) return;
 						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "stroke", "red"));
+        				node.findTreeParts().each(n => m.set(n.data, "color", purplewhite));
+    				});	
+					}
+					}
+				),
+				$("ContextMenuButton",
+					$(go.TextBlock, "Перекрасить ветвь (Полубелый)"),
+					{
+					click: (e, button) => {
+					    const node = button.part.adornedPart;
+						if (!node) return;
+						e.diagram.model.commit(m => {
+        				node.findTreeParts().each(n => m.set(n.data, "color", bluewhite));
     				});	
 					}
 					}
@@ -521,6 +570,26 @@
 					shiftNodesToEmptySpaces();
 					diagram.commitTransaction("Добавить");
 				}
+
+				var myColors = ["lightgray", "lightblue", "lightgreen", "yellow", "orange", "pink"];
+
+				function nextColor(c) {
+					var idx = myColors.indexOf(c);
+					if (idx < 0) return "lightgray";
+					if (idx >= myColors.length - 1) idx = 0;
+					return myColors[idx + 1];
+				}
+
+				function changeLikeColor(e, button) {
+					var node = button.part.adornedPart;
+					var shape = node.findObject("SHAPE");
+					if (shape === null) return;
+					node.diagram.startTransaction("Change color");
+					shape.fill = nextColor(shape.fill);
+					button["_buttonFillNormal"] = nextColor(shape.fill);  // update the button too
+					node.diagram.commitTransaction("Change color");
+				}
+
 				function addNodeAndLinkLeftWhite(e, obj) {
 					var fromNode = obj.part;
 					var diagram = fromNode.diagram;
