@@ -100,10 +100,8 @@
 					selectionAdorned: true,
 					textEditable: true,
 					contextMenu: myContextMenu,
-					locationObjectName: "BODY"
-				}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
+					name: "SHAPE"				}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
 					minSize: new go.Size(120, 21),
-					name: "SHAPE"
 				}, new go.Binding("fill", "color")), $(go.TextBlock, {
 					stroke: "black",
 					font: "15px Helvetica",
@@ -130,17 +128,7 @@
 					fill: null,
 					stroke: "white",
 					strokeWidth: 2
-				})), 
-				$("Button",
-              { click: changeLikeColor, "_buttonFillOver": "transparent" },  // defined below, to support changing the color of the node
-              new go.Binding("ButtonBorder.fill", "color", nextColor),
-              $(go.Shape,
-                { fill: null, stroke: null, name: "SHAPE",desiredSize: new go.Size(14, 14) })
-            ),$(go.Panel, "Auto", {
-					alignment: go.Spot.Left,
-					portId: "to",
-					toLinkable: true
-				}, ));
+				})), );
 				myDiagram.nodeTemplate.selectionAdornmentTemplate =
 				$(go.Adornment, "Spot",
 				$(go.Panel, "Auto",
@@ -160,6 +148,7 @@
 					$(go.Shape,
 					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
 					),
+
 				)
 				);
 				myDiagram.nodeTemplate.contextMenu =
