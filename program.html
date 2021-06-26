@@ -317,7 +317,7 @@
 						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
 						),
 						$("Button",
-							{ 	click: addNodeAndLinkBlue,
+							{ 	click: addNodeAndLinkPurple,
 								alignment: go.Spot.BottomRight, 
 								desiredSize: new go.Size(30, 30), 
 								margin: new go.Margin(0, 0, 5, 20),
@@ -327,10 +327,10 @@
 								"_buttonStrokeOver": "grey",
 							},
 						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
+						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
 						),
 						$("Button",
-							{ 	click: addNodeAndLinkBlue,
+							{ 	click: addNodeAndLinkLeftBlue,
 								alignment: go.Spot.TopLeft, 
 								desiredSize: new go.Size(30, 30), 
 								margin: new go.Margin(0, 0, 5, 20),
@@ -343,7 +343,7 @@
 						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
 						),
 						$("Button",
-							{ 	click: addNodeAndLinkBlue,
+							{ 	click: addNodeAndLinkLeftPurple,
 								alignment: go.Spot.BottomLeft, 
 								desiredSize: new go.Size(30, 30), 
 								margin: new go.Margin(0, 0, 5, 20),
@@ -353,89 +353,12 @@
 								"_buttonStrokeOver": "grey",
 							},
 						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
+						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
 						),
 					
 						)
 					},
-
-					$(go.Panel, "Auto", {
-						alignment: go.Spot.BottomLeft,
-						portId: "fromLeft",
-						fromLinkable: true,
-						click: addNodeAndLinkLeftPurple
-					}, $(go.Shape, "Circle", {
-						width: 25,
-						height: 25,
-						fill: "purple",
-						stroke: "purple",
-						strokeWidth: 3
-					}), $(go.Shape, "PlusLine", {
-						width: 11,
-						height: 11,
-						fill: null,
-						stroke: "white",
-						strokeWidth: 2
-					})), $(go.Panel, "Auto", {
-						alignment: go.Spot.Left,
-						portId: "fromLeft",
-						fromLinkable: true,
-						click: addNodeAndLinkLeftWhite
-					}), $(go.Panel, "Auto", {
-						alignment: go.Spot.TopLeft,
-						portId: "fromLeft",
-						fromLinkable: true,
-						click: addNodeAndLinkLeftBlue
-					}, $(go.Shape, "Circle", {
-						width: 25,
-						height: 25,
-						fill: "dodgerblue",
-						stroke: "dodgerblue",
-						strokeWidth: 3
-					}), $(go.Shape, "PlusLine", {
-						width: 11,
-						height: 11,
-						fill: null,
-						stroke: "white",
-						strokeWidth: 2
-					})),$(go.Panel, "Auto", {
-						alignment: go.Spot.TopRight,
-						portId: "from",
-						fromLinkable: true,
-						click: addNodeAndLinkBlue
-					}, $(go.Shape, "Circle", {
-						width: 25,
-						height: 25,
-						fill: "dodgerblue",
-						stroke: "dodgerblue",
-						strokeWidth: 3
-					}), $(go.Shape, "PlusLine", {
-						width: 11,
-						height: 11,
-						fill: null,
-						stroke: "white",
-						strokeWidth: 2
-					})),
-					
-					
-					$(go.Panel, "Auto", {
-						alignment: go.Spot.BottomRight,
-						portId: "from",
-						fromLinkable: true,
-						click: addNodeAndLinkPurple
-					}, $(go.Shape, "Circle", {
-						width: 25,
-						height: 25,
-						fill: "purple",
-						stroke: "purple",
-						strokeWidth: 3
-					}), $(go.Shape, "PlusLine", {
-						width: 11,
-						height: 11,
-						fill: null,
-						stroke: "white",
-						strokeWidth: 2
-					}))));
+));
 
 
 				myDiagram.contextMenu = myContextMenu;
