@@ -63,7 +63,7 @@
 					1: "#800080"
 				});
 				var purplewhite = $(go.Brush, "Linear", {
-					0: "#9400d3",
+					0: "#800080",
 					1: "#FFFFFF"
 				});
 				var bluegrad = $(go.Brush, "Linear", {
@@ -71,7 +71,7 @@
 					1: "#007fff"
 				});
 				var bluewhite = $(go.Brush, "Linear", {
-					0: "#91ADDD",
+					0: "#007fff",
 					1: "#FFFFFF"
 				});
 				var yellowgrad = $(go.Brush, "Linear", {
@@ -181,7 +181,7 @@
 					}
 				),
 				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Фиолетовый)"),
+					$(go.TextBlock, "Перекрасить ветвь (Пурпурный)"),
 					{
 					click: (e, button) => {
 					    const node = button.part.adornedPart;
@@ -193,7 +193,7 @@
 					}
 				),
 				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Синий)"),
+					$(go.TextBlock, "Перекрасить ветвь (Лазурный)"),
 					{
 					click: (e, button) => {
 					    const node = button.part.adornedPart;
@@ -205,7 +205,7 @@
 					}
 				),
 				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Полуфиолетовый)"),
+					$(go.TextBlock, "Перекрасить ветвь (Пурпурный градиент)"),
 					{
 					click: (e, button) => {
 					    const node = button.part.adornedPart;
@@ -217,7 +217,7 @@
 					}
 				),
 				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Полубелый)"),
+					$(go.TextBlock, "Перекрасить ветвь (Лазурный градиент)"),
 					{
 					click: (e, button) => {
 					    const node = button.part.adornedPart;
@@ -229,7 +229,7 @@
 					}
 				),
 				$("ContextMenuButton",
-					$(go.TextBlock, "Сменить цвет (Фиолетовый)"),
+					$(go.TextBlock, "Сменить цвет (Пурпурный)"),
 					{
 					click: function(e, obj) {
 						var node = obj.part.adornedPart;
@@ -244,7 +244,7 @@
 					}
 				),
 				$("ContextMenuButton",
-					$(go.TextBlock, "Сменить цвет (Синий)"),
+					$(go.TextBlock, "Сменить цвет (Лазурный)"),
 					{
 					click: function(e, obj) {
 						var node = obj.part.adornedPart;
@@ -280,20 +280,85 @@
 						locationObjectName: "BODY"
 					}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Panel, "Auto", {
 						name: "BODY"
-					}, $(go.Shape, "RoundedRectangle", {
+					}, 
+					
+					$(go.Shape, "RoundedRectangle", {
 						fill: graygrad,
 						stroke: "gray",
-						minSize: new go.Size(20, 21)
-					}, new go.Binding("fill", "isSelected", function(s) {
-						return s ? "dodgerblue" : graygrad;
-					}).ofObject()), $(go.TextBlock, {
+						minSize: new go.Size(20, 21),
+					}, ), $(go.TextBlock, {
 						stroke: "white",
 						font: "17px Helvetica",
 						editable: true,
 						margin: new go.Margin(30, 30, 30, 30),
 						alignment: go.Spot.Left
 					}, new go.Binding("text", "text"))),
-					// output port
+					{
+					selectionAdornmentTemplate:
+						$(go.Adornment, "Spot",
+						$(go.Panel, "Auto",
+							$(go.Shape, 
+							{ 
+								fill: null
+							}),
+							$(go.Placeholder)
+						),
+						$("Button",
+							{ 	click: addNodeAndLinkBlue,
+								alignment: go.Spot.TopRight, 
+								desiredSize: new go.Size(30, 30), 
+								margin: new go.Margin(0, 0, 5, 20),
+								"ButtonBorder.figure": "Circle",
+								"ButtonBorder.strokeWidth": 3,
+								"_buttonFillOver": "white",
+								"_buttonStrokeOver": "grey",
+							},
+						$(go.Shape,
+						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
+						),
+						$("Button",
+							{ 	click: addNodeAndLinkBlue,
+								alignment: go.Spot.BottomRight, 
+								desiredSize: new go.Size(30, 30), 
+								margin: new go.Margin(0, 0, 5, 20),
+								"ButtonBorder.figure": "Circle",
+								"ButtonBorder.strokeWidth": 3,
+								"_buttonFillOver": "white",
+								"_buttonStrokeOver": "grey",
+							},
+						$(go.Shape,
+						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
+						),
+						$("Button",
+							{ 	click: addNodeAndLinkBlue,
+								alignment: go.Spot.TopLeft, 
+								desiredSize: new go.Size(30, 30), 
+								margin: new go.Margin(0, 0, 5, 20),
+								"ButtonBorder.figure": "Circle",
+								"ButtonBorder.strokeWidth": 3,
+								"_buttonFillOver": "white",
+								"_buttonStrokeOver": "grey",
+							},
+						$(go.Shape,
+						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
+						),
+						$("Button",
+							{ 	click: addNodeAndLinkBlue,
+								alignment: go.Spot.BottomLeft, 
+								desiredSize: new go.Size(30, 30), 
+								margin: new go.Margin(0, 0, 5, 20),
+								"ButtonBorder.figure": "Circle",
+								"ButtonBorder.strokeWidth": 3,
+								"_buttonFillOver": "white",
+								"_buttonStrokeOver": "grey",
+							},
+						$(go.Shape,
+						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
+						),
+					
+						)
+					},
+
 					$(go.Panel, "Auto", {
 						alignment: go.Spot.BottomLeft,
 						portId: "fromLeft",
@@ -351,6 +416,8 @@
 						stroke: "white",
 						strokeWidth: 2
 					})),
+					
+					
 					$(go.Panel, "Auto", {
 						alignment: go.Spot.BottomRight,
 						portId: "from",
@@ -369,43 +436,8 @@
 						stroke: "white",
 						strokeWidth: 2
 					}))));
-					myDiagram.nodeTemplateMap.selectionAdornmentTemplate =
-				$(go.Adornment, "Spot",
-				$(go.Panel, "Auto",
-					$(go.Shape, "Rectangle", { stroke: "dodgerblue", strokeWidth: 2, fill: null }),
-					$(go.Placeholder)
-				),
-				$(go.Panel, "Horizontal",
-					{ alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom },
 
-					$("Button",
-					{ 	click: addNodeAndLinkPurple, 
-						desiredSize: new go.Size(30, 30), 
-						margin: new go.Margin(0, 20, 5, 0),
-						"ButtonBorder.figure": "Circle",
-						"ButtonBorder.strokeWidth": 3,
-						"_buttonFillOver": "white",
-						"_buttonStrokeOver": "grey",
-					},
-					$(go.Shape,
-					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
-					),
-					$("Button",
-					{ 	click: addNodeAndLinkBlue, 
-						desiredSize: new go.Size(30, 30), 
-						margin: new go.Margin(0, 0, 5, 20),
-						"ButtonBorder.figure": "Circle",
-						"ButtonBorder.strokeWidth": 3,
-						"_buttonFillOver": "white",
-						"_buttonStrokeOver": "grey",
-					},
-					$(go.Shape,
-					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
-					),
 
-				)
-				);
-					
 				myDiagram.contextMenu = myContextMenu;
 				cxElement.addEventListener("contextmenu", function(e) {
 					e.preventDefault();
