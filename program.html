@@ -59,16 +59,16 @@
 				
 				
 				var graygrad = $(go.Brush, "Linear", {
-					0: "#9400d3",
-					1: "#9400d3"
+					0: "#800080",
+					1: "#800080"
 				});
 				var purplewhite = $(go.Brush, "Linear", {
 					0: "#9400d3",
 					1: "#FFFFFF"
 				});
 				var bluegrad = $(go.Brush, "Linear", {
-					0: "#91ADDD",
-					1: "#91ADDD"
+					0: "#007fff",
+					1: "#007fff"
 				});
 				var bluewhite = $(go.Brush, "Linear", {
 					0: "#91ADDD",
@@ -102,8 +102,8 @@
 					contextMenu: myContextMenu}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
 					minSize: new go.Size(120, 21),
 				}, new go.Binding("fill", "color")), $(go.TextBlock, {
-					stroke: "black",
-					font: "15px Helvetica",
+					stroke: "white",
+					font: "17px Helvetica",
 					editable: true,
 					margin: new go.Margin(30, 30, 30, 30),
 					alignment: go.Spot.Left
@@ -116,6 +116,7 @@
 					"ButtonBorder.strokeWidth": 3,
 					"_buttonFillOver": "white",
 					"_buttonStrokeOver": "grey",
+					"ButtonBorder.fill": white,
 					click: changeLikeColor,
 				},
               
@@ -123,6 +124,7 @@
                 { 
 					geometryString: "M106 242H46c-9 0-15 6-15 15v240c0 8 6 15 15 15h60c8 0 15-7 15-15V257c0-9-7-15-15-15zM481 281c-3-23-24-39-48-39H316c10-18 15-69 15-89 0-35-28-62-62-62h-13c-8 0-15 7-15 15 0 35-13 98-39 123-17 17-32 24-51 33v226c29 9 67 24 124 24h98c33 0 58-30 45-62a45 45 0 0030-60c32-9 44-49 22-74 8-9 13-21 11-35z",
 					desiredSize: new go.Size(15, 15),
+					fill: "red",
 					margin: 5
 					 
 				})
@@ -285,8 +287,8 @@
 					}, new go.Binding("fill", "isSelected", function(s) {
 						return s ? "dodgerblue" : graygrad;
 					}).ofObject()), $(go.TextBlock, {
-						stroke: "black",
-						font: "15px Helvetica",
+						stroke: "white",
+						font: "17px Helvetica",
 						editable: true,
 						margin: new go.Margin(30, 30, 30, 30),
 						alignment: go.Spot.Left
@@ -367,6 +369,42 @@
 						stroke: "white",
 						strokeWidth: 2
 					}))));
+					myDiagram.nodeTemplateMap.selectionAdornmentTemplate =
+				$(go.Adornment, "Spot",
+				$(go.Panel, "Auto",
+					$(go.Shape, "Rectangle", { stroke: "dodgerblue", strokeWidth: 2, fill: null }),
+					$(go.Placeholder)
+				),
+				$(go.Panel, "Horizontal",
+					{ alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom },
+
+					$("Button",
+					{ 	click: addNodeAndLinkPurple, 
+						desiredSize: new go.Size(30, 30), 
+						margin: new go.Margin(0, 20, 5, 0),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					},
+					$(go.Shape,
+					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
+					),
+					$("Button",
+					{ 	click: addNodeAndLinkBlue, 
+						desiredSize: new go.Size(30, 30), 
+						margin: new go.Margin(0, 0, 5, 20),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					},
+					$(go.Shape,
+					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
+					),
+
+				)
+				);
 					
 				myDiagram.contextMenu = myContextMenu;
 				cxElement.addEventListener("contextmenu", function(e) {
@@ -507,11 +545,16 @@
 
 				function changeLikeColor(e, button) {
 					colorButton = button["_buttonFillNormal"];
-					if (colorButton == "gold") {
-						button["_buttonFillNormal"] =  "white";
-					} else {
-						button["_buttonFillNormal"] =  "gold";
-        			}    
+					if (colorButton == graygrad) {
+						button["_buttonFillNormal"] = bluegrad;
+					}
+					if (colorButton == bluegrad) {
+						button["_buttonFillNormal"] = white;
+					}
+					if (colorButton == white) {
+						button["_buttonFillNormal"] = graygrad;
+					}
+
 				}
 
 				function addNodeAndLinkLeftWhite(e, obj) {
