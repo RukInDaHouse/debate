@@ -20,30 +20,12 @@
 		<script src="./js/go.js"></script>
 		<script src="./js/DataInspector.js"></script>
 		<div class="p-4 w-full">
-			<link rel="stylesheet" href="./css/DataInspector.css" />
-			<script src="./js/DataInspector.js"></script>
 			<script src="./js/DoubleTreeLayout.js"></script>
 			<script id="code">
 			function init() {
 				var $ = go.GraphObject.make;
 				myDiagram = $(go.Diagram, "myDiagramDiv", {
 					"undoManager.isEnabled": true,
-					maxSelectionCount: 1,
-					validCycle: go.Diagram.CycleDestinationTree,
-					"clickCreatingTool.archetypeNodeData": {
-					name: "(new person)",
-					title: "",
-					comments: ""
-					},
-					"clickCreatingTool.insertPart": function(loc) {  // scroll to the new node
-              var node = go.ClickCreatingTool.prototype.insertPart.call(this, loc);
-              if (node !== null) {
-                this.diagram.select(node);
-                this.diagram.commandHandler.scrollToPart(node);
-                this.diagram.commandHandler.editTextBlock(node.findObject("NAMETB"));
-              }
-              return node;
-            },
 					padding: 20,
             		grid: $(go.Panel, "Grid",
               		$(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.2 }),
@@ -147,33 +129,39 @@
 						separatorStroke: "white" 
 					}),
 
-				$(go.TextBlock, "None (default)",
+				$(go.TextBlock, "Аргумент",
 					{ 
 						row: 0, 
-						column: 1, 
+						column: 0, 
 						stretch: go.GraphObject.Horizontal, 
-						margin: 2, 
-						textAlign: "left" 
+						textAlign: "left",
+						stroke: "white",
+						font: "17px Helvetica",
+						margin: new go.Margin(10, 10, 10, 0)
 					},
 					new go.Binding("text")),
 
-					$(go.TextBlock, "None (default)",
+				$(go.TextBlock, "Ссылка",
 					{ 
-						row: 0, 
-						column: 1, 
+						row: 1, 
+						column: 0, 
 						stretch: go.GraphObject.Horizontal, 
-						margin: 2, 
-						textAlign: "left" 
+						textAlign: "left",
+						stroke: "white",
+						font: "17px Helvetica",
+						margin: new go.Margin(10, 10, 0, 0)
 					},
 					new go.Binding("text")),
 				
-				$(go.TextBlock, "None (default)",
+				$(go.TextBlock,
 					{ 
 						row: 0, 
 						column: 1, 
 						stretch: go.GraphObject.Horizontal, 
-						margin: 2, 
-						textAlign: "left" 
+						stroke: "white",
+						font: "17px Helvetica",
+						margin: new go.Margin(10, 0, 10, 10),
+						editable: true
 					},
 					new go.Binding("text", "text1")),
 
@@ -181,9 +169,11 @@
 					{ 
 						row: 1, 
 						column: 1, 
-						stretch: go.GraphObject.Fill, 
-						margin: 2, 
-						textAlign: "left" 
+						stretch: go.GraphObject.Horizontal, 
+						stroke: "white",
+						font: "17px Helvetica",
+						margin: new go.Margin(10, 0, 0, 10),
+						editable: true
 					},
 					new go.Binding("text", "comments"))
 				),
@@ -459,13 +449,7 @@
 						)
 					},
 ));
-				if (window.Inspector) myInspector = new Inspector("myInspector", myDiagram,
-						{
-						properties: {
-							"key": { readOnly: true },
-							"comments": {}
-						}
-						});
+
 
 				function hideCX() {
 					if(myDiagram.currentTool instanceof go.ContextMenuTool) {
@@ -490,7 +474,8 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "right",
-						text: "Аргумент",
+						text1: "Введите текст",
+						comments: "Введите текст",
 						color: bluegrad
 					};
 					var model = diagram.model;
@@ -513,8 +498,8 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "right",
-						text1: "Аргумент",
-						comments: "Ссылка",
+						text1: "Введите текст",
+						comments: "Введите текст",
 						color: bluegrad
 					};
 					var model = diagram.model;
@@ -537,7 +522,8 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "right",
-						text: "Аргумент",
+						text1: "Введите текст",
+						comments: "Введите текст",
 						color: graygrad
 					};
 					var model = diagram.model;
@@ -560,7 +546,8 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "right",
-						text: "Аргумент",
+						text1: "Введите текст",
+						comments: "Введите текст",
 						color: white
 					};
 					var model = diagram.model;
@@ -583,7 +570,8 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "left",
-						text: "Аргумент",
+						text1: "Введите текст",
+						comments: "Введите текст",
 						color: bluegrad
 					};
 					var model = diagram.model;
@@ -626,7 +614,8 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "left",
-						text: "Аргумент",
+						text1: "Введите текст",
+						comments: "Введите текст",
 						color: white
 					};
 					var model = diagram.model;
@@ -648,7 +637,8 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "left",
-						text: "Аргумент",
+						text1: "Введите текст",
+						comments: "Введите текст",
 						color: bluegrad
 					};
 					var model = diagram.model;
@@ -670,7 +660,8 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "left",
-						text: "Аргумент",
+						text1: "Введите текст",
+						comments: "Введите текст",
 						color: graygrad
 					};
 					var model = diagram.model;
@@ -822,9 +813,6 @@
 				<div style="display: inline-block;">
 					<div style="position: relative;">
 						<div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 700px; width: 100vw; left: 0; padding: 0; margin: 0;"></div>
-					</div>
-					<div>
-						<div id="myInspector"></div>
 					</div>
           <div class="panell active__panel" id="panel">
             <div class="main-wrapper">
