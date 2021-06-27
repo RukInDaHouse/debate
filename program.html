@@ -128,6 +128,26 @@
 					margin: 5
 					 
 				})
+            	),),
+				$(go.Panel, "Auto", {alignment: go.Spot.BottomLeft},
+            	$("Button",
+              	{   
+					"ButtonBorder.figure": "Circle",
+					"ButtonBorder.strokeWidth": 3,
+					"_buttonFillOver": "white",
+					"_buttonStrokeOver": "grey",
+					"ButtonBorder.fill": white,
+					click: changeDislikeColor,
+				},
+              
+              	$(go.Shape,
+                { 
+					geometryString: "M406 362h60c9 0 15-7 15-15V106c0-8-6-15-15-15h-60c-8 0-15 7-15 15v241c0 8 7 15 15 15zM31 322c3 23 24 40 48 40h117c-10 17-15 68-15 89 0 34 29 61 63 61h12c8 0 15-7 15-15 0-35 14-97 39-123 17-17 32-23 51-33V115c-29-9-67-24-124-24h-98c-32 0-58 30-45 62a45 45 0 00-30 60c-32 9-44 49-22 74-8 9-13 21-11 35z",
+					desiredSize: new go.Size(15, 15),
+					fill: "red",
+					margin: 5
+					 
+				})
             	),) );
 				myDiagram.nodeTemplate.selectionAdornmentTemplate =
 				$(go.Adornment, "Spot",
@@ -500,16 +520,22 @@
 
 				function changeLikeColor(e, button) {
 					colorButton = button["_buttonFillNormal"];
-					if (colorButton == graygrad) {
-						button["_buttonFillNormal"] = bluegrad;
+					if (colorButton == "green") {
+						button["_buttonFillNormal"] = "white";
 					}
-					if (colorButton == bluegrad) {
-						button["_buttonFillNormal"] = white;
+					else {
+						button["_buttonFillNormal"] = "green";
 					}
-					if (colorButton == white) {
-						button["_buttonFillNormal"] = graygrad;
-					}
+				}
 
+				function changeDislikeColor(e, button) {
+					colorButton = button["_buttonFillNormal"];
+					if (colorButton == "red") {
+						button["_buttonFillNormal"] = "white";
+					}
+					else {
+						button["_buttonFillNormal"] = "red";
+					}
 				}
 
 				function addNodeAndLinkLeftWhite(e, obj) {
