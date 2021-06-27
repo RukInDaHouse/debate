@@ -26,8 +26,8 @@
 				var $ = go.GraphObject.make;
 				myDiagram = $(go.Diagram, "myDiagramDiv", {
 					"undoManager.isEnabled": true,
-					padding: 20,
-            		grid: $(go.Panel, "Grid",
+					padding: 20,  // extra space when scrolled all the way
+            		grid: $(go.Panel, "Grid",  // a simple 10x10 grid
               		$(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.2 }),
               		$(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.2 })
             		),
@@ -91,93 +91,23 @@
 					if(key < 0 || key > 16) return "images/HSnopic.jpg"; // There are only 16 images on the server
 					return "images/HS" + key + ".jpg"
 				}
-
+				var cxElement = document.getElementById("contextMenu");
+				var myContextMenu = $(go.HTMLInfo, {
+					show: showContextMenu,
+					hide: hideContextMenu
+				});
 				myDiagram.nodeTemplate = $(go.Node, "Auto", {
 					selectionAdorned: true,
-					textEditable: true
-				}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
+					textEditable: true,
+					contextMenu: myContextMenu}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
 					minSize: new go.Size(120, 21),
-				}, new go.Binding("fill", "color")), 
-				$(go.Panel, "Table",
-      			{ 
-					stretch: go.GraphObject.Fill, 					
-					margin: 30 
-				},
-
-				$(go.RowColumnDefinition,
-					{ 	
-						column: 0, 
-						sizing: go.RowColumnDefinition.None, 
-						background: "transparent", 
-						coversSeparators: true 
-					}),
-				$(go.RowColumnDefinition,
-					{ 
-						column: 1, 
-						minimum: 100, 
-						background: "transparent", 
-						separatorStroke: "white" 
-					}),
-				$(go.RowColumnDefinition,
-					{ 
-						row: 0, 
-						sizing: go.RowColumnDefinition.None 
-					}),
-				$(go.RowColumnDefinition,
-					{ 
-						row: 1, 
-						separatorStroke: "white" 
-					}),
-
-				$(go.TextBlock, "Аргумент",
-					{ 
-						row: 0, 
-						column: 0, 
-						stretch: go.GraphObject.Horizontal, 
-						textAlign: "left",
-						stroke: "white",
-						font: "17px Helvetica",
-						margin: new go.Margin(10, 10, 10, 0)
-					},
-					new go.Binding("text")),
-
-				$(go.TextBlock, "Ссылка",
-					{ 
-						row: 1, 
-						column: 0, 
-						stretch: go.GraphObject.Horizontal, 
-						textAlign: "left",
-						stroke: "white",
-						font: "17px Helvetica",
-						margin: new go.Margin(10, 10, 0, 0)
-					},
-					new go.Binding("text")),
-				
-				$(go.TextBlock,
-					{ 
-						row: 0, 
-						column: 1, 
-						stretch: go.GraphObject.Horizontal, 
-						stroke: "white",
-						font: "17px Helvetica",
-						margin: new go.Margin(10, 0, 10, 10),
-						editable: true
-					},
-					new go.Binding("text", "text1")),
-
-				$(go.TextBlock,
-					{ 
-						row: 1, 
-						column: 1, 
-						stretch: go.GraphObject.Horizontal, 
-						stroke: "white",
-						font: "17px Helvetica",
-						margin: new go.Margin(10, 0, 0, 10),
-						editable: true
-					},
-					new go.Binding("text", "comments"))
-				),
-
+				}, new go.Binding("fill", "color")), $(go.TextBlock, {
+					stroke: "white",
+					font: "17px Helvetica",
+					editable: true,
+					margin: new go.Margin(30, 30, 30, 30),
+					alignment: go.Spot.Left
+				}, new go.Binding("text").makeTwoWay()),
 
 				$(go.Panel, "Auto", {alignment: go.Spot.BottomRight},
             	$("Button",
@@ -231,7 +161,7 @@
 					$("Button",
 					{ 	click: addNodeAndLinkPurple, 
 						desiredSize: new go.Size(30, 30), 
-						margin: new go.Margin(0, 200, 5, 0),
+						margin: new go.Margin(0, 20, 5, 0),
 						"ButtonBorder.figure": "Circle",
 						"ButtonBorder.strokeWidth": 3,
 						"_buttonFillOver": "white",
@@ -451,6 +381,12 @@
 ));
 
 
+				myDiagram.contextMenu = myContextMenu;
+				cxElement.addEventListener("contextmenu", function(e) {
+					e.preventDefault();
+					return false;
+				}, false);
+
 				function hideCX() {
 					if(myDiagram.currentTool instanceof go.ContextMenuTool) {
 						myDiagram.currentTool.doCancel();
@@ -474,8 +410,7 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "right",
-						text1: "Введите текст",
-						comments: "Введите текст",
+						text: "Аргумент",
 						color: bluegrad
 					};
 					var model = diagram.model;
@@ -498,8 +433,7 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "right",
-						text1: "Введите текст",
-						comments: "Введите текст",
+						text: "Аргумент",
 						color: bluegrad
 					};
 					var model = diagram.model;
@@ -522,8 +456,7 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "right",
-						text1: "Введите текст",
-						comments: "Введите текст",
+						text: "Аргумент",
 						color: graygrad
 					};
 					var model = diagram.model;
@@ -546,8 +479,7 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "right",
-						text1: "Введите текст",
-						comments: "Введите текст",
+						text: "Аргумент",
 						color: white
 					};
 					var model = diagram.model;
@@ -570,8 +502,7 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "left",
-						text1: "Введите текст",
-						comments: "Введите текст",
+						text: "Аргумент",
 						color: bluegrad
 					};
 					var model = diagram.model;
@@ -614,8 +545,7 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "left",
-						text1: "Введите текст",
-						comments: "Введите текст",
+						text: "Аргумент",
 						color: white
 					};
 					var model = diagram.model;
@@ -637,8 +567,7 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "left",
-						text1: "Введите текст",
-						comments: "Введите текст",
+						text: "Аргумент",
 						color: bluegrad
 					};
 					var model = diagram.model;
@@ -660,8 +589,7 @@
 					var fromData = fromNode.data;
 					var toData = {
 						dir: "left",
-						text1: "Введите текст",
-						comments: "Введите текст",
+						text: "Аргумент",
 						color: graygrad
 					};
 					var model = diagram.model;
@@ -749,6 +677,29 @@
 					myDiagram.commandHandler.scrollToPart(myDiagram.findNodeForKey(1));
 				});
 
+				function showContextMenu(obj, diagram, tool) {
+					var cmd = diagram.commandHandler;
+					var hasMenuItem = false;
+
+					function maybeShowItem(elt, pred) {
+						if(pred) {
+							elt.style.display = "block";
+							hasMenuItem = true;
+						} else {
+							elt.style.display = "none";
+						}
+					}
+					maybeShowItem(document.getElementById("delete"), cmd.canDeleteSelection());
+					maybeShowItem(document.getElementById("color"), obj !== null);
+					if(hasMenuItem) {
+						cxElement.classList.add("show-menu");
+						var mousePt = diagram.lastInput.viewPoint;
+						cxElement.style.left = mousePt.x + 5 + "px";
+						cxElement.style.top = mousePt.y + "px";
+					}
+					window.addEventListener("click", hideCX, true);
+				}
+
 				function hideContextMenu() {
 					cxElement.classList.remove("show-menu");
 					window.removeEventListener("click", hideCX, true);
@@ -813,6 +764,17 @@
 				<div style="display: inline-block;">
 					<div style="position: relative;">
 						<div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 700px; width: 100vw; left: 0; padding: 0; margin: 0;"></div>
+
+						<ul id="contextMenu" class="menu">
+							<li id="delete" class="menu-item" onclick="cxcommand(event)">Удалить</li>
+							<li id="color" class="menu-item">Цвет
+								<ul class="menu">
+									<li class="menu-item" style="background-color: #9400d3;" onclick="cxcommand(event, 'color')">Фиолетовый</li>
+									<li class="menu-item" style="background-color: #007fff;" onclick="cxcommand(event, 'color')">Лазурный</li>
+									<li class="menu-item" style="background-color: #ffffff;" onclick="cxcommand(event, 'color')">Белый</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
           <div class="panell active__panel" id="panel">
             <div class="main-wrapper">
