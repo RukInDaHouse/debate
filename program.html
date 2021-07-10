@@ -15,7 +15,7 @@
 	<title>Дебаты</title>
 </head>
 
-<body>
+<body id="main">
 	<div class="line" id="line"></div>
 	<div class="md:flex flex-col md:flex-row md:min-h-screen w-full max-w-screen-xl mx-auto">
 		<script src="./js/go.js"></script>
@@ -1611,6 +1611,51 @@
 			document.getElementById("panelRight").classList.toggle('hidePanel');
 			document.getElementById("hidePanelButtonArrowRight").classList.toggle('rotate');
 		});
+	</script>
+	<script>
+var enterFullscreen = function(el) {
+	if(el.requestFullscreen) {
+		el.requestFullscreen();
+	} else if(el.msRequestFullscreen) {
+		el.msRequestFullscreen();
+	} else if(el.mozRequestFullScreen) {
+		el.mozRequestFullScreen();
+	} else if(el.webkitRequestFullscreen) {
+		el.webkitRequestFullscreen();
+	} else {
+		noFullscreenSupport();
+	}
+};
+
+var exitFullscreen = function() {
+	if(document.exitFullscreen) {
+		document.exitFullscreen();
+	} else if(document.msExitFullscreen) {
+		document.msExitFullscreen();
+	} else if(document.mozCancelFullScreen) {
+		document.mozCancelFullScreen();
+	} else if(document.webkitExitFullscreen) {
+		document.webkitExitFullscreen();
+	} else {
+		noFullscreenSupport();
+	}
+};
+
+var noFullscreenSupport = function() {
+	alert('Your browser does not support the Fullscreen API.');
+};
+
+var fullscreenButton = document.getElementById('viewerButton');
+fullscreenButton.addEventListener('click', function(e) {
+	e.preventDefault();
+	if((window.innerWidth === screen.width && window.innerHeight === screen.height) || (window.fullScreen)) {
+		exitFullscreen();
+	} else {
+		enterFullscreen(document.documentElement);
+	}	
+});
+
+
 	</script>
 </body>
 

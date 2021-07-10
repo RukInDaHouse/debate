@@ -1481,7 +1481,8 @@ p {
 	  bottom: 0;
 	  z-index: 999;
 	  width: 50vw;
-	  transition: all 1.5s;
+	  transition-duration: 1.5s;
+	transition-property: transform;
   }
 
   .hidePanel {
