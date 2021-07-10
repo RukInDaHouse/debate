@@ -1490,6 +1490,13 @@
                   <path d="M506.5 116L378.5 4A16 16 0 00352 16v48H224A224.2 224.2 0 000 288c0 123.5 100.5 224 224 224a16 16 0 000-32c-79.4 0-144-64.6-144-144s64.6-144 144-144h128v48a16 16 0 0026.5 12l128-112a16 16 0 000-24z" /> 
                 </svg>
               </button>
+              <button title="Спрятать/показать панель" id="hidePanelButton">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 285" fill="#fff">
+					<defs/>
+					<path d="M136 168a9 9 0 0013 0L282 35a9 9 0 000-13L268 7a9 9 0 00-13 0L142 120 30 7a9 9 0 00-13 0L3 22a9 9 0 000 13l133 133z"/>
+					<path d="M268 117a9 9 0 00-13 0L142 229 30 117a9 9 0 00-13 0L3 131a9 9 0 000 13l133 134a9 9 0 0013 0l133-134a9 9 0 000-13l-14-14z"/>
+				  </svg>
+              </button>
             </div>
             <div>
               <textarea id="mySavedModelRight" style="width:100%;height:300px">  { 
@@ -1572,6 +1579,13 @@
                   <path d="M506.5 116L378.5 4A16 16 0 00352 16v48H224A224.2 224.2 0 000 288c0 123.5 100.5 224 224 224a16 16 0 000-32c-79.4 0-144-64.6-144-144s64.6-144 144-144h128v48a16 16 0 0026.5 12l128-112a16 16 0 000-24z" /> 
                 </svg>
               </button>
+			  <button title="Спрятать/показать панель" id="hidePanelRightButton">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 285" fill="#fff">
+					<defs/>
+					<path d="M136 168a9 9 0 0013 0L282 35a9 9 0 000-13L268 7a9 9 0 00-13 0L142 120 30 7a9 9 0 00-13 0L3 22a9 9 0 000 13l133 133z"/>
+					<path d="M268 117a9 9 0 00-13 0L142 229 30 117a9 9 0 00-13 0L3 131a9 9 0 000 13l133 134a9 9 0 0013 0l133-134a9 9 0 000-13l-14-14z"/>
+				  </svg>
+              </button>
             </div>
             <div>
               <textarea id="mySavedModel" style="width:100%;height:300px">  { 
@@ -1600,7 +1614,15 @@
 		document.getElementById('viewerButton').addEventListener('click', function() {
 			document.getElementById("panel").classList.toggle('hide');
 			document.getElementById("panelRight").classList.toggle('hide');
-			document.body.classList.toggle('hide');
+			document.body.classList.toggle('hideScreen');
+		});
+
+		document.getElementById('hidePanelButton').addEventListener('click', function() {
+			document.getElementById("panel").classList.toggle('hidePanel');
+		});
+
+		document.getElementById('hidePanelRightButton').addEventListener('click', function() {
+			document.getElementById("panelRight").classList.toggle('hidePanel');
 		});
 	</script>
 </body>
