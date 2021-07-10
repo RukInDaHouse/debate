@@ -19,7 +19,7 @@
 	<div class="md:flex flex-col md:flex-row md:min-h-screen w-full max-w-screen-xl mx-auto">
 		<script src="./js/go.js"></script>
 		<script src="./js/DataInspector.js"></script>
-		<div class="p-4 w-full">
+		<div class="p-4">
 			<script src="./js/DoubleTreeLayout.js"></script>
 			<script id="code">
 			function init() {
@@ -31,6 +31,7 @@
               		$(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.2 }),
               		$(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.2 })
             		),
+					"commandHandler.archetypeGroupData": { isGroup: true, category: "Loading" },
 					layout: $(DoubleTreeLayout, {
 						vertical: false,
 						directionFunction: function(n) {
@@ -149,6 +150,14 @@
 					 
 				})
             	),) );
+				
+				myDiagram.groupTemplate =
+      $(go.Group, "Auto",
+        // the group does not lay out any of its member nodes
+        { layout: null },
+        $(go.Shape, { visible: false, fill: "transparent" }),
+        $(go.Placeholder));
+
 				myDiagram.nodeTemplate.selectionAdornmentTemplate =
 				$(go.Adornment, "Spot",
 				$(go.Panel, "Auto",
@@ -763,8 +772,7 @@
 			<div id="sample" class="sample">
 				<div style="display: inline-block;">
 					<div style="position: relative;">
-						<div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 700px; width: 100vw; left: 0; padding: 0; margin: 0;"></div>
-
+						<div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 700px; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
 						<ul id="contextMenu" class="menu">
 							<li id="delete" class="menu-item" onclick="cxcommand(event)">Удалить</li>
 							<li id="color" class="menu-item">Цвет
@@ -842,7 +850,7 @@
               <textarea id="mySavedModel" style="width:100%;height:300px">  { 
                 "class": "go.GraphLinksModel", "nodeDataArray": [ 
                   { "key":1,
-                  "text":"Утверждение", 
+                  "text":"Утверждение",
                   "category":"Loading"
                   }				  				  
                 ]
