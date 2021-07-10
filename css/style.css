@@ -1468,3 +1468,19 @@ p {
 	display: block;
 	opacity: 1;
   }
+
+  .viewerButton {
+	  position: fixed;
+	  left: 0;
+	  bottom: 0;
+	  z-index: 9999999;
+  }
+  .hide {
+	display: none;
+  }
+  .active__panel {
+	  position: fixed;
+	  bottom: 0;
+	  z-index: 999;
+	  width: 50vw;
+  }

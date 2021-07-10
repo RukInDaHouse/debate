@@ -659,10 +659,10 @@
 				ltool.direction = go.LinkingTool.ForwardsOnly;
 				var rtool = myDiagramRight.toolManager.relinkingTool;
 				commonLinkingToolInit(rtool);
-				document.getElementById('zoomToFit').addEventListener('click', function() {
+				document.getElementById('zoomToFitRight').addEventListener('click', function() {
 					myDiagramRight.commandHandler.zoomToFit();
 				});
-				document.getElementById('centerRoot').addEventListener('click', function() {
+				document.getElementById('centerRootRight').addEventListener('click', function() {
 					myDiagramRight.scale = 1;
 					myDiagramRight.commandHandler.scrollToPart(myDiagramRight.findNodeForKey(1));
 				});
@@ -1427,18 +1427,18 @@
 			<div id="sampleRight" class="sampleRight">
 				<div style="display: inline-block;">
 					<div style="position: relative;">
-						<div id="myDiagramDivRight" style="background-color: #34343C; border: solid 1px black; height: 700px; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
+						<div id="myDiagramDivRight" style="background-color: #34343C; border: solid 1px black; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
 					</div>
           <div class="panell active__panel" id="panel">
             <div class="main-wrapper">
-              <button title="Полная схема" id="zoomToFit">
+              <button title="Полная схема" id="zoomToFitRight">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
                   <defs/>
                   <g>
                     <path d="M1 0l6 1s1 0 0 0L6 3a100 100 0 005 5v1l-2 2H8L4 6H3L1 7c0 1 0 0 0 0L0 1l1-1zM23 24l-6-1h-1l2-2-1-1-4-4v-1l2-2h1l4 4 1 1 1-2 1 1 1 6-1 1zM0 23l1-6v-1l2 2v-1l5-4h1l2 2v1l-5 4v1l1 1v1l-7 1v-1zM24 1l-1 6h-1l-1-1-1 1-4 4h-1l-2-2V8l4-4 1-1-2-2h1l6-1 1 1z" /> </g>
                 </svg>
               </button>
-              <button title="Центрирование" id="centerRoot">
+              <button title="Центрирование" id="centerRootRight">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="#fff">
                   <defs/>
                   <path d="M11 11l-7-1s-1 0 0 0l1-2-5-5 3-3 5 5 2-1c0-1 0 0 0 0l1 7zM15 15l7 1s1-1 0 0l-1 2a161 161 0 005 5l-3 3-5-5-2 1c0 1 0 0 0 0l-1-7zM11 15l-1 7s0 1 0 0l-2-1-5 5H2l-2-3 5-5-1-2c-1 0 0 0 0 0l7-1zM15 11V4h1l2 1 5-5 3 3-5 5 1 2c1 0 0 0 0 0l-7 1z" /> 
@@ -1509,9 +1509,9 @@
 			<div id="sample" class="sample">
 				<div style="display: inline-block;">
 					<div style="position: relative;">
-						<div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 700px; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
+						<div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
 					</div>
-          <div class="panell active__panel" id="panel">
+          <div class="active__panel" id="panelRight">
             <div class="main-wrapper">
               <button title="Полная схема" id="zoomToFit">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
@@ -1588,8 +1588,21 @@
           </div>
 				</div>
 			</div>
-		</div>
 	</div>
+	<button title="Режим зрителя" class="viewerButton" id="viewerButton">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
+			<defs/>
+			<path d="M421 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM301 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM181 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30z"/>
+			<path d="M61 467v30c0 8 7 15 15 15h360c8 0 15-7 15-15v-30a75 75 0 00-135-45 75 75 0 00-120 0 75 75 0 00-135 45zm270 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15H91v-15zM497 0H15C7 0 0 7 0 15v242c0 8 7 15 15 15h482c8 0 15-7 15-15V15c0-8-7-15-15-15zm-15 242H30V30h452v212z"/>
+		</svg>
+	</button>
+	<script>
+		document.getElementById('viewerButton').addEventListener('click', function() {
+			document.getElementById("panel").classList.toggle('hide');
+			document.getElementById("panelRight").classList.toggle('hide');
+			document.body.classList.toggle('hide');
+		});
+	</script>
 </body>
 
 </html>
