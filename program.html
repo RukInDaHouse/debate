@@ -27,11 +27,15 @@
 				var $ = go.GraphObject.make;
 				myDiagramRight = $(go.Diagram, "myDiagramDivRight", {
 					"undoManager.isEnabled": true,
-					padding: 20,  // extra space when scrolled all the way
-            		grid: $(go.Panel, "Grid",  // a simple 10x10 grid
-              		$(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.2 }),
-              		$(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.2 })
-            		),
+					padding: 20, // extra space when scrolled all the way
+					grid: $(go.Panel, "Grid", // a simple 10x10 grid
+						$(go.Shape, "LineH", {
+							stroke: "lightgray",
+							strokeWidth: 0.2
+						}), $(go.Shape, "LineV", {
+							stroke: "lightgray",
+							strokeWidth: 0.2
+						})),
 					layout: $(DoubleTreeLayout, {
 						vertical: false,
 						directionFunction: function(n) {
@@ -57,8 +61,6 @@
 						if(idx >= 0) document.title = document.title.substr(0, idx);
 					}
 				});
-				
-				
 				var graygrad = $(go.Brush, "Linear", {
 					0: "#800080",
 					1: "#800080"
@@ -87,10 +89,10 @@
 					0: "#FFF",
 					1: "#FFF"
 				});
-
 				myDiagramRight.nodeTemplate = $(go.Node, "Auto", {
 					selectionAdorned: true,
-					textEditable: true}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
+					textEditable: true
+				}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
 					minSize: new go.Size(120, 21),
 				}, new go.Binding("fill", "color")), $(go.TextBlock, {
 					stroke: "white",
@@ -98,276 +100,213 @@
 					editable: true,
 					margin: new go.Margin(30, 30, 30, 30),
 					alignment: go.Spot.Left
-				}, new go.Binding("text").makeTwoWay()),
-
-				$(go.Panel, "Auto", {alignment: go.Spot.BottomRight},
-            	$("Button",
-              	{   
+				}, new go.Binding("text").makeTwoWay()), $(go.Panel, "Auto", {
+					alignment: go.Spot.BottomRight
+				}, $("Button", {
 					"ButtonBorder.figure": "Circle",
 					"ButtonBorder.strokeWidth": 1.5,
 					"_buttonFillOver": "white",
 					"_buttonStrokeOver": "grey",
 					"ButtonBorder.fill": white,
 					click: changeLikeColorRight,
-				},
-              
-              	$(go.Shape,
-                { 
+				}, $(go.Shape, {
 					geometryString: "M106 242H46c-9 0-15 6-15 15v240c0 8 6 15 15 15h60c8 0 15-7 15-15V257c0-9-7-15-15-15zM481 281c-3-23-24-39-48-39H316c10-18 15-69 15-89 0-35-28-62-62-62h-13c-8 0-15 7-15 15 0 35-13 98-39 123-17 17-32 24-51 33v226c29 9 67 24 124 24h98c33 0 58-30 45-62a45 45 0 0030-60c32-9 44-49 22-74 8-9 13-21 11-35z",
 					desiredSize: new go.Size(12, 12),
 					fill: "red",
 					margin: 5
-					 
-				})
-            	),),
-				$(go.Panel, "Auto", {alignment: go.Spot.BottomLeft},
-            	$("Button",
-              	{   
+				})), ), $(go.Panel, "Auto", {
+					alignment: go.Spot.BottomLeft
+				}, $("Button", {
 					"ButtonBorder.figure": "Circle",
 					"ButtonBorder.strokeWidth": 1.5,
 					"_buttonFillOver": "white",
 					"_buttonStrokeOver": "grey",
 					"ButtonBorder.fill": white,
 					click: changeDislikeColorRight,
-				},
-              
-              	$(go.Shape,
-                { 
+				}, $(go.Shape, {
 					geometryString: "M406 362h60c9 0 15-7 15-15V106c0-8-6-15-15-15h-60c-8 0-15 7-15 15v241c0 8 7 15 15 15zM31 322c3 23 24 40 48 40h117c-10 17-15 68-15 89 0 34 29 61 63 61h12c8 0 15-7 15-15 0-35 14-97 39-123 17-17 32-23 51-33V115c-29-9-67-24-124-24h-98c-32 0-58 30-45 62a45 45 0 00-30 60c-32 9-44 49-22 74-8 9-13 21-11 35z",
 					desiredSize: new go.Size(12, 12),
 					fill: "red",
 					margin: 5
-					 
-				})
-            	),) );
-				
-				myDiagramRight.groupTemplate =
-      $(go.Group, "Auto",
-        { layout: null },
-        $(go.Shape, { visible: false, fill: "transparent" }),
-        $(go.Placeholder));
-
-				myDiagramRight.nodeTemplate.selectionAdornmentTemplate =
-				$(go.Adornment, "Spot",
-				$(go.Panel, "Auto",
-					$(go.Shape, "Rectangle", { stroke: "dodgerblue", strokeWidth: 2, fill: null }),
-					$(go.Placeholder)
-				),
-				$(go.Panel, "Horizontal",
-					{ alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom },
-
-					$("Button",
-					{ 	click: addNodeAndLinkPurpleRight, 
-						desiredSize: new go.Size(30, 30), 
-						margin: new go.Margin(0, 20, 5, 0),
-						"ButtonBorder.figure": "Circle",
-						"ButtonBorder.strokeWidth": 3,
-						"_buttonFillOver": "white",
-						"_buttonStrokeOver": "grey",
-					},
-					$(go.Shape,
-					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
-					),
-					$("Button",
-					{ 	click: addNodeAndLinkBlueRight, 
-						desiredSize: new go.Size(30, 30), 
+				})), ));
+				myDiagramRight.groupTemplate = $(go.Group, "Auto", {
+					layout: null
+				}, $(go.Shape, {
+					visible: false,
+					fill: "transparent"
+				}), $(go.Placeholder));
+				myDiagramRight.nodeTemplate.selectionAdornmentTemplate = $(go.Adornment, "Spot", $(go.Panel, "Auto", $(go.Shape, "Rectangle", {
+					stroke: "dodgerblue",
+					strokeWidth: 2,
+					fill: null
+				}), $(go.Placeholder)), $(go.Panel, "Horizontal", {
+					alignment: go.Spot.Top,
+					alignmentFocus: go.Spot.Bottom
+				}, $("Button", {
+					click: addNodeAndLinkPurpleRight,
+					desiredSize: new go.Size(30, 30),
+					margin: new go.Margin(0, 20, 5, 0),
+					"ButtonBorder.figure": "Circle",
+					"ButtonBorder.strokeWidth": 3,
+					"_buttonFillOver": "white",
+					"_buttonStrokeOver": "grey",
+				}, $(go.Shape, {
+					geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+					stroke: "purple",
+					desiredSize: new go.Size(23, 23)
+				})), $("Button", {
+					click: addNodeAndLinkBlueRight,
+					desiredSize: new go.Size(30, 30),
+					margin: new go.Margin(0, 0, 5, 20),
+					"ButtonBorder.figure": "Circle",
+					"ButtonBorder.strokeWidth": 3,
+					"_buttonFillOver": "white",
+					"_buttonStrokeOver": "grey",
+				}, $(go.Shape, {
+					geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+					stroke: "blue",
+					desiredSize: new go.Size(23, 23)
+				})), ));
+				myDiagramRight.nodeTemplate.contextMenu = $("ContextMenu", $("ContextMenuButton", $(go.TextBlock, "Удалить ветвь"), {
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if(node !== null) {
+							myDiagramRight.startTransaction("remove dept");
+							myDiagramRight.removeParts(node.findTreeParts());
+							myDiagramRight.commitTransaction("remove dept");
+						}
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Перекрасить ветвь (Пурпурный)"), {
+					click: (e, button) => {
+						const node = button.part.adornedPart;
+						if(!node) return;
+						e.diagram.model.commit(m => {
+							node.findTreeParts().each(n => m.set(n.data, "color", graygrad));
+						});
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Перекрасить ветвь (Лазурный)"), {
+					click: (e, button) => {
+						const node = button.part.adornedPart;
+						if(!node) return;
+						e.diagram.model.commit(m => {
+							node.findTreeParts().each(n => m.set(n.data, "color", bluegrad));
+						});
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Перекрасить ветвь (Белый)"), {
+					click: (e, button) => {
+						const node = button.part.adornedPart;
+						if(!node) return;
+						e.diagram.model.commit(m => {
+							node.findTreeParts().each(n => m.set(n.data, "color", "#b4b4b4"));
+						});
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Сменить цвет (Пурпурный)"), {
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if(node !== null) {
+							myDiagramRight.startTransaction("remove dept");
+							var color = graygrad;
+							var diagram = myDiagramRight;
+							changeColorRight(diagram, color);
+							myDiagramRight.commitTransaction("remove dept");
+						}
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Сменить цвет (Лазурный)"), {
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if(node !== null) {
+							myDiagramRight.startTransaction("remove dept");
+							var color = bluegrad;
+							var diagram = myDiagramRight;
+							changeColorRight(diagram, color);
+							myDiagramRight.commitTransaction("remove dept");
+						}
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Сменить цвет (Белый)"), {
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if(node !== null) {
+							myDiagramRight.startTransaction("remove dept");
+							var color = "#b4b4b4";
+							var diagram = myDiagramRight;
+							changeColorRight(diagram, color);
+							myDiagramRight.commitTransaction("remove dept");
+						}
+					}
+				}), );
+				myDiagramRight.nodeTemplateMap.add("Loading", $(go.Node, "Spot", {
+					selectionAdorned: true,
+					textEditable: true,
+					locationObjectName: "BODY"
+				}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Panel, "Auto", {
+					name: "BODY"
+				}, $(go.Shape, "RoundedRectangle", {
+					fill: graygrad,
+					stroke: "gray",
+					minSize: new go.Size(20, 21),
+				}, ), $(go.TextBlock, {
+					stroke: "white",
+					font: "17px Helvetica",
+					editable: true,
+					margin: new go.Margin(30, 30, 30, 30),
+					alignment: go.Spot.Left
+				}, new go.Binding("text", "text"))), {
+					selectionAdornmentTemplate: $(go.Adornment, "Spot", $(go.Panel, "Auto", $(go.Shape, {
+						fill: null
+					}), $(go.Placeholder)), $("Button", {
+						click: addNodeAndLinkBlueRight,
+						alignment: go.Spot.TopRight,
+						desiredSize: new go.Size(30, 30),
 						margin: new go.Margin(0, 0, 5, 20),
 						"ButtonBorder.figure": "Circle",
 						"ButtonBorder.strokeWidth": 3,
 						"_buttonFillOver": "white",
 						"_buttonStrokeOver": "grey",
-					},
-					$(go.Shape,
-					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
-					),
-
-				)
-				);
-				myDiagramRight.nodeTemplate.contextMenu =
-				$("ContextMenu",
-				$("ContextMenuButton",
-					$(go.TextBlock, "Удалить ветвь"),
-					{
-					click: function(e, obj) {
-						var node = obj.part.adornedPart;
-						if (node !== null) {
-						myDiagramRight.startTransaction("remove dept");
-						myDiagramRight.removeParts(node.findTreeParts());
-						myDiagramRight.commitTransaction("remove dept");
-						}
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Пурпурный)"),
-					{
-					click: (e, button) => {
-					    const node = button.part.adornedPart;
-						if (!node) return;
-						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", graygrad));
-    				});	
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Лазурный)"),
-					{
-					click: (e, button) => {
-					    const node = button.part.adornedPart;
-						if (!node) return;
-						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", bluegrad));
-    				});	
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Белый)"),
-					{
-					click: (e, button) => {
-					    const node = button.part.adornedPart;
-						if (!node) return;
-						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", "#b4b4b4"));
-    				});	
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Сменить цвет (Пурпурный)"),
-					{
-					click: function(e, obj) {
-						var node = obj.part.adornedPart;
-						if (node !== null) {
-						myDiagramRight.startTransaction("remove dept");
-						var color = graygrad;
-						var diagram = myDiagramRight;
-						changeColorRight(diagram, color);
-						myDiagramRight.commitTransaction("remove dept");
-						}
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Сменить цвет (Лазурный)"),
-					{
-					click: function(e, obj) {
-						var node = obj.part.adornedPart;
-						if (node !== null) {
-						myDiagramRight.startTransaction("remove dept");
-						var color = bluegrad;
-						var diagram = myDiagramRight;
-						changeColorRight(diagram, color);
-						myDiagramRight.commitTransaction("remove dept");
-						}
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Сменить цвет (Белый)"),
-					{
-					click: function(e, obj) {
-						var node = obj.part.adornedPart;
-						if (node !== null) {
-						myDiagramRight.startTransaction("remove dept");
-						var color = "#b4b4b4";
-						var diagram = myDiagramRight;
-						changeColorRight(diagram, color);
-						myDiagramRight.commitTransaction("remove dept");
-						}
-					}
-					}
-				),
-				);
-				myDiagramRight.nodeTemplateMap.add("Loading", $(go.Node, "Spot", {
-						selectionAdorned: true,
-						textEditable: true,
-						locationObjectName: "BODY"
-					}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Panel, "Auto", {
-						name: "BODY"
-					}, 
-					
-					$(go.Shape, "RoundedRectangle", {
-						fill: graygrad,
-						stroke: "gray",
-						minSize: new go.Size(20, 21),
-					}, ), $(go.TextBlock, {
-						stroke: "white",
-						font: "17px Helvetica",
-						editable: true,
-						margin: new go.Margin(30, 30, 30, 30),
-						alignment: go.Spot.Left
-					}, new go.Binding("text", "text"))),
-					{
-					selectionAdornmentTemplate:
-						$(go.Adornment, "Spot",
-						$(go.Panel, "Auto",
-							$(go.Shape, 
-							{ 
-								fill: null
-							}),
-							$(go.Placeholder)
-						),
-						$("Button",
-							{ 	click: addNodeAndLinkBlueRight,
-								alignment: go.Spot.TopRight, 
-								desiredSize: new go.Size(30, 30), 
-								margin: new go.Margin(0, 0, 5, 20),
-								"ButtonBorder.figure": "Circle",
-								"ButtonBorder.strokeWidth": 3,
-								"_buttonFillOver": "white",
-								"_buttonStrokeOver": "grey",
-							},
-						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
-						),
-						$("Button",
-							{ 	click: addNodeAndLinkPurpleRight,
-								alignment: go.Spot.BottomRight, 
-								desiredSize: new go.Size(30, 30), 
-								margin: new go.Margin(0, 0, 5, 20),
-								"ButtonBorder.figure": "Circle",
-								"ButtonBorder.strokeWidth": 3,
-								"_buttonFillOver": "white",
-								"_buttonStrokeOver": "grey",
-							},
-						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
-						),
-						$("Button",
-							{ 	click: addNodeAndLinkLeftBlueRight,
-								alignment: go.Spot.TopLeft, 
-								desiredSize: new go.Size(30, 30), 
-								margin: new go.Margin(0, 0, 5, 20),
-								"ButtonBorder.figure": "Circle",
-								"ButtonBorder.strokeWidth": 3,
-								"_buttonFillOver": "white",
-								"_buttonStrokeOver": "grey",
-							},
-						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
-						),
-						$("Button",
-							{ 	click: addNodeAndLinkLeftPurpleRight,
-								alignment: go.Spot.BottomLeft, 
-								desiredSize: new go.Size(30, 30), 
-								margin: new go.Margin(0, 0, 5, 20),
-								"ButtonBorder.figure": "Circle",
-								"ButtonBorder.strokeWidth": 3,
-								"_buttonFillOver": "white",
-								"_buttonStrokeOver": "grey",
-							},
-						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
-						),
-					
-						)
-					},
-));
-
-
-
+					}, $(go.Shape, {
+						geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+						stroke: "blue",
+						desiredSize: new go.Size(23, 23)
+					})), $("Button", {
+						click: addNodeAndLinkPurpleRight,
+						alignment: go.Spot.BottomRight,
+						desiredSize: new go.Size(30, 30),
+						margin: new go.Margin(0, 0, 5, 20),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					}, $(go.Shape, {
+						geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+						stroke: "purple",
+						desiredSize: new go.Size(23, 23)
+					})), $("Button", {
+						click: addNodeAndLinkLeftBlueRight,
+						alignment: go.Spot.TopLeft,
+						desiredSize: new go.Size(30, 30),
+						margin: new go.Margin(0, 0, 5, 20),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					}, $(go.Shape, {
+						geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+						stroke: "blue",
+						desiredSize: new go.Size(23, 23)
+					})), $("Button", {
+						click: addNodeAndLinkLeftPurpleRight,
+						alignment: go.Spot.BottomLeft,
+						desiredSize: new go.Size(30, 30),
+						margin: new go.Margin(0, 0, 5, 20),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					}, $(go.Shape, {
+						geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+						stroke: "purple",
+						desiredSize: new go.Size(23, 23)
+					})), )
+				}, ));
 				myDiagramRight.linkTemplate = $(go.Link, go.Link.Orthogonal, {
 					corner: 5,
 					relinkableFrom: true,
@@ -377,7 +316,6 @@
 					stroke: "#F5F5F5"
 				}));
 				loadRight();
-				
 
 				function addNodeAndLinkRight(e, obj) {
 					var fromNode = obj.part;
@@ -496,20 +434,18 @@
 
 				function changeLikeColorRight(e, button) {
 					colorButton = button["_buttonFillNormal"];
-					if (colorButton == "#50c878") {
+					if(colorButton == "#50c878") {
 						button["_buttonFillNormal"] = "white";
-					}
-					else {
+					} else {
 						button["_buttonFillNormal"] = "#50c878";
 					}
 				}
 
 				function changeDislikeColorRight(e, button) {
 					colorButton = button["_buttonFillNormal"];
-					if (colorButton == "#ff2e2e") {
+					if(colorButton == "#ff2e2e") {
 						button["_buttonFillNormal"] = "white";
-					}
-					else {
+					} else {
 						button["_buttonFillNormal"] = "#ff2e2e";
 					}
 				}
@@ -536,6 +472,7 @@
 					shiftNodesToEmptySpaces();
 					diagram.commitTransaction("Добавить");
 				}
+
 				function addNodeAndLinkLeftBlueRight(e, obj) {
 					var fromNode = obj.part;
 					var diagram = fromNode.diagram;
@@ -558,6 +495,7 @@
 					shiftNodesToEmptySpaces();
 					diagram.commitTransaction("Добавить");
 				}
+
 				function addNodeAndLinkLeftPurpleRight(e, obj) {
 					var fromNode = obj.part;
 					var diagram = fromNode.diagram;
@@ -634,14 +572,12 @@
 						}
 					});
 				}
-
 				myDiagramRight.addDiagramListener("LayoutCompleted", function(e) {
 					myDiagramRight.nodes.each(function(node) {
 						if(node.category === "Recycle") return;
 						node.minLocation = new go.Point(node.location.x, -Infinity);
 					});
 				});
-
 				var ltool = myDiagramRight.toolManager.linkingTool;
 				commonLinkingToolInit(ltool);
 				ltool.direction = go.LinkingTool.ForwardsOnly;
@@ -654,7 +590,6 @@
 					myDiagramRight.scale = 1;
 					myDiagramRight.commandHandler.scrollToPart(myDiagramRight.findNodeForKey(1));
 				});
-
 			}
 
 			function deleteNodeRight() {
@@ -705,7 +640,6 @@
 			}
 			window.addEventListener('DOMContentLoaded', init);
 			</script>
-		
 		</div>
 		<div class="p-4">
 			<script id="code">
@@ -714,10 +648,14 @@
 				myDiagram = $(go.Diagram, "myDiagramDiv", {
 					"undoManager.isEnabled": true,
 					padding: 20,
-            		grid: $(go.Panel, "Grid",  // a simple 10x10 grid
-              		$(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.2 }),
-              		$(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.2 })
-            		),
+					grid: $(go.Panel, "Grid", // a simple 10x10 grid
+						$(go.Shape, "LineH", {
+							stroke: "lightgray",
+							strokeWidth: 0.2
+						}), $(go.Shape, "LineV", {
+							stroke: "lightgray",
+							strokeWidth: 0.2
+						})),
 					layout: $(DoubleTreeLayout, {
 						vertical: false,
 						directionFunction: function(n) {
@@ -743,8 +681,6 @@
 						if(idx >= 0) document.title = document.title.substr(0, idx);
 					}
 				});
-				
-				
 				var graygrad = $(go.Brush, "Linear", {
 					0: "#800080",
 					1: "#800080"
@@ -778,10 +714,10 @@
 					if(key < 0 || key > 16) return "images/HSnopic.jpg"; // There are only 16 images on the server
 					return "images/HS" + key + ".jpg"
 				}
-
 				myDiagram.nodeTemplate = $(go.Node, "Auto", {
 					selectionAdorned: true,
-					textEditable: true}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
+					textEditable: true
+				}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
 					minSize: new go.Size(120, 21),
 				}, new go.Binding("fill", "color")), $(go.TextBlock, {
 					font: "17px Helvetica",
@@ -789,276 +725,213 @@
 					editable: true,
 					margin: new go.Margin(30, 30, 30, 30),
 					alignment: go.Spot.Left
-				}, new go.Binding("text").makeTwoWay()),
-
-				$(go.Panel, "Auto", {alignment: go.Spot.BottomRight},
-            	$("Button",
-              	{   
+				}, new go.Binding("text").makeTwoWay()), $(go.Panel, "Auto", {
+					alignment: go.Spot.BottomRight
+				}, $("Button", {
 					"ButtonBorder.figure": "Circle",
 					"ButtonBorder.strokeWidth": 1.5,
 					"_buttonFillOver": "white",
 					"_buttonStrokeOver": "grey",
 					"ButtonBorder.fill": white,
 					click: changeLikeColor,
-				},
-              
-              	$(go.Shape,
-                { 
+				}, $(go.Shape, {
 					geometryString: "M106 242H46c-9 0-15 6-15 15v240c0 8 6 15 15 15h60c8 0 15-7 15-15V257c0-9-7-15-15-15zM481 281c-3-23-24-39-48-39H316c10-18 15-69 15-89 0-35-28-62-62-62h-13c-8 0-15 7-15 15 0 35-13 98-39 123-17 17-32 24-51 33v226c29 9 67 24 124 24h98c33 0 58-30 45-62a45 45 0 0030-60c32-9 44-49 22-74 8-9 13-21 11-35z",
 					desiredSize: new go.Size(12, 12),
 					fill: "red",
 					margin: 5
-					 
-				})
-            	),),
-				$(go.Panel, "Auto", {alignment: go.Spot.BottomLeft},
-            	$("Button",
-              	{   
+				})), ), $(go.Panel, "Auto", {
+					alignment: go.Spot.BottomLeft
+				}, $("Button", {
 					"ButtonBorder.figure": "Circle",
 					"ButtonBorder.strokeWidth": 1.5,
 					"_buttonFillOver": "white",
 					"_buttonStrokeOver": "grey",
 					"ButtonBorder.fill": white,
 					click: changeDislikeColor,
-				},
-              
-              	$(go.Shape,
-                { 
+				}, $(go.Shape, {
 					geometryString: "M406 362h60c9 0 15-7 15-15V106c0-8-6-15-15-15h-60c-8 0-15 7-15 15v241c0 8 7 15 15 15zM31 322c3 23 24 40 48 40h117c-10 17-15 68-15 89 0 34 29 61 63 61h12c8 0 15-7 15-15 0-35 14-97 39-123 17-17 32-23 51-33V115c-29-9-67-24-124-24h-98c-32 0-58 30-45 62a45 45 0 00-30 60c-32 9-44 49-22 74-8 9-13 21-11 35z",
 					desiredSize: new go.Size(12, 12),
 					fill: "red",
 					margin: 5
-					 
-				})
-            	),) );
-				
-				myDiagram.groupTemplate =
-      $(go.Group, "Auto",
-        { layout: null },
-        $(go.Shape, { visible: false, fill: "transparent" }),
-        $(go.Placeholder));
-
-				myDiagram.nodeTemplate.selectionAdornmentTemplate =
-				$(go.Adornment, "Spot",
-				$(go.Panel, "Auto",
-					$(go.Shape, "Rectangle", { stroke: "dodgerblue", strokeWidth: 2, fill: null }),
-					$(go.Placeholder)
-				),
-				$(go.Panel, "Horizontal",
-					{ alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom },
-
-					$("Button",
-					{ 	click: addNodeAndLinkPurple, 
-						desiredSize: new go.Size(30, 30), 
-						margin: new go.Margin(0, 20, 5, 0),
-						"ButtonBorder.figure": "Circle",
-						"ButtonBorder.strokeWidth": 3,
-						"_buttonFillOver": "white",
-						"_buttonStrokeOver": "grey",
-					},
-					$(go.Shape,
-					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
-					),
-					$("Button",
-					{ 	click: addNodeAndLinkBlue, 
-						desiredSize: new go.Size(30, 30), 
+				})), ));
+				myDiagram.groupTemplate = $(go.Group, "Auto", {
+					layout: null
+				}, $(go.Shape, {
+					visible: false,
+					fill: "transparent"
+				}), $(go.Placeholder));
+				myDiagram.nodeTemplate.selectionAdornmentTemplate = $(go.Adornment, "Spot", $(go.Panel, "Auto", $(go.Shape, "Rectangle", {
+					stroke: "dodgerblue",
+					strokeWidth: 2,
+					fill: null
+				}), $(go.Placeholder)), $(go.Panel, "Horizontal", {
+					alignment: go.Spot.Top,
+					alignmentFocus: go.Spot.Bottom
+				}, $("Button", {
+					click: addNodeAndLinkPurple,
+					desiredSize: new go.Size(30, 30),
+					margin: new go.Margin(0, 20, 5, 0),
+					"ButtonBorder.figure": "Circle",
+					"ButtonBorder.strokeWidth": 3,
+					"_buttonFillOver": "white",
+					"_buttonStrokeOver": "grey",
+				}, $(go.Shape, {
+					geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+					stroke: "purple",
+					desiredSize: new go.Size(23, 23)
+				})), $("Button", {
+					click: addNodeAndLinkBlue,
+					desiredSize: new go.Size(30, 30),
+					margin: new go.Margin(0, 0, 5, 20),
+					"ButtonBorder.figure": "Circle",
+					"ButtonBorder.strokeWidth": 3,
+					"_buttonFillOver": "white",
+					"_buttonStrokeOver": "grey",
+				}, $(go.Shape, {
+					geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+					stroke: "blue",
+					desiredSize: new go.Size(23, 23)
+				})), ));
+				myDiagram.nodeTemplate.contextMenu = $("ContextMenu", $("ContextMenuButton", $(go.TextBlock, "Удалить ветвь"), {
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if(node !== null) {
+							myDiagram.startTransaction("remove dept");
+							myDiagram.removeParts(node.findTreeParts());
+							myDiagram.commitTransaction("remove dept");
+						}
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Перекрасить ветвь (Пурпурный)"), {
+					click: (e, button) => {
+						const node = button.part.adornedPart;
+						if(!node) return;
+						e.diagram.model.commit(m => {
+							node.findTreeParts().each(n => m.set(n.data, "color", graygrad));
+						});
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Перекрасить ветвь (Лазурный)"), {
+					click: (e, button) => {
+						const node = button.part.adornedPart;
+						if(!node) return;
+						e.diagram.model.commit(m => {
+							node.findTreeParts().each(n => m.set(n.data, "color", bluegrad));
+						});
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Перекрасить ветвь (Белый)"), {
+					click: (e, button) => {
+						const node = button.part.adornedPart;
+						if(!node) return;
+						e.diagram.model.commit(m => {
+							node.findTreeParts().each(n => m.set(n.data, "color", "#b4b4b4"));
+						});
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Сменить цвет (Пурпурный)"), {
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if(node !== null) {
+							myDiagram.startTransaction("remove dept");
+							var color = graygrad;
+							var diagram = myDiagram;
+							changeColor(diagram, color);
+							myDiagram.commitTransaction("remove dept");
+						}
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Сменить цвет (Лазурный)"), {
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if(node !== null) {
+							myDiagram.startTransaction("remove dept");
+							var color = bluegrad;
+							var diagram = myDiagram;
+							changeColor(diagram, color);
+							myDiagram.commitTransaction("remove dept");
+						}
+					}
+				}), $("ContextMenuButton", $(go.TextBlock, "Сменить цвет (Белый)"), {
+					click: function(e, obj) {
+						var node = obj.part.adornedPart;
+						if(node !== null) {
+							myDiagram.startTransaction("remove dept");
+							var color = "#b4b4b4";
+							var diagram = myDiagram;
+							changeColor(diagram, color);
+							myDiagram.commitTransaction("remove dept");
+						}
+					}
+				}), );
+				myDiagram.nodeTemplateMap.add("Loading", $(go.Node, "Spot", {
+					selectionAdorned: true,
+					textEditable: true,
+					locationObjectName: "BODY"
+				}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Panel, "Auto", {
+					name: "BODY"
+				}, $(go.Shape, "RoundedRectangle", {
+					fill: bluegrad,
+					stroke: "gray",
+					minSize: new go.Size(20, 21),
+				}, ), $(go.TextBlock, {
+					stroke: "white",
+					font: "17px Helvetica",
+					editable: true,
+					margin: new go.Margin(30, 30, 30, 30),
+					alignment: go.Spot.Left
+				}, new go.Binding("text", "text"))), {
+					selectionAdornmentTemplate: $(go.Adornment, "Spot", $(go.Panel, "Auto", $(go.Shape, {
+						fill: null
+					}), $(go.Placeholder)), $("Button", {
+						click: addNodeAndLinkBlue,
+						alignment: go.Spot.TopRight,
+						desiredSize: new go.Size(30, 30),
 						margin: new go.Margin(0, 0, 5, 20),
 						"ButtonBorder.figure": "Circle",
 						"ButtonBorder.strokeWidth": 3,
 						"_buttonFillOver": "white",
 						"_buttonStrokeOver": "grey",
-					},
-					$(go.Shape,
-					{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
-					),
-
-				)
-				);
-				myDiagram.nodeTemplate.contextMenu =
-				$("ContextMenu",
-				$("ContextMenuButton",
-					$(go.TextBlock, "Удалить ветвь"),
-					{
-					click: function(e, obj) {
-						var node = obj.part.adornedPart;
-						if (node !== null) {
-						myDiagram.startTransaction("remove dept");
-						myDiagram.removeParts(node.findTreeParts());
-						myDiagram.commitTransaction("remove dept");
-						}
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Пурпурный)"),
-					{
-					click: (e, button) => {
-					    const node = button.part.adornedPart;
-						if (!node) return;
-						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", graygrad));
-    				});	
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Лазурный)"),
-					{
-					click: (e, button) => {
-					    const node = button.part.adornedPart;
-						if (!node) return;
-						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", bluegrad));
-    				});	
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Белый)"),
-					{
-					click: (e, button) => {
-					    const node = button.part.adornedPart;
-						if (!node) return;
-						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", "#b4b4b4"));
-    				});	
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Сменить цвет (Пурпурный)"),
-					{
-					click: function(e, obj) {
-						var node = obj.part.adornedPart;
-						if (node !== null) {
-						myDiagram.startTransaction("remove dept");
-						var color = graygrad;
-						var diagram = myDiagram;
-						changeColor(diagram, color);
-						myDiagram.commitTransaction("remove dept");
-						}
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Сменить цвет (Лазурный)"),
-					{
-					click: function(e, obj) {
-						var node = obj.part.adornedPart;
-						if (node !== null) {
-						myDiagram.startTransaction("remove dept");
-						var color = bluegrad;
-						var diagram = myDiagram;
-						changeColor(diagram, color);
-						myDiagram.commitTransaction("remove dept");
-						}
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Сменить цвет (Белый)"),
-					{
-					click: function(e, obj) {
-						var node = obj.part.adornedPart;
-						if (node !== null) {
-						myDiagram.startTransaction("remove dept");
-						var color = "#b4b4b4";
-						var diagram = myDiagram;
-						changeColor(diagram, color);
-						myDiagram.commitTransaction("remove dept");
-						}
-					}
-					}
-				),
-				);
-				myDiagram.nodeTemplateMap.add("Loading", $(go.Node, "Spot", {
-						selectionAdorned: true,
-						textEditable: true,
-						locationObjectName: "BODY"
-					}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Panel, "Auto", {
-						name: "BODY"
-					}, 
-					
-					$(go.Shape, "RoundedRectangle", {
-						fill: bluegrad,
-						stroke: "gray",
-						minSize: new go.Size(20, 21),
-					}, ), $(go.TextBlock, {
-						stroke: "white",
-						font: "17px Helvetica",
-						editable: true,
-						margin: new go.Margin(30, 30, 30, 30),
-						alignment: go.Spot.Left
-					}, new go.Binding("text", "text"))),
-					{
-					selectionAdornmentTemplate:
-						$(go.Adornment, "Spot",
-						$(go.Panel, "Auto",
-							$(go.Shape, 
-							{ 
-								fill: null
-							}),
-							$(go.Placeholder)
-						),
-						$("Button",
-							{ 	click: addNodeAndLinkBlue,
-								alignment: go.Spot.TopRight, 
-								desiredSize: new go.Size(30, 30), 
-								margin: new go.Margin(0, 0, 5, 20),
-								"ButtonBorder.figure": "Circle",
-								"ButtonBorder.strokeWidth": 3,
-								"_buttonFillOver": "white",
-								"_buttonStrokeOver": "grey",
-							},
-						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
-						),
-						$("Button",
-							{ 	click: addNodeAndLinkPurple,
-								alignment: go.Spot.BottomRight, 
-								desiredSize: new go.Size(30, 30), 
-								margin: new go.Margin(0, 0, 5, 20),
-								"ButtonBorder.figure": "Circle",
-								"ButtonBorder.strokeWidth": 3,
-								"_buttonFillOver": "white",
-								"_buttonStrokeOver": "grey",
-							},
-						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
-						),
-						$("Button",
-							{ 	click: addNodeAndLinkLeftBlue,
-								alignment: go.Spot.TopLeft, 
-								desiredSize: new go.Size(30, 30), 
-								margin: new go.Margin(0, 0, 5, 20),
-								"ButtonBorder.figure": "Circle",
-								"ButtonBorder.strokeWidth": 3,
-								"_buttonFillOver": "white",
-								"_buttonStrokeOver": "grey",
-							},
-						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "blue", desiredSize: new go.Size(23, 23) })
-						),
-						$("Button",
-							{ 	click: addNodeAndLinkLeftPurple,
-								alignment: go.Spot.BottomLeft, 
-								desiredSize: new go.Size(30, 30), 
-								margin: new go.Margin(0, 0, 5, 20),
-								"ButtonBorder.figure": "Circle",
-								"ButtonBorder.strokeWidth": 3,
-								"_buttonFillOver": "white",
-								"_buttonStrokeOver": "grey",
-							},
-						$(go.Shape,
-						{ geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z", stroke: "purple", desiredSize: new go.Size(23, 23) })
-						),
-					
-						)
-					},
-));
-
-
-
+					}, $(go.Shape, {
+						geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+						stroke: "blue",
+						desiredSize: new go.Size(23, 23)
+					})), $("Button", {
+						click: addNodeAndLinkPurple,
+						alignment: go.Spot.BottomRight,
+						desiredSize: new go.Size(30, 30),
+						margin: new go.Margin(0, 0, 5, 20),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					}, $(go.Shape, {
+						geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+						stroke: "purple",
+						desiredSize: new go.Size(23, 23)
+					})), $("Button", {
+						click: addNodeAndLinkLeftBlue,
+						alignment: go.Spot.TopLeft,
+						desiredSize: new go.Size(30, 30),
+						margin: new go.Margin(0, 0, 5, 20),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					}, $(go.Shape, {
+						geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+						stroke: "blue",
+						desiredSize: new go.Size(23, 23)
+					})), $("Button", {
+						click: addNodeAndLinkLeftPurple,
+						alignment: go.Spot.BottomLeft,
+						desiredSize: new go.Size(30, 30),
+						margin: new go.Margin(0, 0, 5, 20),
+						"ButtonBorder.figure": "Circle",
+						"ButtonBorder.strokeWidth": 3,
+						"_buttonFillOver": "white",
+						"_buttonStrokeOver": "grey",
+					}, $(go.Shape, {
+						geometryString: "M26 0a26 26 0 100 52 26 26 0 000-52zm13 28H28v11a2 2 0 01-4 0V28H14a2 2 0 010-4h10V14a2 2 0 014 0v10h11a2 2 0 010 4z",
+						stroke: "purple",
+						desiredSize: new go.Size(23, 23)
+					})), )
+				}, ));
 				myDiagram.linkTemplate = $(go.Link, go.Link.Orthogonal, {
 					corner: 5,
 					relinkableFrom: true,
@@ -1068,7 +941,6 @@
 					stroke: "#F5F5F5"
 				}));
 				load();
-				
 
 				function addNodeAndLink(e, obj) {
 					var fromNode = obj.part;
@@ -1187,20 +1059,18 @@
 
 				function changeLikeColor(e, button) {
 					colorButton = button["_buttonFillNormal"];
-					if (colorButton == "#50c878") {
+					if(colorButton == "#50c878") {
 						button["_buttonFillNormal"] = "white";
-					}
-					else {
+					} else {
 						button["_buttonFillNormal"] = "#50c878";
 					}
 				}
 
 				function changeDislikeColor(e, button) {
 					colorButton = button["_buttonFillNormal"];
-					if (colorButton == "#ff2e2e") {
+					if(colorButton == "#ff2e2e") {
 						button["_buttonFillNormal"] = "white";
-					}
-					else {
+					} else {
 						button["_buttonFillNormal"] = "#ff2e2e";
 					}
 				}
@@ -1227,6 +1097,7 @@
 					shiftNodesToEmptySpaces();
 					diagram.commitTransaction("Добавить");
 				}
+
 				function addNodeAndLinkLeftBlue(e, obj) {
 					var fromNode = obj.part;
 					var diagram = fromNode.diagram;
@@ -1249,6 +1120,7 @@
 					shiftNodesToEmptySpaces();
 					diagram.commitTransaction("Добавить");
 				}
+
 				function addNodeAndLinkLeftPurple(e, obj) {
 					var fromNode = obj.part;
 					var diagram = fromNode.diagram;
@@ -1325,24 +1197,20 @@
 						}
 					});
 				}
-				
 				myDiagram.addDiagramListener("LayoutCompleted", function(e) {
 					myDiagram.nodes.each(function(node) {
 						if(node.category === "Recycle") return;
 						node.minLocation = new go.Point(node.location.x, -Infinity);
 					});
 				});
-
 				var ltool = myDiagram.toolManager.linkingTool;
 				commonLinkingToolInit(ltool);
 				ltool.direction = go.LinkingTool.ForwardsOnly;
-
 				var rtool = myDiagram.toolManager.relinkingTool;
 				commonLinkingToolInit(rtool);
 				document.getElementById('zoomToFit').addEventListener('click', function() {
 					myDiagram.commandHandler.zoomToFit();
 				});
-
 				document.getElementById('centerRoot').addEventListener('click', function() {
 					myDiagram.scale = 1;
 					myDiagram.commandHandler.scrollToPart(myDiagram.findNodeForKey(1));
@@ -1395,267 +1263,221 @@
 				});
 				diagram.commitTransaction("change color");
 			}
-			
 			window.addEventListener('DOMContentLoaded', init);
 			</script>
-		
 		</div>
-			<div id="sampleRight" class="sampleRight">
-				<div style="display: inline-block;">
-					<div style="position: relative;">
-						<div id="myDiagramDivRight" style="background-color: #34343C; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
+		<div id="sampleRight" class="sampleRight">
+			<div style="display: inline-block;">
+				<div style="position: relative;">
+					<div id="myDiagramDivRight" style="background-color: #34343C; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
+				</div>
+				<div class="active__panel" id="panel">
+					<div class="main-wrapper">
+						<button title="Спрятать/показать панель" id="hidePanelButton">
+							<svg id="hidePanelButtonArrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 285" fill="#fff">
+								<defs/>
+								<path d="M136 168a9 9 0 0013 0L282 35a9 9 0 000-13L268 7a9 9 0 00-13 0L142 120 30 7a9 9 0 00-13 0L3 22a9 9 0 000 13l133 133z" />
+								<path d="M268 117a9 9 0 00-13 0L142 229 30 117a9 9 0 00-13 0L3 131a9 9 0 000 13l133 134a9 9 0 0013 0l133-134a9 9 0 000-13l-14-14z" /> </svg>
+						</button>
+						<button title="Полная схема" id="zoomToFitRight">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
+								<defs/>
+								<g>
+									<path d="M1 0l6 1s1 0 0 0L6 3a100 100 0 005 5v1l-2 2H8L4 6H3L1 7c0 1 0 0 0 0L0 1l1-1zM23 24l-6-1h-1l2-2-1-1-4-4v-1l2-2h1l4 4 1 1 1-2 1 1 1 6-1 1zM0 23l1-6v-1l2 2v-1l5-4h1l2 2v1l-5 4v1l1 1v1l-7 1v-1zM24 1l-1 6h-1l-1-1-1 1-4 4h-1l-2-2V8l4-4 1-1-2-2h1l6-1 1 1z" /> </g>
+							</svg>
+						</button>
+						<button title="Центрирование" id="centerRootRight">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="#fff">
+								<defs/>
+								<path d="M11 11l-7-1s-1 0 0 0l1-2-5-5 3-3 5 5 2-1c0-1 0 0 0 0l1 7zM15 15l7 1s1-1 0 0l-1 2a161 161 0 005 5l-3 3-5-5-2 1c0 1 0 0 0 0l-1-7zM11 15l-1 7s0 1 0 0l-2-1-5 5H2l-2-3 5-5-1-2c-1 0 0 0 0 0l7-1zM15 11V4h1l2 1 5-5 3 3-5 5 1 2c1 0 0 0 0 0l-7 1z" /> </svg>
+						</button>
+						<button title="Сохранить схему" id="SaveButton" onclick="saveRight()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.3 469.3" fill="#fff">
+								<defs/>
+								<path d="M466.2 88.5L381 3c-2-2-4.7-3.1-7.6-3.1H42.7A42.7 42.7 0 000 42.7v384a42.7 42.7 0 0042.7 42.6h384a42.7 42.7 0 0042.6-42.6V96c0-2.8-1-5.5-3-7.5zM106.7 21.3h234.6v128c0 11.8-9.5 21.4-21.3 21.4H128a21.4 21.4 0 01-21.3-21.4v-128zM384 448H85.3V256H384v192zm64-21.3c0 11.7-9.6 21.3-21.3 21.3h-21.4V245.3c0-5.9-4.7-10.6-10.6-10.6h-320c-6 0-10.7 4.7-10.7 10.6V448H42.7a21.4 21.4 0 01-21.4-21.3v-384c0-11.8 9.6-21.4 21.4-21.4h42.6v128A42.7 42.7 0 00128 192h192a42.7 42.7 0 0042.7-42.7v-128h6.2l79.1 79.1v326.3z" />
+								<path d="M266.7 149.3h42.6c6 0 10.7-4.7 10.7-10.6V53.3c0-5.9-4.8-10.6-10.7-10.6h-42.6c-6 0-10.7 4.7-10.7 10.6v85.4c0 5.9 4.8 10.6 10.7 10.6zM277.3 64h21.4v64h-21.4V64z" /> </svg>
+						</button>
+						<button title="Загрузить схему" onclick="loadRight()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.9 477.9" fill="#fff">
+								<defs/>
+								<path d="M443.7 307.2a17 17 0 00-17 17v102.5a17 17 0 01-17.1 17H68.3a17 17 0 01-17.1-17V324.3a17 17 0 10-34.1 0v102.4c0 28.2 22.9 51.2 51.2 51.2h341.3c28.3 0 51.2-23 51.2-51.2V324.3a17 17 0 00-17-17.1z" />
+								<path d="M336 295.1a17 17 0 00-23.8 0L256 351.3V17.1a17 17 0 10-34.1 0v334.2l-56.2-56.2a17 17 0 00-24.2 24.2l85.4 85.3a17 17 0 0024.1 0l85.4-85.3a17 17 0 00-.5-24.2z" /> </svg>
+						</button>
+						<button title="Увеличить масштаб" onclick="zoomInRight()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.3 459.3" fill="#fff">
+								<defs/>
+								<path d="M459.3 229.7c0 22.2-18 40.2-40.2 40.2H269.8V419a40.2 40.2 0 11-80.3 0V270H40.2A40 40 0 010 229.7c0-22.2 18-40.2 40.2-40.2h149.3V40.2a40.2 40.2 0 0180.4 0v149.3H419c22.2 0 40.2 18 40.2 40.2z" /> </svg>
+						</button>
+						<button title="Уменьшить масштаб" onclick="zoomOutRight()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 124" fill="#fff">
+								<defs/>
+								<path d="M112 50H12A12 12 0 000 62a12 12 0 0012 12h100a12 12 0 0012-12 12 12 0 00-12-12z" /> </svg>
+						</button>
+						<button title="Удалить" onclick="deleteNodeRight()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 0 427 427" fill="#fff">
+								<defs/>
+								<path d="M232 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0M114 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0" />
+								<path d="M28 127v247c0 14 6 28 15 38 9 9 22 15 36 15h189c14 0 26-6 36-15 9-10 14-24 14-38V127a38 38 0 00-9-75h-52V40a39 39 0 00-39-40h-89a39 39 0 00-40 40v12H38a38 38 0 00-10 75zm240 280H79c-17 0-31-15-31-33V128h250v246c0 18-13 33-30 33zM109 40a19 19 0 0120-20h89a19 19 0 0119 20v12H109zM38 72h271a18 18 0 110 36H38a18 18 0 110-36zm0 0" />
+								<path d="M173 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0" /> </svg>
+						</button>
+						<button title="Отменить" onclick="undoRight()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
+								<defs/>
+								<path d="M0 128c0 4.6 2 9 5.5 12l128 112a16 16 0 0026.6-12.1v-48h128c79.4 0 144 64.6 144 144s-64.6 144-144 144c-8.8 0-16 7.2-16 16s7.2 16 16 16c123.5 0 224-100.5 224-224s-100.5-224-224-224H160V16c0-6.3-3.6-12-9.4-14.6a16.1 16.1 0 00-17.2 2.5L5.5 116C2 119 0 123.4 0 128z" /> </svg>
+						</button>
+						<button title="Повторить" onclick="redoRight()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
+								<defs/>
+								<path d="M506.5 116L378.5 4A16 16 0 00352 16v48H224A224.2 224.2 0 000 288c0 123.5 100.5 224 224 224a16 16 0 000-32c-79.4 0-144-64.6-144-144s64.6-144 144-144h128v48a16 16 0 0026.5 12l128-112a16 16 0 000-24z" /> </svg>
+						</button>
 					</div>
-          <div class="active__panel" id="panel">
-        	<div class="main-wrapper">
-			<button title="Спрятать/показать панель" id="hidePanelButton">
-				<svg id="hidePanelButtonArrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 285" fill="#fff">
-					<defs/>
-					<path d="M136 168a9 9 0 0013 0L282 35a9 9 0 000-13L268 7a9 9 0 00-13 0L142 120 30 7a9 9 0 00-13 0L3 22a9 9 0 000 13l133 133z"/>
-					<path d="M268 117a9 9 0 00-13 0L142 229 30 117a9 9 0 00-13 0L3 131a9 9 0 000 13l133 134a9 9 0 0013 0l133-134a9 9 0 000-13l-14-14z"/>
-				</svg>
-			</button>
-              <button title="Полная схема" id="zoomToFitRight">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
-                  <defs/>
-                  <g>
-                    <path d="M1 0l6 1s1 0 0 0L6 3a100 100 0 005 5v1l-2 2H8L4 6H3L1 7c0 1 0 0 0 0L0 1l1-1zM23 24l-6-1h-1l2-2-1-1-4-4v-1l2-2h1l4 4 1 1 1-2 1 1 1 6-1 1zM0 23l1-6v-1l2 2v-1l5-4h1l2 2v1l-5 4v1l1 1v1l-7 1v-1zM24 1l-1 6h-1l-1-1-1 1-4 4h-1l-2-2V8l4-4 1-1-2-2h1l6-1 1 1z" /> </g>
-                </svg>
-              </button>
-              <button title="Центрирование" id="centerRootRight">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="#fff">
-                  <defs/>
-                  <path d="M11 11l-7-1s-1 0 0 0l1-2-5-5 3-3 5 5 2-1c0-1 0 0 0 0l1 7zM15 15l7 1s1-1 0 0l-1 2a161 161 0 005 5l-3 3-5-5-2 1c0 1 0 0 0 0l-1-7zM11 15l-1 7s0 1 0 0l-2-1-5 5H2l-2-3 5-5-1-2c-1 0 0 0 0 0l7-1zM15 11V4h1l2 1 5-5 3 3-5 5 1 2c1 0 0 0 0 0l-7 1z" /> 
-                </svg>
-              </button>
-              <button title="Сохранить схему" id="SaveButton" onclick="saveRight()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.3 469.3" fill="#fff">
-                  <defs/>
-                  <path d="M466.2 88.5L381 3c-2-2-4.7-3.1-7.6-3.1H42.7A42.7 42.7 0 000 42.7v384a42.7 42.7 0 0042.7 42.6h384a42.7 42.7 0 0042.6-42.6V96c0-2.8-1-5.5-3-7.5zM106.7 21.3h234.6v128c0 11.8-9.5 21.4-21.3 21.4H128a21.4 21.4 0 01-21.3-21.4v-128zM384 448H85.3V256H384v192zm64-21.3c0 11.7-9.6 21.3-21.3 21.3h-21.4V245.3c0-5.9-4.7-10.6-10.6-10.6h-320c-6 0-10.7 4.7-10.7 10.6V448H42.7a21.4 21.4 0 01-21.4-21.3v-384c0-11.8 9.6-21.4 21.4-21.4h42.6v128A42.7 42.7 0 00128 192h192a42.7 42.7 0 0042.7-42.7v-128h6.2l79.1 79.1v326.3z" />
-                  <path d="M266.7 149.3h42.6c6 0 10.7-4.7 10.7-10.6V53.3c0-5.9-4.8-10.6-10.7-10.6h-42.6c-6 0-10.7 4.7-10.7 10.6v85.4c0 5.9 4.8 10.6 10.7 10.6zM277.3 64h21.4v64h-21.4V64z" /> 
-                </svg>
-              </button>
-              <button title="Загрузить схему" onclick="loadRight()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.9 477.9" fill="#fff">
-                  <defs/>
-                  <path d="M443.7 307.2a17 17 0 00-17 17v102.5a17 17 0 01-17.1 17H68.3a17 17 0 01-17.1-17V324.3a17 17 0 10-34.1 0v102.4c0 28.2 22.9 51.2 51.2 51.2h341.3c28.3 0 51.2-23 51.2-51.2V324.3a17 17 0 00-17-17.1z" />
-                  <path d="M336 295.1a17 17 0 00-23.8 0L256 351.3V17.1a17 17 0 10-34.1 0v334.2l-56.2-56.2a17 17 0 00-24.2 24.2l85.4 85.3a17 17 0 0024.1 0l85.4-85.3a17 17 0 00-.5-24.2z" /> 
-                </svg>
-              </button>
-              <button title="Увеличить масштаб" onclick="zoomInRight()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.3 459.3" fill="#fff">
-                  <defs/>
-                  <path d="M459.3 229.7c0 22.2-18 40.2-40.2 40.2H269.8V419a40.2 40.2 0 11-80.3 0V270H40.2A40 40 0 010 229.7c0-22.2 18-40.2 40.2-40.2h149.3V40.2a40.2 40.2 0 0180.4 0v149.3H419c22.2 0 40.2 18 40.2 40.2z" /> 
-                </svg>
-              </button>
-              <button title="Уменьшить масштаб" onclick="zoomOutRight()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 124" fill="#fff">
-                  <defs/>
-                  <path d="M112 50H12A12 12 0 000 62a12 12 0 0012 12h100a12 12 0 0012-12 12 12 0 00-12-12z" /> 
-                </svg>
-              </button>
-              <button title="Удалить" onclick="deleteNodeRight()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 0 427 427" fill="#fff">
-                  <defs/>
-                  <path d="M232 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0M114 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0" />
-                  <path d="M28 127v247c0 14 6 28 15 38 9 9 22 15 36 15h189c14 0 26-6 36-15 9-10 14-24 14-38V127a38 38 0 00-9-75h-52V40a39 39 0 00-39-40h-89a39 39 0 00-40 40v12H38a38 38 0 00-10 75zm240 280H79c-17 0-31-15-31-33V128h250v246c0 18-13 33-30 33zM109 40a19 19 0 0120-20h89a19 19 0 0119 20v12H109zM38 72h271a18 18 0 110 36H38a18 18 0 110-36zm0 0" />
-                  <path d="M173 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0" /> 
-                </svg>
-              </button>
-              <button title="Отменить" onclick="undoRight()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
-                  <defs/>
-                  <path d="M0 128c0 4.6 2 9 5.5 12l128 112a16 16 0 0026.6-12.1v-48h128c79.4 0 144 64.6 144 144s-64.6 144-144 144c-8.8 0-16 7.2-16 16s7.2 16 16 16c123.5 0 224-100.5 224-224s-100.5-224-224-224H160V16c0-6.3-3.6-12-9.4-14.6a16.1 16.1 0 00-17.2 2.5L5.5 116C2 119 0 123.4 0 128z" /> 
-                </svg>
-              </button>
-              <button title="Повторить" onclick="redoRight()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
-                  <defs/>
-                  <path d="M506.5 116L378.5 4A16 16 0 00352 16v48H224A224.2 224.2 0 000 288c0 123.5 100.5 224 224 224a16 16 0 000-32c-79.4 0-144-64.6-144-144s64.6-144 144-144h128v48a16 16 0 0026.5 12l128-112a16 16 0 000-24z" /> 
-                </svg>
-              </button>
-            </div>
-			<div class="textareaBox">
-				<textarea id="mySavedModelRight" style="width:100%;height:230px">  { 
-					"class": "go.GraphLinksModel", "nodeDataArray": [ 
-					  { "key":1,
-					  "text":"Утверждение",
-					  "category":"Loading"
-					  }				  				  
-					]
-					 
-				  } 
-				</textarea>
-			</div>
-          </div>
+					<div class="textareaBox">
+						<textarea id="mySavedModelRight" style="width:100%;height:230px"> { "class": "go.GraphLinksModel", "nodeDataArray": [ { "key":1, "text":"Утверждение", "category":"Loading" } ] } </textarea>
+					</div>
 				</div>
 			</div>
-			<div id="sample" class="sample">
-				<div style="display: inline-block;">
-					<div style="position: relative;">
-						<div id="myDiagramDiv" style="background-color: #34343C; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
+		</div>
+		<div id="sample" class="sample">
+			<div style="display: inline-block;">
+				<div style="position: relative;">
+					<div id="myDiagramDiv" style="background-color: #34343C; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
+				</div>
+				<div class="active__panel" id="panelRight">
+					<div class="main-wrapper">
+						<button title="Полная схема" id="zoomToFit">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
+								<defs/>
+								<g>
+									<path d="M1 0l6 1s1 0 0 0L6 3a100 100 0 005 5v1l-2 2H8L4 6H3L1 7c0 1 0 0 0 0L0 1l1-1zM23 24l-6-1h-1l2-2-1-1-4-4v-1l2-2h1l4 4 1 1 1-2 1 1 1 6-1 1zM0 23l1-6v-1l2 2v-1l5-4h1l2 2v1l-5 4v1l1 1v1l-7 1v-1zM24 1l-1 6h-1l-1-1-1 1-4 4h-1l-2-2V8l4-4 1-1-2-2h1l6-1 1 1z" /> </g>
+							</svg>
+						</button>
+						<button title="Центрирование" id="centerRoot">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="#fff">
+								<defs/>
+								<path d="M11 11l-7-1s-1 0 0 0l1-2-5-5 3-3 5 5 2-1c0-1 0 0 0 0l1 7zM15 15l7 1s1-1 0 0l-1 2a161 161 0 005 5l-3 3-5-5-2 1c0 1 0 0 0 0l-1-7zM11 15l-1 7s0 1 0 0l-2-1-5 5H2l-2-3 5-5-1-2c-1 0 0 0 0 0l7-1zM15 11V4h1l2 1 5-5 3 3-5 5 1 2c1 0 0 0 0 0l-7 1z" /> </svg>
+						</button>
+						<button title="Сохранить схему" id="SaveButton" onclick="save()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.3 469.3" fill="#fff">
+								<defs/>
+								<path d="M466.2 88.5L381 3c-2-2-4.7-3.1-7.6-3.1H42.7A42.7 42.7 0 000 42.7v384a42.7 42.7 0 0042.7 42.6h384a42.7 42.7 0 0042.6-42.6V96c0-2.8-1-5.5-3-7.5zM106.7 21.3h234.6v128c0 11.8-9.5 21.4-21.3 21.4H128a21.4 21.4 0 01-21.3-21.4v-128zM384 448H85.3V256H384v192zm64-21.3c0 11.7-9.6 21.3-21.3 21.3h-21.4V245.3c0-5.9-4.7-10.6-10.6-10.6h-320c-6 0-10.7 4.7-10.7 10.6V448H42.7a21.4 21.4 0 01-21.4-21.3v-384c0-11.8 9.6-21.4 21.4-21.4h42.6v128A42.7 42.7 0 00128 192h192a42.7 42.7 0 0042.7-42.7v-128h6.2l79.1 79.1v326.3z" />
+								<path d="M266.7 149.3h42.6c6 0 10.7-4.7 10.7-10.6V53.3c0-5.9-4.8-10.6-10.7-10.6h-42.6c-6 0-10.7 4.7-10.7 10.6v85.4c0 5.9 4.8 10.6 10.7 10.6zM277.3 64h21.4v64h-21.4V64z" /> </svg>
+						</button>
+						<button title="Загрузить схему" onclick="load()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.9 477.9" fill="#fff">
+								<defs/>
+								<path d="M443.7 307.2a17 17 0 00-17 17v102.5a17 17 0 01-17.1 17H68.3a17 17 0 01-17.1-17V324.3a17 17 0 10-34.1 0v102.4c0 28.2 22.9 51.2 51.2 51.2h341.3c28.3 0 51.2-23 51.2-51.2V324.3a17 17 0 00-17-17.1z" />
+								<path d="M336 295.1a17 17 0 00-23.8 0L256 351.3V17.1a17 17 0 10-34.1 0v334.2l-56.2-56.2a17 17 0 00-24.2 24.2l85.4 85.3a17 17 0 0024.1 0l85.4-85.3a17 17 0 00-.5-24.2z" /> </svg>
+						</button>
+						<button title="Увеличить масштаб" onclick="zoomIn()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.3 459.3" fill="#fff">
+								<defs/>
+								<path d="M459.3 229.7c0 22.2-18 40.2-40.2 40.2H269.8V419a40.2 40.2 0 11-80.3 0V270H40.2A40 40 0 010 229.7c0-22.2 18-40.2 40.2-40.2h149.3V40.2a40.2 40.2 0 0180.4 0v149.3H419c22.2 0 40.2 18 40.2 40.2z" /> </svg>
+						</button>
+						<button title="Уменьшить масштаб" onclick="zoomOut()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 124" fill="#fff">
+								<defs/>
+								<path d="M112 50H12A12 12 0 000 62a12 12 0 0012 12h100a12 12 0 0012-12 12 12 0 00-12-12z" /> </svg>
+						</button>
+						<button title="Удалить" onclick="deleteNode()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 0 427 427" fill="#fff">
+								<defs/>
+								<path d="M232 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0M114 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0" />
+								<path d="M28 127v247c0 14 6 28 15 38 9 9 22 15 36 15h189c14 0 26-6 36-15 9-10 14-24 14-38V127a38 38 0 00-9-75h-52V40a39 39 0 00-39-40h-89a39 39 0 00-40 40v12H38a38 38 0 00-10 75zm240 280H79c-17 0-31-15-31-33V128h250v246c0 18-13 33-30 33zM109 40a19 19 0 0120-20h89a19 19 0 0119 20v12H109zM38 72h271a18 18 0 110 36H38a18 18 0 110-36zm0 0" />
+								<path d="M173 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0" /> </svg>
+						</button>
+						<button title="Отменить" onclick="undo()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
+								<defs/>
+								<path d="M0 128c0 4.6 2 9 5.5 12l128 112a16 16 0 0026.6-12.1v-48h128c79.4 0 144 64.6 144 144s-64.6 144-144 144c-8.8 0-16 7.2-16 16s7.2 16 16 16c123.5 0 224-100.5 224-224s-100.5-224-224-224H160V16c0-6.3-3.6-12-9.4-14.6a16.1 16.1 0 00-17.2 2.5L5.5 116C2 119 0 123.4 0 128z" /> </svg>
+						</button>
+						<button title="Повторить" onclick="redo()">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
+								<defs/>
+								<path d="M506.5 116L378.5 4A16 16 0 00352 16v48H224A224.2 224.2 0 000 288c0 123.5 100.5 224 224 224a16 16 0 000-32c-79.4 0-144-64.6-144-144s64.6-144 144-144h128v48a16 16 0 0026.5 12l128-112a16 16 0 000-24z" /> </svg>
+						</button>
+						<button title="Спрятать/показать панель" id="hidePanelRightButton">
+							<svg id="hidePanelButtonArrowRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 285" fill="#fff">
+								<defs/>
+								<path d="M136 168a9 9 0 0013 0L282 35a9 9 0 000-13L268 7a9 9 0 00-13 0L142 120 30 7a9 9 0 00-13 0L3 22a9 9 0 000 13l133 133z" />
+								<path d="M268 117a9 9 0 00-13 0L142 229 30 117a9 9 0 00-13 0L3 131a9 9 0 000 13l133 134a9 9 0 0013 0l133-134a9 9 0 000-13l-14-14z" /> </svg>
+						</button>
 					</div>
-          <div class="active__panel" id="panelRight">
-            <div class="main-wrapper">
-              <button title="Полная схема" id="zoomToFit">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff">
-                  <defs/>
-                  <g>
-                    <path d="M1 0l6 1s1 0 0 0L6 3a100 100 0 005 5v1l-2 2H8L4 6H3L1 7c0 1 0 0 0 0L0 1l1-1zM23 24l-6-1h-1l2-2-1-1-4-4v-1l2-2h1l4 4 1 1 1-2 1 1 1 6-1 1zM0 23l1-6v-1l2 2v-1l5-4h1l2 2v1l-5 4v1l1 1v1l-7 1v-1zM24 1l-1 6h-1l-1-1-1 1-4 4h-1l-2-2V8l4-4 1-1-2-2h1l6-1 1 1z" /> </g>
-                </svg>
-              </button>
-              <button title="Центрирование" id="centerRoot">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" fill="#fff">
-                  <defs/>
-                  <path d="M11 11l-7-1s-1 0 0 0l1-2-5-5 3-3 5 5 2-1c0-1 0 0 0 0l1 7zM15 15l7 1s1-1 0 0l-1 2a161 161 0 005 5l-3 3-5-5-2 1c0 1 0 0 0 0l-1-7zM11 15l-1 7s0 1 0 0l-2-1-5 5H2l-2-3 5-5-1-2c-1 0 0 0 0 0l7-1zM15 11V4h1l2 1 5-5 3 3-5 5 1 2c1 0 0 0 0 0l-7 1z" /> 
-                </svg>
-              </button>
-              <button title="Сохранить схему" id="SaveButton" onclick="save()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.3 469.3" fill="#fff">
-                  <defs/>
-                  <path d="M466.2 88.5L381 3c-2-2-4.7-3.1-7.6-3.1H42.7A42.7 42.7 0 000 42.7v384a42.7 42.7 0 0042.7 42.6h384a42.7 42.7 0 0042.6-42.6V96c0-2.8-1-5.5-3-7.5zM106.7 21.3h234.6v128c0 11.8-9.5 21.4-21.3 21.4H128a21.4 21.4 0 01-21.3-21.4v-128zM384 448H85.3V256H384v192zm64-21.3c0 11.7-9.6 21.3-21.3 21.3h-21.4V245.3c0-5.9-4.7-10.6-10.6-10.6h-320c-6 0-10.7 4.7-10.7 10.6V448H42.7a21.4 21.4 0 01-21.4-21.3v-384c0-11.8 9.6-21.4 21.4-21.4h42.6v128A42.7 42.7 0 00128 192h192a42.7 42.7 0 0042.7-42.7v-128h6.2l79.1 79.1v326.3z" />
-                  <path d="M266.7 149.3h42.6c6 0 10.7-4.7 10.7-10.6V53.3c0-5.9-4.8-10.6-10.7-10.6h-42.6c-6 0-10.7 4.7-10.7 10.6v85.4c0 5.9 4.8 10.6 10.7 10.6zM277.3 64h21.4v64h-21.4V64z" /> 
-                </svg>
-              </button>
-              <button title="Загрузить схему" onclick="load()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.9 477.9" fill="#fff">
-                  <defs/>
-                  <path d="M443.7 307.2a17 17 0 00-17 17v102.5a17 17 0 01-17.1 17H68.3a17 17 0 01-17.1-17V324.3a17 17 0 10-34.1 0v102.4c0 28.2 22.9 51.2 51.2 51.2h341.3c28.3 0 51.2-23 51.2-51.2V324.3a17 17 0 00-17-17.1z" />
-                  <path d="M336 295.1a17 17 0 00-23.8 0L256 351.3V17.1a17 17 0 10-34.1 0v334.2l-56.2-56.2a17 17 0 00-24.2 24.2l85.4 85.3a17 17 0 0024.1 0l85.4-85.3a17 17 0 00-.5-24.2z" /> 
-                </svg>
-              </button>
-              <button title="Увеличить масштаб" onclick="zoomIn()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.3 459.3" fill="#fff">
-                  <defs/>
-                  <path d="M459.3 229.7c0 22.2-18 40.2-40.2 40.2H269.8V419a40.2 40.2 0 11-80.3 0V270H40.2A40 40 0 010 229.7c0-22.2 18-40.2 40.2-40.2h149.3V40.2a40.2 40.2 0 0180.4 0v149.3H419c22.2 0 40.2 18 40.2 40.2z" /> 
-                </svg>
-              </button>
-              <button title="Уменьшить масштаб" onclick="zoomOut()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 124" fill="#fff">
-                  <defs/>
-                  <path d="M112 50H12A12 12 0 000 62a12 12 0 0012 12h100a12 12 0 0012-12 12 12 0 00-12-12z" /> 
-                </svg>
-              </button>
-              <button title="Удалить" onclick="deleteNode()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 0 427 427" fill="#fff">
-                  <defs/>
-                  <path d="M232 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0M114 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0" />
-                  <path d="M28 127v247c0 14 6 28 15 38 9 9 22 15 36 15h189c14 0 26-6 36-15 9-10 14-24 14-38V127a38 38 0 00-9-75h-52V40a39 39 0 00-39-40h-89a39 39 0 00-40 40v12H38a38 38 0 00-10 75zm240 280H79c-17 0-31-15-31-33V128h250v246c0 18-13 33-30 33zM109 40a19 19 0 0120-20h89a19 19 0 0119 20v12H109zM38 72h271a18 18 0 110 36H38a18 18 0 110-36zm0 0" />
-                  <path d="M173 155c-5 0-10 4-10 10v189a10 10 0 0020 0V165c0-6-4-10-10-10zm0 0" /> 
-                </svg>
-              </button>
-              <button title="Отменить" onclick="undo()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
-                  <defs/>
-                  <path d="M0 128c0 4.6 2 9 5.5 12l128 112a16 16 0 0026.6-12.1v-48h128c79.4 0 144 64.6 144 144s-64.6 144-144 144c-8.8 0-16 7.2-16 16s7.2 16 16 16c123.5 0 224-100.5 224-224s-100.5-224-224-224H160V16c0-6.3-3.6-12-9.4-14.6a16.1 16.1 0 00-17.2 2.5L5.5 116C2 119 0 123.4 0 128z" /> 
-                </svg>
-              </button>
-              <button title="Повторить" onclick="redo()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
-                  <defs/>
-                  <path d="M506.5 116L378.5 4A16 16 0 00352 16v48H224A224.2 224.2 0 000 288c0 123.5 100.5 224 224 224a16 16 0 000-32c-79.4 0-144-64.6-144-144s64.6-144 144-144h128v48a16 16 0 0026.5 12l128-112a16 16 0 000-24z" /> 
-                </svg>
-              </button>
-			  <button title="Спрятать/показать панель" id="hidePanelRightButton">
-				<svg id="hidePanelButtonArrowRight"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 285" fill="#fff">
-					<defs/>
-					<path d="M136 168a9 9 0 0013 0L282 35a9 9 0 000-13L268 7a9 9 0 00-13 0L142 120 30 7a9 9 0 00-13 0L3 22a9 9 0 000 13l133 133z"/>
-					<path d="M268 117a9 9 0 00-13 0L142 229 30 117a9 9 0 00-13 0L3 131a9 9 0 000 13l133 134a9 9 0 0013 0l133-134a9 9 0 000-13l-14-14z"/>
-				</svg>
-              </button>
-            </div>
-			<div class="textareaBox">
-            	<textarea id="mySavedModel" style="width:100%;height:230px">  { 
-                "class": "go.GraphLinksModel", "nodeDataArray": [ 
-                  { "key":1,
-                  "text":"Утверждение",
-                  "category":"Loading"
-                  }				  				  
-                ]
-				 
-              } 
-            	</textarea>
-			</div>
-          </div>
+					<div class="textareaBox">
+						<textarea id="mySavedModel" style="width:100%;height:230px"> { "class": "go.GraphLinksModel", "nodeDataArray": [ { "key":1, "text":"Утверждение", "category":"Loading" } ] } </textarea>
+					</div>
 				</div>
 			</div>
+		</div>
 	</div>
 	<button title="Режим зрителя" class="viewerButton hoverButton" id="viewerButton">
-		<svg id="viewerButtonOff"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
+		<svg id="viewerButtonOff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
 			<defs/>
-			<path d="M421 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM301 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM181 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30z"/>
-			<path d="M61 467v30c0 8 7 15 15 15h360c8 0 15-7 15-15v-30a75 75 0 00-135-45 75 75 0 00-120 0 75 75 0 00-135 45zm270 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15H91v-15zM497 0H15C7 0 0 7 0 15v242c0 8 7 15 15 15h482c8 0 15-7 15-15V15c0-8-7-15-15-15zm-15 242H30V30h452v212z"/>
-		</svg>
+			<path d="M421 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM301 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM181 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30z" />
+			<path d="M61 467v30c0 8 7 15 15 15h360c8 0 15-7 15-15v-30a75 75 0 00-135-45 75 75 0 00-120 0 75 75 0 00-135 45zm270 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15H91v-15zM497 0H15C7 0 0 7 0 15v242c0 8 7 15 15 15h482c8 0 15-7 15-15V15c0-8-7-15-15-15zm-15 242H30V30h452v212z" /> </svg>
 		<svg id="viewerButtonOn" class="hide" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#fff">
 			<defs/>
-			<path d="M421 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM301 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM181 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30z"/>
-			<path d="M61 467v30c0 8 7 15 15 15h360c8 0 15-7 15-15v-30a75 75 0 00-135-45 75 75 0 00-120 0 75 75 0 00-135 45zm270 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15H91v-15zM497 0H15C7 0 0 7 0 15v242c0 8 7 15 15 15h482c8 0 15-7 15-15V15c0-8-7-15-15-15zm-15 242H30V30h452v212z"/>
-			<path d="M24 19h479v237H24z"/>
+			<path d="M421 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM301 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30zM181 347a45 45 0 10-90 0 45 45 0 0090 0zm-45 15a15 15 0 110-30 15 15 0 010 30z" />
+			<path d="M61 467v30c0 8 7 15 15 15h360c8 0 15-7 15-15v-30a75 75 0 00-135-45 75 75 0 00-120 0 75 75 0 00-135 45zm270 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15h-90v-15zm-120 0a45 45 0 0190 0v15H91v-15zM497 0H15C7 0 0 7 0 15v242c0 8 7 15 15 15h482c8 0 15-7 15-15V15c0-8-7-15-15-15zm-15 242H30V30h452v212z" />
+			<path d="M24 19h479v237H24z" /> 
 		</svg>
 	</button>
 	<script>
-		document.getElementById('viewerButton').addEventListener('click', function() {
-			document.getElementById("panel").classList.toggle('hide');
-			document.getElementById("panelRight").classList.toggle('hide');
-			document.getElementById("viewerButtonOff").classList.toggle('hide');
-			document.getElementById("viewerButtonOn").classList.toggle('hide');
-			document.getElementById("line").classList.toggle('hide');
-			document.body.classList.toggle('hideScreen');
-		});
-
-		document.getElementById('hidePanelButton').addEventListener('click', function() {
-			document.getElementById("panel").classList.toggle('hidePanel');
-			document.getElementById("hidePanelButtonArrow").classList.toggle('rotate');
-		});
-
-		document.getElementById('hidePanelRightButton').addEventListener('click', function() {
-			document.getElementById("panelRight").classList.toggle('hidePanel');
-			document.getElementById("hidePanelButtonArrowRight").classList.toggle('rotate');
-		});
+	document.getElementById('viewerButton').addEventListener('click', function() {
+		document.getElementById("panel").classList.toggle('hide');
+		document.getElementById("panelRight").classList.toggle('hide');
+		document.getElementById("viewerButtonOff").classList.toggle('hide');
+		document.getElementById("viewerButtonOn").classList.toggle('hide');
+		document.getElementById("line").classList.toggle('hide');
+		document.body.classList.toggle('hideScreen');
+	});
+	document.getElementById('hidePanelButton').addEventListener('click', function() {
+		document.getElementById("panel").classList.toggle('hidePanel');
+		document.getElementById("hidePanelButtonArrow").classList.toggle('rotate');
+	});
+	document.getElementById('hidePanelRightButton').addEventListener('click', function() {
+		document.getElementById("panelRight").classList.toggle('hidePanel');
+		document.getElementById("hidePanelButtonArrowRight").classList.toggle('rotate');
+	});
 	</script>
 	<script>
-var enterFullscreen = function(el) {
-	if(el.requestFullscreen) {
-		el.requestFullscreen();
-	} else if(el.msRequestFullscreen) {
-		el.msRequestFullscreen();
-	} else if(el.mozRequestFullScreen) {
-		el.mozRequestFullScreen();
-	} else if(el.webkitRequestFullscreen) {
-		el.webkitRequestFullscreen();
-	} else {
-		noFullscreenSupport();
-	}
-};
-
-var exitFullscreen = function() {
-	if(document.exitFullscreen) {
-		document.exitFullscreen();
-	} else if(document.msExitFullscreen) {
-		document.msExitFullscreen();
-	} else if(document.mozCancelFullScreen) {
-		document.mozCancelFullScreen();
-	} else if(document.webkitExitFullscreen) {
-		document.webkitExitFullscreen();
-	} else {
-		noFullscreenSupport();
-	}
-};
-
-var noFullscreenSupport = function() {
-	alert('Your browser does not support the Fullscreen API.');
-};
-
-var fullscreenButton = document.getElementById('viewerButton');
-fullscreenButton.addEventListener('click', function(e) {
-	e.preventDefault();
-	if((window.innerWidth === screen.width && window.innerHeight === screen.height) || (window.fullScreen)) {
-		exitFullscreen();
-	} else {
-		enterFullscreen(document.documentElement);
-	}	
-});
-
-
+	var enterFullscreen = function(el) {
+		if(el.requestFullscreen) {
+			el.requestFullscreen();
+		} else if(el.msRequestFullscreen) {
+			el.msRequestFullscreen();
+		} else if(el.mozRequestFullScreen) {
+			el.mozRequestFullScreen();
+		} else if(el.webkitRequestFullscreen) {
+			el.webkitRequestFullscreen();
+		} else {
+			noFullscreenSupport();
+		}
+	};
+	var exitFullscreen = function() {
+		if(document.exitFullscreen) {
+			document.exitFullscreen();
+		} else if(document.msExitFullscreen) {
+			document.msExitFullscreen();
+		} else if(document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		} else if(document.webkitExitFullscreen) {
+			document.webkitExitFullscreen();
+		} else {
+			noFullscreenSupport();
+		}
+	};
+	var noFullscreenSupport = function() {
+		alert('Your browser does not support the Fullscreen API.');
+	};
+	var fullscreenButton = document.getElementById('viewerButton');
+	fullscreenButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		if((window.innerWidth === screen.width && window.innerHeight === screen.height) || (window.fullScreen)) {
+			exitFullscreen();
+		} else {
+			enterFullscreen(document.documentElement);
+		}
+	});
 	</script>
 </body>
 
