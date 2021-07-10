@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
 	<meta charset="utf-8" />
@@ -16,6 +16,7 @@
 </head>
 
 <body>
+	<div class="line" id="line"></div>
 	<div class="md:flex flex-col md:flex-row md:min-h-screen w-full max-w-screen-xl mx-auto">
 		<script src="./js/go.js"></script>
 		<script src="./js/DataInspector.js"></script>
@@ -31,7 +32,6 @@
               		$(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.2 }),
               		$(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.2 })
             		),
-					"commandHandler.archetypeGroupData": { isGroup: true, category: "Loading" },
 					layout: $(DoubleTreeLayout, {
 						vertical: false,
 						directionFunction: function(n) {
@@ -223,25 +223,13 @@
 					}
 				),
 				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Пурпурный градиент)"),
+					$(go.TextBlock, "Перекрасить ветвь (Белый)"),
 					{
 					click: (e, button) => {
 					    const node = button.part.adornedPart;
 						if (!node) return;
 						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", purplewhite));
-    				});	
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Лазурный градиент)"),
-					{
-					click: (e, button) => {
-					    const node = button.part.adornedPart;
-						if (!node) return;
-						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", bluewhite));
+        				node.findTreeParts().each(n => m.set(n.data, "color", "#b4b4b4"));
     				});	
 					}
 					}
@@ -283,7 +271,7 @@
 						var node = obj.part.adornedPart;
 						if (node !== null) {
 						myDiagramRight.startTransaction("remove dept");
-						var color = "white";
+						var color = "#b4b4b4";
 						var diagram = myDiagramRight;
 						changeColorRight(diagram, color);
 						myDiagramRight.commitTransaction("remove dept");
@@ -725,12 +713,11 @@
 				var $ = go.GraphObject.make;
 				myDiagram = $(go.Diagram, "myDiagramDiv", {
 					"undoManager.isEnabled": true,
-					padding: 20,  // extra space when scrolled all the way
+					padding: 20,
             		grid: $(go.Panel, "Grid",  // a simple 10x10 grid
               		$(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.2 }),
               		$(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.2 })
             		),
-					"commandHandler.archetypeGroupData": { isGroup: true, category: "Loading" },
 					layout: $(DoubleTreeLayout, {
 						vertical: false,
 						directionFunction: function(n) {
@@ -797,8 +784,8 @@
 					textEditable: true}, new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify), $(go.Shape, "RoundedRectangle", {
 					minSize: new go.Size(120, 21),
 				}, new go.Binding("fill", "color")), $(go.TextBlock, {
-					stroke: "white",
 					font: "17px Helvetica",
+					stroke: "white",
 					editable: true,
 					margin: new go.Margin(30, 30, 30, 30),
 					alignment: go.Spot.Left
@@ -847,7 +834,6 @@
 				
 				myDiagram.groupTemplate =
       $(go.Group, "Auto",
-        // the group does not lay out any of its member nodes
         { layout: null },
         $(go.Shape, { visible: false, fill: "transparent" }),
         $(go.Placeholder));
@@ -928,25 +914,13 @@
 					}
 				),
 				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Пурпурный градиент)"),
+					$(go.TextBlock, "Перекрасить ветвь (Белый)"),
 					{
 					click: (e, button) => {
 					    const node = button.part.adornedPart;
 						if (!node) return;
 						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", purplewhite));
-    				});	
-					}
-					}
-				),
-				$("ContextMenuButton",
-					$(go.TextBlock, "Перекрасить ветвь (Лазурный градиент)"),
-					{
-					click: (e, button) => {
-					    const node = button.part.adornedPart;
-						if (!node) return;
-						e.diagram.model.commit(m => {
-        				node.findTreeParts().each(n => m.set(n.data, "color", bluewhite));
+        				node.findTreeParts().each(n => m.set(n.data, "color", "#b4b4b4"));
     				});	
 					}
 					}
@@ -988,7 +962,7 @@
 						var node = obj.part.adornedPart;
 						if (node !== null) {
 						myDiagram.startTransaction("remove dept");
-						var color = "white";
+						var color = "#b4b4b4";
 						var diagram = myDiagram;
 						changeColor(diagram, color);
 						myDiagram.commitTransaction("remove dept");
@@ -1006,7 +980,7 @@
 					}, 
 					
 					$(go.Shape, "RoundedRectangle", {
-						fill: graygrad,
+						fill: bluegrad,
 						stroke: "gray",
 						minSize: new go.Size(20, 21),
 					}, ), $(go.TextBlock, {
@@ -1362,16 +1336,17 @@
 				var ltool = myDiagram.toolManager.linkingTool;
 				commonLinkingToolInit(ltool);
 				ltool.direction = go.LinkingTool.ForwardsOnly;
+
 				var rtool = myDiagram.toolManager.relinkingTool;
 				commonLinkingToolInit(rtool);
 				document.getElementById('zoomToFit').addEventListener('click', function() {
 					myDiagram.commandHandler.zoomToFit();
 				});
+
 				document.getElementById('centerRoot').addEventListener('click', function() {
 					myDiagram.scale = 1;
 					myDiagram.commandHandler.scrollToPart(myDiagram.findNodeForKey(1));
 				});
-
 			}
 
 			function deleteNode() {
@@ -1420,6 +1395,7 @@
 				});
 				diagram.commitTransaction("change color");
 			}
+			
 			window.addEventListener('DOMContentLoaded', init);
 			</script>
 		
@@ -1427,10 +1403,10 @@
 			<div id="sampleRight" class="sampleRight">
 				<div style="display: inline-block;">
 					<div style="position: relative;">
-						<div id="myDiagramDivRight" style="background-color: #34343C; border: solid 1px black; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
+						<div id="myDiagramDivRight" style="background-color: #34343C; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
 					</div>
-          <div class="panell active__panel" id="panel">
-            <div class="main-wrapper">
+          <div class="active__panel" id="panel">
+        	<div class="main-wrapper">
 			<button title="Спрятать/показать панель" id="hidePanelButton">
 				<svg id="hidePanelButtonArrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 285" fill="#fff">
 					<defs/>
@@ -1498,25 +1474,25 @@
                 </svg>
               </button>
             </div>
-            <div>
-              <textarea id="mySavedModelRight" style="width:100%;height:300px">  { 
-                "class": "go.GraphLinksModel", "nodeDataArray": [ 
-                  { "key":1,
-                  "text":"Утверждение",
-                  "category":"Loading"
-                  }				  				  
-                ]
-				 
-              } 
-            </textarea>
-            </div>
+			<div class="textareaBox">
+				<textarea id="mySavedModelRight" style="width:100%;height:230px">  { 
+					"class": "go.GraphLinksModel", "nodeDataArray": [ 
+					  { "key":1,
+					  "text":"Утверждение",
+					  "category":"Loading"
+					  }				  				  
+					]
+					 
+				  } 
+				</textarea>
+			</div>
           </div>
 				</div>
 			</div>
 			<div id="sample" class="sample">
 				<div style="display: inline-block;">
 					<div style="position: relative;">
-						<div id="myDiagramDiv" style="background-color: #34343C; border: solid 1px black; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
+						<div id="myDiagramDiv" style="background-color: #34343C; height: 100vh; width: 50vw; left: 0; padding: 0; margin: 0;"></div>
 					</div>
           <div class="active__panel" id="panelRight">
             <div class="main-wrapper">
@@ -1587,8 +1563,8 @@
 				</svg>
               </button>
             </div>
-            <div>
-              <textarea id="mySavedModel" style="width:100%;height:300px">  { 
+			<div class="textareaBox">
+            	<textarea id="mySavedModel" style="width:100%;height:230px">  { 
                 "class": "go.GraphLinksModel", "nodeDataArray": [ 
                   { "key":1,
                   "text":"Утверждение",
@@ -1597,8 +1573,8 @@
                 ]
 				 
               } 
-            </textarea>
-            </div>
+            	</textarea>
+			</div>
           </div>
 				</div>
 			</div>
@@ -1622,6 +1598,7 @@
 			document.getElementById("panelRight").classList.toggle('hide');
 			document.getElementById("viewerButtonOff").classList.toggle('hide');
 			document.getElementById("viewerButtonOn").classList.toggle('hide');
+			document.getElementById("line").classList.toggle('hide');
 			document.body.classList.toggle('hideScreen');
 		});
 
